@@ -1,0 +1,31 @@
+{
+  "name": "musicmaster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "start": "npm run build && live-server dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoanPTDev/Udemy_musicMaster.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YoanPTDev/Udemy_musicMaster/issues"
+  },
+  "homepage": "https://github.com/YoanPTDev/Udemy_musicMaster#readme",
+  "dependencies": {
+    "live-server": "^1.2.2",
+    "parcel": "^2.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
