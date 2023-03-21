@@ -49,14 +49,14 @@
 --CARD COLLECTION
 {
   "_id": ObjectId
-    "suit": string
-    "season": string
-    "value": string,
+    "suit": string                  --Hearts, Diamonds, Clovers, Spades
+    "season": string                --Spring, Summer, Fall, Winter
+    "value": string,                --A, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K
     "prompts": Array of Objects
     [
       "description": text
-      "mechanic": string
-    ]
+      "mechanic": string            --pause projects, complete project, prolong project, modify project, remove POI, modify ressource, discard cards, end turn, end game 
+    ]                               --start project, discussion, discovery, lore
 }
 
 --IMAGES COLLECTION
