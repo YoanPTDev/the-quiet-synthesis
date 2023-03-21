@@ -1,0 +1,33 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { expandAdventureLog, collapseAdventureLog } from '../actions/settings';
+
+const AdventureLog = (props) => {
+  const { adventureLogExpanded, expandAdventureLog, collapseAdventureLog } =
+    props;
+
+  if (adventureLogExpanded) {
+    return (
+      <div>
+        <h2>Adventure Log</h2>
+        <p>Ceci est le carnet d'aventure</p>
+        <br />
+        <button onClick={collapseAdventureLog}>show less</button>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <h2>Adventure Log</h2>
+      <br />
+      <button onClick={expandAdventureLog}>read more</button>
+    </div>
+  );
+};
+
+export default connect(
+  (state) => ({
+    adventureLogExpanded: state.settings.adventureLogExpanded,
+  }),
+  { expandAdventureLog, collapseAdventureLog }
+)(AdventureLog);
