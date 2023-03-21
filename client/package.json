@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YoanPTDev/Test_synthese.git"
+    "url": "git+https://github.com/YoanPTDev/the-quiet-synthesis.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/YoanPTDev/Test_synthese/issues"
+    "url": "https://github.com/YoanPTDev/the-quiet-synthesis/issues"
   },
-  "homepage": "https://github.com/YoanPTDev/Test_synthese#readme",
+  "homepage": "https://github.com/YoanPTDev/the-quiet-synthesis#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
     "live-server": "^1.2.2",
