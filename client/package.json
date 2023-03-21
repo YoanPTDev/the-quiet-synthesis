@@ -1,0 +1,33 @@
+{
+  "name": "index",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "start": "npm run build && live-server dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoanPTDev/Test_synthese.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YoanPTDev/Test_synthese/issues"
+  },
+  "homepage": "https://github.com/YoanPTDev/Test_synthese#readme",
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.6",
+    "live-server": "^1.2.2",
+    "parcel": "^2.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
