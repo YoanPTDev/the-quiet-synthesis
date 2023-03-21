@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import {
   startGame,
   cancelGame,
-  expandAdventureLog,
-  collapseAdventureLog,
 } from '../actions/settings';
 import Adventurelog from './Adventurelog';
 import Map from './Map';
 
 class App extends Component {
   render() {
+    console.log('this', this);
+    
     return (
       <div>
         <h1>The Quiet Year</h1>
@@ -38,15 +38,10 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    gameStarted: state.gameStarted,
+    gameStarted: state.settings.gameStarted,
   };
 };
 
-const componentConnector = connect(mapStateToProps, {
-  startGame,
-  cancelGame,
-  expandAdventureLog,
-  collapseAdventureLog,
-});
+const componentConnector = connect(mapStateToProps, {startGame, cancelGame});
 
 export default componentConnector(App);

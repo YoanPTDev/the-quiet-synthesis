@@ -2,13 +2,13 @@ import Sketch from 'react-p5';
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 
-const Map = () => {
+const Map = (props) => {
   const [prevMouseX, setPrevMouseX] = useState(null);
   const [prevMouseY, setPrevMouseY] = useState(null);
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(800, 800).parent(canvasParentRef);
-    p5.background(255);
+    p5.createCanvas(1800, 500).parent(canvasParentRef);
+    p5.background(200);
   };
 
   const drawLine = (p5) => {

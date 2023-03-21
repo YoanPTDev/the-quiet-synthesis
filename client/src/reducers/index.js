@@ -1,5 +1,7 @@
 import settingsReducer from './settings';
 
-export default {
+const rootReducer = {
   settings: settingsReducer,
 };
+
+export default rootReducer;
