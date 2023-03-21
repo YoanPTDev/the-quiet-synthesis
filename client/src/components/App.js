@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  startGame,
-  cancelGame,
-} from '../actions/settings';
+import { startGame, cancelGame } from '../actions/settings';
 import Adventurelog from './Adventurelog';
+import Notebook from './Notebook';
 import Map from './Map';
 
 class App extends Component {
   render() {
     console.log('this', this);
-    
+
     return (
       <div>
         <h1>The Quiet Year</h1>
         {this.props.gameStarted ? (
           <div>
-            <h3>Draw bitch!</h3>
+            <h3>Draw!</h3>
             <br />
             <Map />
             <br />
@@ -30,7 +28,12 @@ class App extends Component {
           </div>
         )}
         <br />
-        <Adventurelog />
+        <div className='log'>
+          <Adventurelog />
+        </div>
+        <div className='log'>
+          <Notebook />
+        </div>
       </div>
     );
   }
@@ -42,6 +45,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const componentConnector = connect(mapStateToProps, {startGame, cancelGame});
+const componentConnector = connect(mapStateToProps, { startGame, cancelGame });
 
 export default componentConnector(App);

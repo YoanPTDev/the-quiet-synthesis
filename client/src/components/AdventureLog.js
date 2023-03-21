@@ -16,6 +16,7 @@ const AdventureLog = (props) => {
       </div>
     );
   }
+  
   return (
     <div>
       <h2>Adventure Log</h2>

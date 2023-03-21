@@ -1,4 +1,8 @@
-import { SET_GAME_STARTED, SET_ADVENTURELOG_EXPANDED, SET_NOTEBOOK_EXPANDED } from "./types";
+import {
+  SET_GAME_STARTED,
+  SET_ADVENTURELOG_EXPANDED,
+  SET_NOTEBOOK_EXPANDED,
+} from './types';
 
 export const startGame = () => {
   return {
@@ -31,13 +35,13 @@ export const collapseAdventureLog = () => {
 export const expandNotebook = () => {
   return {
     type: SET_NOTEBOOK_EXPANDED,
-    adventureLogExpanded: true,
+    notebookExpanded: true,
   };
 };
 
 export const collapseNotebook = () => {
   return {
     type: SET_NOTEBOOK_EXPANDED,
-    adventureLogExpanded: false,
+    notebookExpanded: false,
   };
 };
