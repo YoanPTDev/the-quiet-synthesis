@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { startGame, cancelGame } from '../actions/settings';
-import Adventurelog from './Adventurelog';
+import Adventurelog from './AdventureLog';
 import Notebook from './Notebook';
 import Map from './Map';
 
