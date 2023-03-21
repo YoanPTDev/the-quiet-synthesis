@@ -1,3 +1,7 @@
-# react-app-template
+### The Quiet Year project
 
-Using parcel, react, react-dom and live-server
+Yoan Poulin Truchon
+Raphael Lavoie
+Nicolas Drolet
+
+Using parcel, react, react-dom, redux, live-server
