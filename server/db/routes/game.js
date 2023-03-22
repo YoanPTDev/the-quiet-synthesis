@@ -3,31 +3,45 @@
 const express = require("express");
 const gameRoutes = express.Router();
  
-const dbo = require("../db/conn");
- 
+const dbo = require("../db/connection");
 const ObjectId = require("mongodb").ObjectId;
  
- 
-// This section will help you get a list of all the records.
-gameRoutes.route("/game").get(function (req, res) {
+// Créer une nouvelle partie
+gameRoutes.route("/game/add").get(function (req, res) {
  let db_connect = dbo.getDb("employees");
- db_connect
-   .collection("records")
-   .find({})
-   .toArray(function (err, result) {
-     if (err) throw err;
-     res.json(result);
-   });
-});
+ let myobj = {
+    createdBy: req.body.createdBy,
+    players: req.body.players,
+    createdOn: req.body.createdOn,
+    adventureLog: req.body.adventureLog,
+    deck: req.body.deck
+  };
+  db_connect.collection("games").insertOne(myobj, function (err, res) {
+    if (err) throw err;
+    response.json(res);
+  });
+ });
  
-// This section will help you get a single record by id
-recordRoutes.route("/record/:id").get(function (req, res) {
+// Récupérer toutes les parties d'un joueur
+gameRoutes.route("/game").get(function (req, res) {
  let db_connect = dbo.getDb();
- let myquery = { _id: ObjectId(req.params.id) };
+ let myquery = { $or: [{createdBy: username}, {players: {$elemMatch: {players: username}}}] };
  db_connect
-   .collection("records")
+   .collection("games")
    .findOne(myquery, function (err, result) {
      if (err) throw err;
      res.json(result);
    });
 });
+
+// Récupérer une partie spécifique
+gameRoutes.route("/game/load").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = { shortId: req.body.shortId };
+    db_connect
+      .collection("games")
+      .findOne(myquery, function (err, result) {
+        if (err) throw err;
+        res.json(result);
+      });
+   });

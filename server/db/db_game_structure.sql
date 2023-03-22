@@ -1,4 +1,4 @@
--- USER COLLECTION
+-- USER COLLECTION (Scrapped for now)
 {
   "_id": ObjectId
   "username": string

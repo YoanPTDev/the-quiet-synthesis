@@ -6,11 +6,11 @@
     "prompts": [
         {
             "description": "What group has the highest status in the community?\nWhat must people do to gain inclusion in this group?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "Are there distinct family units in the community?\nIf so, what family structures are common?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -21,11 +21,11 @@
     "prompts": [
         {
             "description": "There’s a large body of water on the map.\nWhere is it? What does it look like?",
-            "type": "discovery"
+            "mechanic": "discovery"
         },
         {
             "description": "There’s a giant man-made structure on the map.\nWhere is it? Why is it abandoned?",
-            "type": "discovery"
+            "mechanic": "discovery"
         }
     ]
   },
@@ -36,11 +36,11 @@
     "prompts": [
         {
             "description": "Someone new arrives. Who?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "Two of the community’s younger members get into a fight.\nWhat provoked them?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -51,11 +51,11 @@
     "prompts": [
         {
             "description": "What important and basic tools does the community lack?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "Where are you storing your food?\nWhy is this a risky place to store things?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -66,11 +66,11 @@
     "prompts": [
         {
             "description": "There is a disquieting legend about this place.\nWhat is it?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "Alarming weather patterns destroy something.\nHow and what?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -81,11 +81,11 @@
     "prompts": [
         {
             "description": "Are there children in the community?\nIf there are, what is their role in the community?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "How old are the eldest members of the community?\nWhat unique needs do they have?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -96,11 +96,11 @@
     "prompts": [
         {
             "description": "Where does everyone sleep?\nWho is unhappy with this arrangement, and why?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "What natural predators roam this area?\nAre you safe?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -111,11 +111,11 @@
     "prompts": [
         {
             "description": "An old piece of machinery is discovered,\nbroken but perhaps repairable. What is it?\nWhat would it be useful for?",
-            "type": "discovery"
+            "mechanic": "discovery"
         },
         {
             "description": "An old piece of machinery is discovered, cursed and\ndangerous. How does the community destroy it?",
-            "type": "discovery"
+            "mechanic": "discovery"
         }
     ]
   },
@@ -126,11 +126,11 @@
     "prompts": [
         {
             "description": "A charismatic young girl convinces many to help her\nwith an elaborate scheme. What is it? Who joins her\nendeavors? Start a project to reflect.",
-            "type": "start project"
+            "mechanic": "start project"
         },
         {
             "description": "A charismatic young girl tries to tempt many into sinful\nor dangerous activity. Why does she do this?\nHow does the community respond?",
-            "type": "discussion"
+            "mechanic": "discussion"
         }
     ]
   },
@@ -141,11 +141,11 @@
     "prompts": [
         {
             "description": "There’s another community somewhere on the map.\nWhere are they? What sets them apart from you?",
-            "type": "discovery"
+            "mechanic": "discovery"
         },
         {
             "description": "What belief or practice helps to unify your community?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -156,11 +156,11 @@
     "prompts": [
         {
             "description": "You see a good omen. What is it?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "You see a bad omen. What is it?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -171,11 +171,11 @@
     "prompts": [
         {
             "description": "What’s the most beautiful thing in this area?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "What’s the most hideous thing in this area?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -186,11 +186,11 @@
     "prompts": [
         {
             "description": "A young boy starts digging in the ground,\nand discovers something unexpected. What is it?",
-            "type": "discovery"
+            "mechanic": "discovery"
         },
         {
             "description": "An old man confesses to past crimes and atrocities.\nWhat has he done?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -201,11 +201,11 @@
     "prompts": [
         {
             "description": "A contingent within the community demand to be\nheard. Who are they? What are they asking for?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "A contingent within the community have acted on their\nfrustrations. What have they damaged, and why did they\ndamage it? Is it permanent?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -216,11 +216,11 @@
     "prompts": [
         {
             "description": "Someone new arrives. Who? Why are they in distress?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "Someone leaves the community. Who?\nWhat are they looking for?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -231,11 +231,11 @@
     "prompts": [
         {
             "description": "Summer is a time for production and tending to the\nearth. Start a project related to food production.",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "Summer is a time for conquest and the gathering of might.\nStart a project related to military readiness and conquest.",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -246,11 +246,11 @@
     "prompts": [
         {
             "description": "The eldest among you dies. What caused the death?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "The eldest among you is very sick. Caring for them\nand searching for a cure requires the help of the entire\ncommunity. Do not reduce project dice this week.",
-            "type": "pause projects"
+            "mechanic": "pause projects"
         }
     ]
   },
@@ -261,11 +261,11 @@
     "prompts": [
         {
             "description": "A project finishes early.\nWhat led to its early completion?",
-            "type": "complete project"
+            "mechanic": "complete project"
         },
         {
             "description": "The weather is nice and people can feel the potential all\naround them. Start a new project.",
-            "type": "start project"
+            "mechanic": "start project"
         }
     ]
   },
@@ -276,11 +276,11 @@
     "prompts": [
         {
             "description": "Outsiders arrive in the area. Why are they a threat?\nHow are they vulnerable?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "Outsiders arrive in the area. How many?\nHow are they greeted?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -291,11 +291,11 @@
     "prompts": [
         {
             "description": "Introduce a mystery at the edge of the map.",
-            "type": "discovery"
+            "mechanic": "discovery"
         },
         {
             "description": "An unattended situation becomes problematic and scary.\nWhat is it? How does it go awry?",
-            "type": "lore"
+            "mechanic": "lore"
         }
     ]
   },
@@ -306,11 +306,11 @@
     "prompts": [
         {
             "description": "Someone tries to take control of the community by\nforce. Do they succeed? Why do they do this?",
-            "type": "lore"
+            "mechanic": "lore"
         },
         {
             "description": "A headstrong community member decides to put one of\ntheir ideas in motion. Start a foolish project.",
-            "type": "start project"
+            "mechanic": "start project"
         }
     ]
   },
@@ -321,11 +321,11 @@
     "prompts": [
         {
             "description": "A project fails. Which one? Why?",
-            "type": "complete project"
+            "mechanic": "complete project"
         },
         {
             "description": "Something goes foul and supplies are ruined.\nAdd a new Scarcity.",
-            "type": "modify ressource"
+            "mechanic": "modify ressource"
         }
     ]
   },
@@ -336,11 +336,11 @@
     "prompts": [
         {
             "description": "You discover a cache of supplies or resources.\nAdd a new Abundance.",
-            "type": "modify ressource"
+            "mechanic": "modify ressource"
         },
         {
             "description": "A Scarcity has gone unaddressed for too long!\nStart a project that will alleviate that Scarcity.",
-            "type": "start project"
+            "mechanic": "start project"
         }
     ]
   },
