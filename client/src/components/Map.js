@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
-const Map = (props) => {
-  let socket;
-
+const Map = () => {
+  const [socket, setSocket] = useState(null);
   const [prevMouseX, setPrevMouseX] = useState(null);
   const [prevMouseY, setPrevMouseY] = useState(null);
+  const [prevReceivedMouseX, setPrevReceivedMouseX] = useState(null);
+  const [prevReceivedMouseY, setPrevReceivedMouseY] = useState(null);
+  const [receivedMouseX, setReceivedMouseX] = useState(null);
+  const [receivedMouseY, setReceivedMouseY] = useState(null);
 
   const setup = (p5, canvasParentRef) => {
     p5.createCanvas(window.innerWidth, window.innerHeight).parent(
@@ -18,16 +21,14 @@ const Map = (props) => {
 
   useEffect(() => {
     console.log('mounted');
-    let socket = io.connect('http://localhost:3000');
-    socket.on('mouse', function (data) {
+    const newSocket = io.connect('http://localhost:3000');
+    setSocket(newSocket);
+    newSocket.on('mouse', function (data) {
       console.log('Got: ' + data.x + ' ' + data.y);
-      // Draw a blue circle
-      fill(0, 0, 255);
-      noStroke();
-      ellipse(data.x, data.y, 20, 20);
+      setReceivedMouses(data.x, data.y);
     });
     return () => {
-      socket.disconnect();
+      newSocket.disconnect();
     };
   }, []);
 
@@ -51,10 +52,30 @@ const Map = (props) => {
     setPrevMouseY(p5.mouseY);
   };
 
+  const setReceivedMouses = (mouseX, mouseY) => {
+    setReceivedMouseX(mouseX);
+    setReceivedMouseY(mouseY);
+  };
+
+  const setPrevReceivedMouses = (mouseX, mouseY) => {
+    setPrevReceivedMouseX(mouseX);
+    setPrevReceivedMouseY(mouseY);
+  };
+
+  const drawReceivedLine = (p5) => {
+    if (prevReceivedMouseX !== null && prevReceivedMouseY !== null) {
+      p5.line(prevReceivedMouseX, prevReceivedMouseY, receivedMouseX, receivedMouseY);
+    }
+    setPrevReceivedMouses(receivedMouseX, receivedMouseY)
+  };
+
   return (
     <Sketch
       setup={setup}
-      draw={drawLine}
+      draw={(p5) => {
+        drawLine(p5);
+        drawReceivedLine(p5);
+      }}
     />
   );
 };

@@ -5,7 +5,7 @@ import {
 } from '../actions/types';
 
 const DEFAULT_SETTINGS = {
-  gameStarted: false,
+  gameStarted: true,
   adventureLogExpanded: false,
   notebookExpanded: false,
 };

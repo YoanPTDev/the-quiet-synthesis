@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
 
   socket.on('mouse', (data) => {
     console.log('Received:', data.x, data.y);
-    io.emit('mouse', data);
+    socket.broadcast.emit('mouse', data);
   });
 
   socket.on('disconnect', () => {
