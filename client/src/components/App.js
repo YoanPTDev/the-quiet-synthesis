@@ -16,7 +16,7 @@ class App extends Component {
           <div>
             <h3>Draw!</h3>
             <br />
-            <Map />
+            <Map className='map'/>
             <br />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
           </div>

@@ -3,10 +3,31 @@ const http = require('http');
 const socketio = require('socket.io');
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const cors = require('cors');
+
+const corsOptions = {
+  origin: 'http://localhost:1234',
+};
+
+const io = socketio(server, {
+  cors: corsOptions
+});
+
+app.use(cors(corsOptions)); // use cors middleware
+
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  res.header('Access-Control-Allow-Origin', 'http://localhost:1234'); // set the allowed origin
+  next();
+});
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  socket.on('mouse', (data) => {
+    console.log('Received:', data.x, data.y);
+    io.emit('mouse', data);
+  });
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
