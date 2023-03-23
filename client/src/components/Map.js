@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
 const Map = () => {
+  const [isPressed, setIsPressed] = useState(null);
   const [socket, setSocket] = useState(null);
   const [prevMouseX, setPrevMouseX] = useState(null);
   const [prevMouseY, setPrevMouseY] = useState(null);
@@ -24,18 +25,22 @@ const Map = () => {
     const newSocket = io.connect('http://localhost:3000');
     setSocket(newSocket);
     newSocket.on('mouse', function (data) {
-      console.log('Got: ' + data.x + ' ' + data.y);
-      setReceivedMouses(data.x, data.y);
+      if (!data.isPressed) {
+        setPrevReceivedMouses(data.x, data.y);
+      } else {
+        setReceivedMouses(data.x, data.y);
+      }
     });
     return () => {
       newSocket.disconnect();
     };
   }, []);
 
-  const sendMouse = (xpos, ypos) => {
+  const sendMouse = (xpos, ypos, isPressed) => {
     let data = {
       x: xpos,
       y: ypos,
+      isPressed: isPressed,
     };
 
     socket.emit('mouse', data);
@@ -43,14 +48,21 @@ const Map = () => {
 
   const drawLine = (p5) => {
     if (p5.mouseIsPressed) {
+      setIsPressed(true);
       if (prevMouseX !== null && prevMouseY !== null) {
         p5.line(prevMouseX, prevMouseY, p5.mouseX, p5.mouseY);
-        sendMouse(p5.mouseX, p5.mouseY);
+        sendMouse(p5.mouseX, p5.mouseY, isPressed);
       }
+
+      setPrevMouseX(p5.mouseX);
+      setPrevMouseY(p5.mouseY);
     }
-    setPrevMouseX(p5.mouseX);
-    setPrevMouseY(p5.mouseY);
   };
+
+  const mouseReleased = (p5) => {
+    setIsPressed(false);
+    sendMouse(p5.mouseX, p5.mouseY, isPressed);
+  }
 
   const setReceivedMouses = (mouseX, mouseY) => {
     setReceivedMouseX(mouseX);
@@ -64,9 +76,14 @@ const Map = () => {
 
   const drawReceivedLine = (p5) => {
     if (prevReceivedMouseX !== null && prevReceivedMouseY !== null) {
-      p5.line(prevReceivedMouseX, prevReceivedMouseY, receivedMouseX, receivedMouseY);
+      p5.line(
+        prevReceivedMouseX,
+        prevReceivedMouseY,
+        receivedMouseX,
+        receivedMouseY
+      );
     }
-    setPrevReceivedMouses(receivedMouseX, receivedMouseY)
+    setPrevReceivedMouses(receivedMouseX, receivedMouseY);
   };
 
   return (
@@ -76,6 +93,7 @@ const Map = () => {
         drawLine(p5);
         drawReceivedLine(p5);
       }}
+      mouseReleased={mouseReleased}
     />
   );
 };

@@ -45,3 +45,15 @@ gameRoutes.route("/game/load").get(function (req, res) {
         res.json(result);
       });
    });
+
+//Récupérer un Adventure Log par son id
+gameRoutes.route("/game/log").get(function (req, res) {
+  let db_connect = dbo.getDb();
+  let myquery = { _id: ObjectId(req.body.id) };
+  db_connect
+    .collection("adventure_logs")
+    .findOne(myquery, function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+ });
