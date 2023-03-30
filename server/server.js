@@ -4,21 +4,24 @@ const socketio = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const cors = require('cors');
-const {GameEngine, playerTurnStateMachine} = require('./modules/game_engine');
+const { GameEngine, playerTurnStateMachine } = require('./modules/game_engine');
 
 const corsOptions = {
   origin: 'http://localhost:1234',
 };
 
 const io = socketio(server, {
-  cors: corsOptions
+  cors: corsOptions,
 });
 
 app.use(cors(corsOptions)); // use cors middleware
 
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  res.header('Access-Control-Allow-Origin', 'http://localhost:1234, http://thequietsynthesis.com'); // set the allowed origin
+  res.header(
+    'Access-Control-Allow-Origin',
+    'http://localhost:1234, http://thequietsynthesis.com'
+  ); // set the allowed origin
   next();
 });
 

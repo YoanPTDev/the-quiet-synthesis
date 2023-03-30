@@ -1,7 +1,9 @@
+import PLayer from './player';
+
 const playerStates = {
-  WAITING: "WAITING",
-  PLAYING: "PLAYING",
-  FINISHED: "FINISHED",
+  WAITING: 'WAITING',
+  PLAYING: 'PLAYING',
+  FINISHED: 'FINISHED',
 };
 
 class GameEngine {
@@ -47,25 +49,25 @@ const playerTurnStateMachine = {
       case playerStates.PLAYING:
         if (this.currentState === playerStates.WAITING) {
           this.currentState = playerStates.PLAYING;
-          io.to(this.currentPlayer.id).emit("start turn");
+          io.to(this.currentPlayer.id).emit('start turn');
         } else {
           throw new Error(
-            "Invalid state transition: " + this.currentState + " to " + newState
+            'Invalid state transition: ' + this.currentState + ' to ' + newState
           );
         }
         break;
       case playerStates.FINISHED:
         if (this.currentState === playerStates.PLAYING) {
           this.currentState = playerStates.FINISHED;
-          io.to(this.currentPlayer.id).emit("end turn");
+          io.to(this.currentPlayer.id).emit('end turn');
         } else {
           throw new Error(
-            "Invalid state transition: " + this.currentState + " to " + newState
+            'Invalid state transition: ' + this.currentState + ' to ' + newState
           );
         }
         break;
       default:
-        throw new Error("Invalid state: " + newState);
+        throw new Error('Invalid state: ' + newState);
     }
   },
 
@@ -92,4 +94,4 @@ const playerTurnStateMachine = {
   },
 };
 
-module.exports = {GameEngine, playerTurnStateMachine};
+export { GameEngine, playerTurnStateMachine };
