@@ -38,8 +38,8 @@ class Deck {
     return this.fullDeck.shift();
   }
 
-  discard(ammount) {
-    this.fullDeck.slice(0, ammount); //Enleve les cartes de l'index 0 a "ammount" non-inclus
+  discard(amount) {
+    this.fullDeck.slice(0, amount); //Enleve les cartes de l'index 0 a "amount" non-inclus
   }
 }
 

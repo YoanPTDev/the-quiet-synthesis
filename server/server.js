@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const cors = require('cors');
-const { GameEngine, playerTurnStateMachine } = require('./modules/game_engine');
+const GameEngine = require('./modules/game_engine');
 
 const corsOptions = {
   origin: 'http://localhost:1234',
@@ -36,6 +36,11 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+});
+
+io.on('startGame', () => {
+  console.log('creating game engine');
+  const game_engine = new GameEngine(null, null, null)
 });
 
 const port = process.env.PORT || 3000;

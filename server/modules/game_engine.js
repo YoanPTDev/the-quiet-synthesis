@@ -1,17 +1,23 @@
+import Game from "./game";
+import Notebook from "./notebook";
+import Deck from "./deck";
+import Map from "./map";
+import AdventureLog from "./adventure_log";
+
 const playerStates = {
   WAITING: 'WAITING',
   PLAYING: 'PLAYING',
   FINISHED: 'FINISHED',
 };
 
-class GameEngine {
-  constructor(game, notebook, deck, players, map, log) {
-    this.game = game; // Objet Game
-    this.notebook = notebook; // Objet Notebook
-    this.deck = deck; // Objet Deck
-    this.players = players; // Liste de Player
-    this.map = map; // Objet Map
-    this.log = log; // Objet AdventureLog
+module.exports = class GameEngine {
+  constructor(gameConfig, deckConfig, mapConfig) {
+    this.game = new Game(gameConfig);
+    this.notebook = new Notebook();
+    this.deck = new Deck(deckConfig);
+    this.players = new Array(); // Liste de Player
+    this.map = new Map(mapConfig);
+    this.log = new AdventureLog();
     this.gameId = 1; // ID de la partie (encore necessaire?)
     this.timeElapsed = 0; // Sert a calculer le temps passé pour la sauvegarde
     this.nbrContempts = 0; // Nombre de contempt tokens
@@ -91,5 +97,3 @@ const playerTurnStateMachine = {
     return this.currentState === playerStates.FINISHED;
   },
 };
-
-module.exports = { GameEngine, playerTurnStateMachine };
