@@ -1,5 +1,3 @@
-import PLayer from './player';
-
 const playerStates = {
   WAITING: 'WAITING',
   PLAYING: 'PLAYING',
@@ -94,4 +92,4 @@ const playerTurnStateMachine = {
   },
 };
 
-export { GameEngine, playerTurnStateMachine };
+module.exports = { GameEngine, playerTurnStateMachine };

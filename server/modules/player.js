@@ -1,6 +1,6 @@
 import User from './user';
 
-class PLayer {
+class Player {
   constructor(user) {
     this.user = user; //objet User
   }
@@ -18,4 +18,4 @@ class PLayer {
   }
 }
 
-export default PLayer;
+export default Player;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { expandAdventureLog, collapseAdventureLog } from '../actions/settings';
+import Log from './Log';
 
 const AdventureLog = (props) => {
   const { adventureLogExpanded, expandAdventureLog, collapseAdventureLog } =
@@ -12,6 +13,8 @@ const AdventureLog = (props) => {
         <h2>Adventure Log</h2>
         <p>Ceci est le carnet d'aventure</p>
         <br />
+        <Log/>
+        <hr/>
         <button onClick={collapseAdventureLog}>show less</button>
       </div>
     );
