@@ -1,10 +1,18 @@
-const express = require('express');
-const http = require('http');
-const socketio = require('socket.io');
-const app = express();
-const server = http.createServer(app);
-const cors = require('cors');
-const GameEngine = require('./modules/game_engine');
+import express from 'express';
+import http from 'http'
+import socketio from 'socket.io';
+import cors from 'cors';
+import GameEngine from './modules/game_engine.js';
+
+
+
+// const express = require('express');
+// const http = require('http');
+// const socketio = require('socket.io');
+// const app = express();
+// const server = http.createServer(app);
+// const cors = require('cors');
+// const GameEngine = require('./modules/game_engine');
 
 const corsOptions = {
   origin: 'http://localhost:1234',

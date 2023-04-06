@@ -1,4 +1,4 @@
-import Card from './card';
+import Card from './card.js';
 
 class DeckConfig {
   constructor(springCards, summerCards, fallCards, winterCards) {
