@@ -3,7 +3,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
 
-import dbo from './db/connection.js';
+import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
 import { DeckConfig } from './modules/deck.js';
 
@@ -53,12 +53,14 @@ io.on('startGame', () => {
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
-  });
-
   console.log(`Server running on port ${port}`);
+  init();
 
+});
+
+async function init() {
+  const connectionString = 'mongodb://localhost:27017/your-database';
+  await connectToDatabase();
   //Code de test -> retirer apres
   console.log('creating game engine');
   const game_engine = new GameEngine(
@@ -72,4 +74,4 @@ server.listen(port, () => {
   console.log(card.prompt1);
   console.log(card.prompt2);
   //----------------------------
-});
+}

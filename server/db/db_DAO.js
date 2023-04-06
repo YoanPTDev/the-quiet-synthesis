@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
-import dbo from './connection.js';
+import { getDatabase } from './connection.js';
 
-let db_connect = dbo.getDb();
+let theQuietYearDB = getDatabase();
 
 // ======================================================
 // COMMENT UTILISER LE DAO (server-side code examples)
@@ -26,7 +26,7 @@ let db_connect = dbo.getDb();
 
 async function getDeckByName(deckName) {
   try {
-    const deckCollection = db_connect.collection('decks');
+    const deckCollection = theQuietYearDB.collection('decks');
     const deck = await deckCollection.findOne({ name: deckName });
     return deck;
   } catch (err) {
@@ -36,7 +36,7 @@ async function getDeckByName(deckName) {
 
 async function getCardById(cardId) {
   try {
-    const cardCollection = db_connect.collection('cards');
+    const cardCollection = theQuietYearDB.collection('cards');
     const card = await cardCollection.findOne({ _id: ObjectId(cardId) });
     return card;
   } catch (err) {
