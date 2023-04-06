@@ -1,8 +1,8 @@
-import Game from "./game";
-import Notebook from "./notebook";
-import Deck from "./deck";
-import Map from "./map";
-import AdventureLog from "./adventure_log";
+import Game from "./game.js";
+import Notebook from "./notebook.js";
+import Deck from "./deck.js";
+import Map from "./map.js";
+import AdventureLog from "./adventure_log.js";
 
 const playerStates = {
   WAITING: 'WAITING',
@@ -10,7 +10,7 @@ const playerStates = {
   FINISHED: 'FINISHED',
 };
 
-module.exports = class GameEngine {
+class GameEngine {
   constructor(gameConfig, deckConfig, mapConfig) {
     this.game = new Game(gameConfig);
     this.notebook = new Notebook();
@@ -97,3 +97,5 @@ const playerTurnStateMachine = {
     return this.currentState === playerStates.FINISHED;
   },
 };
+
+export default GameEngine;

@@ -1,4 +1,4 @@
-import TurnAction from './turn_action';
+import TurnAction from './turn_action.js';
 
 class Week {
   constructor() {
