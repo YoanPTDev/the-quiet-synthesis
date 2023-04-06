@@ -4,8 +4,14 @@ import { startGame, cancelGame } from '../actions/settings';
 import Adventurelog from './Adventurelog';
 import Notebook from './Notebook';
 import Map from './Map';
+import Card from './Card';
 
 class App extends Component {
+  startGame = () => {
+    this.props.startGame();
+    this.props.fetchDeck();
+  }
+
   render() {
     console.log('this', this);
 
@@ -16,24 +22,26 @@ class App extends Component {
           <div>
             <h3>Draw!</h3>
             <br />
-            <Map className='map'/>
+            <Map className='map' />
             <br />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
+            <br/>
+            <div className='log'>
+              <Adventurelog />
+            </div>
+            <div className='log'>
+              <Notebook />
+            </div>
+            <br/>
+            <Card/>
           </div>
         ) : (
           <div>
             <h3>A new adventure is on the horizon!</h3>
             <br />
-            <button onClick={this.props.startGame}>Go on an adventure!</button>
+            <button onClick={this.startGame}>Go on an adventure!</button>
           </div>
         )}
-        <br />
-        <div className='log'>
-          <Adventurelog />
-        </div>
-        <div className='log'>
-          <Notebook />
-        </div>
       </div>
     );
   }

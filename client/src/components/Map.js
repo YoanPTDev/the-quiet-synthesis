@@ -14,7 +14,7 @@ const Map = () => {
   const [receivedMouseY, setReceivedMouseY] = useState(null);
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(window.innerWidth, window.innerHeight).parent(
+    p5.createCanvas(window.innerWidth - 400, window.innerHeight - 400).parent(
       canvasParentRef
     );
     p5.background(200);
