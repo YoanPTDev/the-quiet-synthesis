@@ -8,7 +8,7 @@ class DeckConfig {
     this.fallCards = new Array(); //Array de Card
     this.winterCards = new Array(); //Array de Card
 
-    tempDeck = getDeckByName(deckName);
+    let tempDeck = getDeckByName(deckName);
 
     for (let i = 0; i < tempDeck.cards.length; i++) {
       let temp_card = getCardById(tempDeck.cards[i]);
@@ -30,6 +30,11 @@ class DeckConfig {
         this.winterCards.push(card);
       }
     }
+
+    shuffle(this.springCards);
+    shuffle(this.summerCards);
+    shuffle(this.fallCards);
+    shuffle(this.winterCards);
   }
 
   getSpring() {
@@ -47,6 +52,25 @@ class DeckConfig {
   getWinter() {
     return this.winterCards;
   }
+}
+
+// https://bost.ocks.org/mike/shuffle/ -> Algorithme de Fisher-Yates
+function shuffle(array) {
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
 }
 
 class Deck {

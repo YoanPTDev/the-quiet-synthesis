@@ -1,15 +1,12 @@
 // SOURCE: https://www.mongodb.com/languages/mern-stack-tutorial
 
-const { MongoClient } = require('mongodb');
-const Db = process.env.ATLAS_URI;
-const client = new MongoClient(Db, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+import { MongoClient } from 'mongodb';
+const Db = "mongodb+srv://ndroletCVM:xc8biqOytEyvO0y9lV4IFUXhTow4GjQY@tqyonline.ljgkpby.mongodb.net/test"
+const client = new MongoClient(Db);
 
 let _db = null;
 
-module.exports = {
+const dbo = {
   connectToServer: function (callback) {
     client.connect(function (err, db) {
       if (db) {
@@ -24,3 +21,5 @@ module.exports = {
     return _db;
   },
 };
+
+export default dbo;
