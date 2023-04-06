@@ -1,0 +1,764 @@
+[
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "A",
+    "prompts": [
+        {
+            "description": "What group has the highest status in the community?\nWhat must people do to gain inclusion in this group?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Are there distinct family units in the community?\nIf so, what family structures are common?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "2",
+    "prompts": [
+        {
+            "description": "There’s a large body of water on the map.\nWhere is it? What does it look like?",
+            "mechanic": "discovery"
+        },
+        {
+            "description": "There’s a giant man-made structure on the map.\nWhere is it? Why is it abandoned?",
+            "mechanic": "discovery"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "3",
+    "prompts": [
+        {
+            "description": "Someone new arrives. Who?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Two of the community’s younger members get into a fight.\nWhat provoked them?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "4",
+    "prompts": [
+        {
+            "description": "What important and basic tools does the community lack?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Where are you storing your food?\nWhy is this a risky place to store things?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "5",
+    "prompts": [
+        {
+            "description": "There is a disquieting legend about this place.\nWhat is it?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Alarming weather patterns destroy something.\nHow and what?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "6",
+    "prompts": [
+        {
+            "description": "Are there children in the community?\nIf there are, what is their role in the community?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "How old are the eldest members of the community?\nWhat unique needs do they have?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "7",
+    "prompts": [
+        {
+            "description": "Where does everyone sleep?\nWho is unhappy with this arrangement, and why?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "What natural predators roam this area?\nAre you safe?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "8",
+    "prompts": [
+        {
+            "description": "An old piece of machinery is discovered,\nbroken but perhaps repairable. What is it?\nWhat would it be useful for?",
+            "mechanic": "discovery"
+        },
+        {
+            "description": "An old piece of machinery is discovered, cursed and\ndangerous. How does the community destroy it?",
+            "mechanic": "discovery"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "9",
+    "prompts": [
+        {
+            "description": "A charismatic young girl convinces many to help her\nwith an elaborate scheme. What is it? Who joins her\nendeavors? Start a project to reflect.",
+            "mechanic": "start project"
+        },
+        {
+            "description": "A charismatic young girl tries to tempt many into sinful\nor dangerous activity. Why does she do this?\nHow does the community respond?",
+            "mechanic": "discussion"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "10",
+    "prompts": [
+        {
+            "description": "There’s another community somewhere on the map.\nWhere are they? What sets them apart from you?",
+            "mechanic": "discovery"
+        },
+        {
+            "description": "What belief or practice helps to unify your community?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "J",
+    "prompts": [
+        {
+            "description": "You see a good omen. What is it?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "You see a bad omen. What is it?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "Q",
+    "prompts": [
+        {
+            "description": "What’s the most beautiful thing in this area?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "What’s the most hideous thing in this area?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Hearts",
+    "season": "Spring",
+    "value": "K",
+    "prompts": [
+        {
+            "description": "A young boy starts digging in the ground,\nand discovers something unexpected. What is it?",
+            "mechanic": "discovery"
+        },
+        {
+            "description": "An old man confesses to past crimes and atrocities.\nWhat has he done?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "A",
+    "prompts": [
+        {
+            "description": "A contingent within the community demand to be\nheard. Who are they? What are they asking for?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "A contingent within the community have acted on their\nfrustrations. What have they damaged, and why did they\ndamage it? Is it permanent?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "2",
+    "prompts": [
+        {
+            "description": "Someone new arrives. Who? Why are they in distress?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Someone leaves the community. Who?\nWhat are they looking for?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "3",
+    "prompts": [
+        {
+            "description": "Summer is a time for production and tending to the\nearth. Start a project related to food production.",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Summer is a time for conquest and the gathering of might.\nStart a project related to military readiness and conquest.",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "4",
+    "prompts": [
+        {
+            "description": "The eldest among you dies. What caused the death?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "The eldest among you is very sick. Caring for them\nand searching for a cure requires the help of the entire\ncommunity. Do not reduce project dice this week.",
+            "mechanic": "pause projects"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "5",
+    "prompts": [
+        {
+            "description": "A project finishes early.\nWhat led to its early completion?",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "The weather is nice and people can feel the potential all\naround them. Start a new project.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "6",
+    "prompts": [
+        {
+            "description": "Outsiders arrive in the area. Why are they a threat?\nHow are they vulnerable?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Outsiders arrive in the area. How many?\nHow are they greeted?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "7",
+    "prompts": [
+        {
+            "description": "Introduce a mystery at the edge of the map.",
+            "mechanic": "discovery"
+        },
+        {
+            "description": "An unattended situation becomes problematic and scary.\nWhat is it? How does it go awry?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "8",
+    "prompts": [
+        {
+            "description": "Someone tries to take control of the community by\nforce. Do they succeed? Why do they do this?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "A headstrong community member decides to put one of\ntheir ideas in motion. Start a foolish project.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "9",
+    "prompts": [
+        {
+            "description": "A project fails. Which one? Why?",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "Something goes foul and supplies are ruined.\nAdd a new Scarcity.",
+            "mechanic": "modify ressource"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "10",
+    "prompts": [
+        {
+            "description": "You discover a cache of supplies or resources.\nAdd a new Abundance.",
+            "mechanic": "modify ressource"
+        },
+        {
+            "description": "A Scarcity has gone unaddressed for too long!\nStart a project that will alleviate that Scarcity.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "J",
+    "prompts": [
+        {
+            "description": "Predators and bad omens are afoot. You are\ncareless, and someone goes missing under ominous\ncircumstances. Who?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Predators and bad omens are afoot. What measures do\nyou take to keep everyone safe and under surveillance?\nDo not reduce project dice this week.",
+            "mechanic": "pause projects"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "Q",
+    "prompts": [
+        {
+            "description": "A project finishes early. Which one? Why?",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "If there are no projects underway, boredom leads to a\nquarrel. A fight breaks out between two people.\nWhat is it about?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Diamonds",
+    "season": "Summer",
+    "value": "K",
+    "prompts": [
+        {
+            "description": "Summer is fleeting.\nDiscard the top two cards off the top of the deck and\ntake two actions this week.",
+            "mechanic": "discard cards"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "A",
+    "prompts": [
+        {
+            "description": "The community becomes obsessed with a single project.\nThey decide to take more time to ensure that it is\nperfect. Add 3 weeks to the project die.",
+            "mechanic": "prolong project"
+        },
+        {
+            "description": "If there are no projects underway,\nadd a Scarcity born of idleness.",
+            "mechanic": "modify ressource"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "2",
+    "prompts": [
+        {
+            "description": "Someone returns to the community. Who?\nWhere were they?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "You find a body. Do people recognize who it is?\nWhat happened?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "3",
+    "prompts": [
+        {
+            "description": "Someone leaves the community after issuing a dire\nwarning. Who? What is the warning?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Someone issues a dire warning, and the community\nleaps into action to avoid disaster. What is the warning?\nStart a contentious project that relates to it.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "4",
+    "prompts": [
+        {
+            "description": "The strongest among you dies. What caused the death?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "The weakest among you dies.\nWho is to blame for their death?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "5",
+    "prompts": [
+        {
+            "description": "The Parish arrives. Who are they? Why have they\nchosen your community, and for what?",
+            "mechanic": "lore"
+        },
+        {
+            "description": "A small gang of marauders is making its way through\nlocal terrain. How many are there? What weapons do\nthey carry?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "6",
+    "prompts": [
+        {
+            "description": "Introduce a dark mystery among the members of the\ncommunity.",
+            "mechanic": "lore"
+        },
+        {
+            "description": "Conflict flares up among community members, and as a\nresult, a project fails.",
+            "mechanic": "complete project"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "7",
+    "prompts": [
+        {
+            "description": "A project just isn’t working out as expected. Radically\nchange the nature of this project (don’t modify the\nproject die). When it resolves, you’ll be responsible for\ntelling the community how it went.",
+            "mechanic": "modify project"
+        },
+        {
+            "description": "Something goes foul and supplies are ruined.\nAdd a new Scarcity.",
+            "mechanic": "modify ressource"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "8",
+    "prompts": [
+        {
+            "description": "Someone sabotages a project, and the project fails as a\nresult. Who did this? Why?",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "Someone is caught trying to sabotage the efforts of the\ncommunity. How does the community respond?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "9",
+    "prompts": [
+        {
+            "description": "The community works constantly, and as a result a\nproject finishes early.",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "A group goes out to explore the map more thoroughly,\nand finds something that had been previously overlooked.",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "10",
+    "prompts": [
+        {
+            "description": "Harvest is here and plentiful. Add an Abundance.",
+            "mechanic": "modify ressource"
+        },
+        {
+            "description": "Cold autumn winds drive out your enemies. Remove a\nthreatening force from the map and the area.",
+            "mechanic": "remove POI"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "J",
+    "prompts": [
+        {
+            "description": "A project finishes early. Which one? Why?",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "If there are no projects underway, restlessness creates\nanimosity, which leads to violence. Who gets hurt?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "Q",
+    "prompts": [
+        {
+            "description": "Disease spreads through the community.\nYou spend the week quarantining and treating the\ndisease. Project dice are not reduced this week.",
+            "mechanic": "pause projects"
+        },
+        {
+            "description": "Disease spreads through the community.\nNobody knows what to do about it. Add “Health and\nFertility” as a Scarcity.",
+            "mechanic": "modify ressource"
+        }
+    ]
+  },
+  {
+    "suit": "Clubs",
+    "season": "Fall",
+    "value": "K",
+    "prompts": [
+        {
+            "description": "A natural disaster strikes the area.\nYou focus on getting everyone to safety.\nA project fails",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "A natural disaster strikes the area.\nYou focus on protecting your supplies and hard work at\nany cost. Several people die as a result.",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "A",
+    "prompts": [
+        {
+            "description": "Now is the time to conserve energy and resources.\nGain an Abundance.",
+            "mechanic": "modify ressource"
+        },
+        {
+            "description": "Now is the time for hurried labour and final efforts.\nA project finishes early.",
+            "mechanic": "complete project"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "2",
+    "prompts": [
+        {
+            "description": "A headstrong community member takes charge of the\ncommunity’s work efforts. A project finishes early.",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "A headstrong community member tries to take\ncontrol of the community. How are they prevented\nfrom doing this? Due to the conflict,\nproject dice are not reduced this week.",
+            "mechanic": "pause projects"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "3",
+    "prompts": [
+        {
+            "description": "Someone comes up with an ingenious solution to a big\nproblem, and as a result a project finishes early.\nWhat was their idea?",
+            "mechanic": "complete project"
+        },
+        {
+            "description": "Someone comes up with a plan to ensure safety\nand comfort during the coldest months.\nStart a project related to this.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "4",
+    "prompts": [
+        {
+            "description": "All the animals and young children are crying and won’t\nstop. Hold a discussion about this, in addition\nto your regular action for this week.",
+            "mechanic": "discussion"
+        },
+        {
+            "description": "A great atrocity is revealed. What is it?\nWho uncovers it?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "5",
+    "prompts": [
+        {
+            "description": "Winter elements destroy a food source. If this was your\nonly food source, add a Scarcity.",
+            "mechanic": "modify ressource"
+        },
+        {
+            "description": "Winter elements leave everyone cold, tired, and\nmiserable. Project dice are not reduced this week.",
+            "mechanic": "pause projects"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "6",
+    "prompts": [
+        {
+            "description": "The time has come to consolidate your efforts and your\nborders. Projects located outside the settlement fail,\nand all remaining projects are reduced by 2 this week.",
+            "mechanic": "modify project"
+        },
+        {
+            "description": "Someone finds a curious opportunity on the edge of the\nmap. Start a project related to this discovery.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "7",
+    "prompts": [
+        {
+            "description": "What is winter like in this area? How do community\nmembers react to the weather?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "8",
+    "prompts": [
+        {
+            "description": "Winter is harsh, and desperation gives rise to fear mongering\nSpend the week calming the masses and dispelling\ntheir violent sentiments. The week ends immediately.",
+            "mechanic": "end turn"
+        },
+        {
+            "description": "Winter is harsh, and desperation gives rise to fear mongering\nDeclare war on someone or something. This counts as\nstarting a project.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "9",
+    "prompts": [
+        {
+            "description": "Someone goes missing. They’re alone in the winter elements\nThe community organizes constant search parties and\neventually the person is found. Project dice are\nnot reduced this week.",
+            "mechanic": "pause projects"
+        },
+        {
+            "description": "Someone goes missing. They’re alone in the winter elements\nNo one ever hears from that person again.",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "10",
+    "prompts": [
+        {
+            "description": "In preparation for the coming year, the community\nbegins a huge undertaking. Start a project that will take\nat least 5 weeks to complete.",
+            "mechanic": "start project"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "J",
+    "prompts": [
+        {
+            "description": "An infected outsider arrives, seeking amnesty. They have\nsome much-needed resources with them. Choose one:\nWelcome them into the community. Remove a Scarcity,\nbut also introduce an infection into the community.",
+            "mechanic": "modify ressource"
+        },
+        {
+            "description": "An infected outsider arrives, seeking amnesty. They have\nBar them from entry. What Scarcity could they have\naddressed? How does its need become more dire this week?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "Q",
+    "prompts": [
+        {
+            "description": "You see a good omen. What is it?",
+            "mechanic": "lore"
+        }
+    ]
+  },
+  {
+    "suit": "Spades",
+    "season": "Winter",
+    "value": "K",
+    "prompts": [
+        {
+            "description": "The Frost Shepherds arrive.\nThe game is over.",
+            "mechanic": "end game"
+        }
+    ]
+  }
+]
+
+  
