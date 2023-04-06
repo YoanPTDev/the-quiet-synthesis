@@ -37,7 +37,7 @@ async function getDeckByName(deckName) {
 async function getCardById(cardId) {
   try {
     const cardCollection = theQuietYearDB.collection('cards');
-    const card = await cardCollection.findOne({ _id: ObjectId(cardId) });
+    const card = await cardCollection.findOne({ _id: new ObjectId(cardId) });
     return card;
   } catch (err) {
     console.error(err);

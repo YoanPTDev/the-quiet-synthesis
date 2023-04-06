@@ -62,16 +62,24 @@ async function init() {
   const connectionString = 'mongodb://localhost:27017/your-database';
   await connectToDatabase();
   //Code de test -> retirer apres
-  console.log('creating game engine');
+  const deckConfig = await createDeckConfig();
+  console.log(deckConfig);
   const game_engine = new GameEngine(
     null,
-    new DeckConfig('default deck'),
+    deckConfig,
     null
   );
-  let card = game_engine.deck.drawCard();
-  console.log(card.suit);
-  console.log(card.value);
-  console.log(card.prompt1);
-  console.log(card.prompt2);
+  console.log('build finished')
+  console.log(game_engine);
+  // let card = game_engine.deck.drawCard();
+  // console.log(card.suit);
+  // console.log(card.value);
+  // console.log(card.prompt1);
+  // console.log(card.prompt2);
   //----------------------------
+}
+
+const createDeckConfig = async () => {
+  console.log('creating deck configuration');
+  return new DeckConfig('default deck');
 }

@@ -1,5 +1,5 @@
-import Card from "./card.js";
-import { getDeckByName, getCardById } from "../db/db_DAO.js";
+import Card from './card.js';
+import { getDeckByName, getCardById } from '../db/db_DAO.js';
 
 class DeckConfig {
   constructor(deckName) {
@@ -8,59 +8,56 @@ class DeckConfig {
     this.fallCards = new Array(); //Array de Card
     this.winterCards = new Array(); //Array de Card
 
-    let tempDeck = getDeckByName(deckName);
+  }
 
-    for (let i = 0; i < tempDeck.cards.length; i++) {
-      let temp_card = getCardById(tempDeck.cards[i]);
+  buildSeasons = async () => {
+    getDeckByName(deckName).then((dataDeck) => {
+      for (let i = 0; i < dataDeck.cards.length; i++) {
+        getCardById(dataDeck.cards[i]).then((dataCard) => {
+          let card = null;
+          try {
+            card = new Card(
+              dataCard.suit,
+              dataCard.value,
+              dataCard.prompts[0].description,
+              dataCard.prompts[1].description
+            );
+          } catch (error) {
+            card = new Card(
+              dataCard.suit,
+              dataCard.value,
+              dataCard.prompts[0].description
+            );
+          }
 
-      let card = new Card(
-        temp_card.suit,
-        temp_card.value,
-        temp_card.prompts[0].description,
-        temp_card.prompts[1].description
-      );
-
-      if (temp_card.season == "Spring") {
-        this.springCards.push(card);
-      } else if (temp_card.season == "Summer") {
-        this.summerCards.push(card);
-      } else if (temp_card.season == "Fall") {
-        this.fallCards.push(card);
-      } else if (temp_card.season == "Winter") {
-        this.winterCards.push(card);
+          if (dataCard.season == 'Spring') {
+            this.springCards.push(card);
+          } else if (dataCard.season == 'Summer') {
+            this.summerCards.push(card);
+          } else if (dataCard.season == 'Fall') {
+            this.fallCards.push(card);
+          } else if (dataCard.season == 'Winter') {
+            this.winterCards.push(card);
+          }
+        });
       }
-    }
 
-    shuffle(this.springCards);
-    shuffle(this.summerCards);
-    shuffle(this.fallCards);
-    shuffle(this.winterCards);
-  }
-
-  getSpring() {
-    return this.springCards;
-  }
-
-  getSummer() {
-    return this.summerCards;
-  }
-
-  getFall() {
-    return this.fallCards;
-  }
-
-  getWinter() {
-    return this.winterCards;
+      shuffle(this.springCards);
+      shuffle(this.summerCards);
+      shuffle(this.fallCards);
+      shuffle(this.winterCards);
+    });
   }
 }
 
 // https://bost.ocks.org/mike/shuffle/ -> Algorithme de Fisher-Yates
 function shuffle(array) {
-  var m = array.length, t, i;
+  var m = array.length,
+    t,
+    i;
 
   // While there remain elements to shuffle…
   while (m) {
-
     // Pick a remaining element…
     i = Math.floor(Math.random() * m--);
 
@@ -75,14 +72,16 @@ function shuffle(array) {
 
 class Deck {
   constructor(config) {
-    this.config = config; //Objet DeckConfig
-    this.fullDeck = config
-      .getSpring()
-      .concat(config.getSummer(), config.getFall(), config.getWinter());
+    this.fullDeck = config.springCards.concat(
+      config.summerCards,
+      config.fallCards,
+      config.winterCards
+    );
   }
 
   drawCard() {
     //Retourne un objet Card
+    console.log(this.fullDeck);
     return this.fullDeck.shift();
   }
 
