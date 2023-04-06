@@ -1,11 +1,35 @@
-import Card from './card.js';
+import Card from "./card.js";
+import { getDeckByName, getCardById } from "../db/db_DAO.js";
 
 class DeckConfig {
-  constructor(springCards, summerCards, fallCards, winterCards) {
-    this.springCards = springCards; //Array de Card
-    this.summerCards = summerCards; //Array de Card
-    this.fallCards = fallCards; //Array de Card
-    this.winterCards = winterCards; //Array de Card
+  constructor(deckName) {
+    this.springCards = new Array(); //Array de Card
+    this.summerCards = new Array(); //Array de Card
+    this.fallCards = new Array(); //Array de Card
+    this.winterCards = new Array(); //Array de Card
+
+    tempDeck = getDeckByName(deckName);
+
+    for (let i = 0; i < tempDeck.cards.length; i++) {
+      let temp_card = getCardById(tempDeck.cards[i]);
+
+      let card = new Card(
+        temp_card.suit,
+        temp_card.value,
+        temp_card.prompts[0].description,
+        temp_card.prompts[1].description
+      );
+
+      if (temp_card.season == "Spring") {
+        this.springCards.push(card);
+      } else if (temp_card.season == "Summer") {
+        this.summerCards.push(card);
+      } else if (temp_card.season == "Fall") {
+        this.fallCards.push(card);
+      } else if (temp_card.season == "Winter") {
+        this.winterCards.push(card);
+      }
+    }
   }
 
   getSpring() {
@@ -43,4 +67,4 @@ class Deck {
   }
 }
 
-export default Deck;
+export { Deck, DeckConfig };

@@ -1,6 +1,6 @@
 import Game from "./game.js";
 import Notebook from "./notebook.js";
-import Deck from "./deck.js";
+import { Deck } from "./deck.js";
 import Map from "./map.js";
 import AdventureLog from "./adventure_log.js";
 
