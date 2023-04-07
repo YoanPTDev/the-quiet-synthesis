@@ -25,7 +25,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .log {
-  position: relative;
+  position: absolute;
+  display: inline-block;
   border: 2px solid black;
   border-radius: 2px;
   margin: 1px;
