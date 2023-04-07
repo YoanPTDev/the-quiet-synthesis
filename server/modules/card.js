@@ -1,5 +1,5 @@
 class Card {
-  constructor(suit, value, prompt1, prompt2) {
+  constructor(suit, value, prompt1, prompt2 = null) {
     this.suit = suit;
     this.value = value;
     this.prompt1 = prompt1;

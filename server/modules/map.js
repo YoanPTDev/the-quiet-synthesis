@@ -1,5 +1,5 @@
-import MapElement from './map_element';
-import Project from './project';
+import MapElement from './map_element.js';
+import Project from './project.js';
 
 class MapConfig {
   constructor(color, height, width, ratio) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
  
 
-//TO-DO: définir comment on obtient le id du adventure log: soit par 
+//TO-DO: définir comment on obtient le id du adventure log 
 export default function GetAdvLog() {
  
   const [form, setForm] = useState({

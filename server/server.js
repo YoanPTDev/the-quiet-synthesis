@@ -1,16 +1,20 @@
-const express = require('express');
-const http = require('http');
-const socketio = require('socket.io');
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import cors from 'cors';
+
+import { connectToDatabase } from './db/connection.js';
+import GameEngine from './modules/game_engine.js';
+import { DeckConfig } from './modules/deck.js';
+
 const app = express();
 const server = http.createServer(app);
-const cors = require('cors');
-const { GameEngine, playerTurnStateMachine } = require('./modules/game_engine');
 
 const corsOptions = {
   origin: 'http://localhost:1234',
 };
 
-const io = socketio(server, {
+const io = new Server(server, {
   cors: corsOptions,
 });
 
@@ -38,7 +42,44 @@ io.on('connection', (socket) => {
   });
 });
 
+io.on('startGame', () => {
+  console.log('creating game engine');
+  const game_engine = new GameEngine(
+    null,
+    new DeckConfig('default deck'),
+    null
+  );
+});
+
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
+  init();
+
 });
+
+async function init() {
+  const connectionString = 'mongodb://localhost:27017/your-database';
+  await connectToDatabase();
+  //Code de test -> retirer apres
+  const deckConfig = await createDeckConfig();
+  console.log(deckConfig);
+  const game_engine = new GameEngine(
+    null,
+    deckConfig,
+    null
+  );
+  console.log('build finished')
+  console.log(game_engine);
+  // let card = game_engine.deck.drawCard();
+  // console.log(card.suit);
+  // console.log(card.value);
+  // console.log(card.prompt1);
+  // console.log(card.prompt2);
+  //----------------------------
+}
+
+const createDeckConfig = async () => {
+  console.log('creating deck configuration');
+  return new DeckConfig('default deck');
+}

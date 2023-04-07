@@ -1,4 +1,4 @@
-import MapElement from './map_element';
+import MapElement from './map_element.js';
 
 class Project {
   constructor(timer, desc, mapElem) {

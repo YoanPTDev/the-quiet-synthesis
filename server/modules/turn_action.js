@@ -5,7 +5,7 @@ import {
   AddWeeksAction,
   ModifyAction,
   RemoveMapElementAction,
-} from './game_action_strategy';
+} from './game_action_strategy.js';
 
 class TurnAction {
   constructor() {

@@ -1,4 +1,4 @@
-import Week from './week';
+import Week from './week.js';
 
 class AdventureLog {
   constructor() {
