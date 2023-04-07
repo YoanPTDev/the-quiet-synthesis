@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Card = ({ cards }) => {
-  if (!cards) return null;
+const Card = ({ card }) => {
+  if (!card) return null;
 
-  const { _id, value, suit, season, prompts } = cards;
+  const { card_id, value, suit, season, prompts } = card;
 
   return (
-    <>
+    <div
+      key={card_id}
+      className='card-item'>
       <h3>
         {value} of {suit}
       </h3>
@@ -15,9 +17,21 @@ const Card = ({ cards }) => {
       {prompts.map((prompt) => {
         <div>{prompt}</div>;
       })}
-    </>
+    </div>
   );
 };
 
-// export default connect(({ deck: { cards } }) => ({ cards }))(Card);
-export default Card;
+const mapStateToProps = (state) => {
+  return {
+    card: state.card.card,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    
+  }
+}
+
+export default connect(({ card: { card } }) => ({ card }))(Card);
+// export default Card;

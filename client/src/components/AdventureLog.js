@@ -13,13 +13,13 @@ const AdventureLog = (props) => {
         <h2>Adventure Log</h2>
         <p>Ceci est le carnet d'aventure</p>
         <br />
-        <Log/>
-        <hr/>
+        <Log />
+        <hr />
         <button onClick={collapseAdventureLog}>show less</button>
       </div>
     );
   }
-  
+
   return (
     <div>
       <h2>Adventure Log</h2>
@@ -29,9 +29,35 @@ const AdventureLog = (props) => {
   );
 };
 
-export default connect(
-  (state) => ({
+const mapStateToProps = (state) => {
+  return {
     adventureLogExpanded: state.settings.adventureLogExpanded,
-  }),
-  { expandAdventureLog, collapseAdventureLog }
-)(AdventureLog);
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    expandAdventureLog: () => dispatch(expandAdventureLog()),
+    collapseAdventureLog: () => dispatch(collapseAdventureLog())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdventureLog);
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Shorthand syntaxe
+// export default connect(
+//   state => ({adventureLogExpanded: state.adventureLogExpanded}),
+//   {expandAdventureLog, collapseAdventureLog}
+// )(AdventureLog);

@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// Cette fonction retourne une fonction
+import { connect } from 'react-redux'; 
 import { startGame, cancelGame } from '../actions/settings';
+import { fetchCard } from '../actions/card';
 import Adventurelog from './Adventurelog';
 import Notebook from './Notebook';
 import Map from './Map';
 import Card from './Card';
+import DrawCard from './DrawCard';
 
 class App extends Component {
   startGame = () => {
     this.props.startGame();
-    this.props.fetchDeck();
-  }
+    this.props.fetchCard();
+  };
 
   render() {
     console.log('this', this);
@@ -25,15 +28,17 @@ class App extends Component {
             <Map className='map' />
             <br />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
-            <br/>
+            <br />
             <div className='log'>
               <Adventurelog />
             </div>
             <div className='log'>
               <Notebook />
             </div>
+            <br />
+            <DrawCard/>
             <br/>
-            <Card/>
+            <Card />
           </div>
         ) : (
           <div>
