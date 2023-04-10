@@ -27,6 +27,7 @@ export const fetchCard = () => (dispatch) => {
     const cardDataObject = JSON.parse(cardData);
     dispatch(fetchCardSuccess(cardDataObject));
     socket.off('cardData');
+    console.log('socket off');
   });
 
   socket.on('error', (error) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const Card = ({ card }) => {
-  if (!card) return null;
+  if (card.id === '') return null;
 
   const { id, value, suit, season, prompts } = card;
 
@@ -15,23 +15,21 @@ const Card = ({ card }) => {
       </h3>
       <h4>{season}</h4>
       {prompts.map((prompt) => {
-        <div>{prompt}</div>;
+        return <div>{prompt}</div>;
       })}
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
+  return { card: state.card };
+};
+
+const mapDispatchToProps = (dispatch) => {
   return {
-    card: state.card.card,
+    fetchCard: () => dispatch(fetchCard()),
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    
-  }
-}
-
-export default connect(({ card: { card } }) => ({ card }))(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
 // export default Card;

@@ -28,8 +28,8 @@ class App extends Component {
             <div className='log'>
               <Notebook />
             </div>
-            <DrawCard/>
             <Card />
+            <DrawCard/>
           </div>
         ) : (
           <div>

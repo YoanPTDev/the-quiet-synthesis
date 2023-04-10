@@ -14,7 +14,7 @@ const Map = () => {
   const [receivedMouseY, setReceivedMouseY] = useState(null);
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(window.innerWidth - 400, window.innerHeight - 400).parent(
+    p5.createCanvas(window.innerWidth - 400, window.innerHeight - 600).parent(
       canvasParentRef
     );
     p5.background(200);
@@ -23,7 +23,7 @@ const Map = () => {
   useEffect(() => {
     console.log('mounted');
 
-    // const newSocket = io.connect('http://localhost:3000');
+    // const newSocket = io.connect('http://localhost:3001');
     const newSocket = io.connect('http://thequietsynthesis.com:3001');
     setSocket(newSocket);
     newSocket.on('mouse', function (data) {
