@@ -22,16 +22,15 @@ export const fetchCardError = (error) => {
 export const fetchCard = () => (dispatch) => {
   socket.emit('drawCard');
 
-  console.log(socket);
-
   socket.on('cardData', (cardData) => {
     const cardDataObject = JSON.parse(cardData);
-    console.log(cardDataObject);
     dispatch(fetchCardSuccess(cardDataObject));
+    socket.off('cardData');
   });
 
   socket.on('error', (error) => {
     dispatch(fetchCardError(error));
+    socket.off('error');
   });
 
   // return fetch(`${API_ADDRESS}`)

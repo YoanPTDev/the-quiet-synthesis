@@ -14,8 +14,6 @@ class App extends Component {
   };
 
   render() {
-    console.log('this', this);
-
     return (
       <div>
         <h1>The Quiet Year</h1>

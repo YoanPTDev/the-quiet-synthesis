@@ -10,16 +10,12 @@ const DrawCard = ({ fetchCard }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    state
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
-  return { fetchCard: () => dispatch(fetchCard()) };
+  return {
+    fetchCard: () => dispatch(fetchCard()),
+  };
 };
 
-const componentConnector = connect(mapStateToProps, mapDispatchToProps);
+const componentConnector = connect(null, mapDispatchToProps);
 
 export default componentConnector(DrawCard);
