@@ -7,7 +7,7 @@ import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
 import { DeckConfig } from './modules/deck.js';
 
-const gameEngine = null;
+let gameEngine = null;
 
 const app = express();
 const server = http.createServer(app);
@@ -62,12 +62,9 @@ server.listen(port, () => {
 async function init() {
   const connectionString = 'mongodb://localhost:27017/your-database';
   await connectToDatabase();
-  return new Promise(async (resolve) => {
-    gameEngine = new GameEngine(null, null);
-    await gameEngine.buildDeck('default deck');
-    console.log('build finished');
-    resolve();
-  });
+  gameEngine = new GameEngine(null, null);
+  await gameEngine.buildDeck('default deck');
+  console.log('build finished');
   //Code de test -> retirer apres
   // let card = game_engine.deck.drawCard();
   // console.log(card.suit);
