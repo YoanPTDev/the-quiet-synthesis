@@ -1,23 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchDrawCard } from '../actions/card';
+import { fetchCard } from '../actions/card';
 
-const DrawCard = ({ fetchDrawCard }) => {
+const DrawCard = ({ fetchCard }) => {
   return (
     <div>
-      <button onClick={fetchDrawCard}>Pige une carte</button>
+      <button onClick={fetchCard}>Pige une carte</button>
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    
+    state
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { fetchDrawCard: () => dispatch(fetchDrawCard()) };
+  return { fetchCard: () => dispatch(fetchCard()) };
 };
 
 const componentConnector = connect(mapStateToProps, mapDispatchToProps);
