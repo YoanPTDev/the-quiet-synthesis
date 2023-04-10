@@ -15,22 +15,17 @@ class DeckConfig {
       for (let i = 0; i < dataDeck.cards.length; i++) {
         const dataCard = await getCardById(dataDeck.cards[i]);
         let card = null;
-        try {
-          card = new Card(
-            dataCard._id,
-            dataCard.suit,
-            dataCard.value,
-            dataCard.prompts[0].description,
-            dataCard.prompts[1].description
-          );
-        } catch (error) {
-          card = new Card(
-            dataCard.suit,
-            dataCard.value,
-            dataCard.prompts[0].description
-          );
+        
+        card = new Card(
+          dataCard._id,
+          dataCard.suit,
+          dataCard.season,
+          dataCard.value
+        );
+        for (let j = 0; j < dataCard.prompts.length; j++) {
+          card.prompts[j] = dataCard.prompts[j].description;
         }
-
+          
         if (dataCard.season == 'Spring') {
           this.springCards.push(card);
         } else if (dataCard.season == 'Summer') {

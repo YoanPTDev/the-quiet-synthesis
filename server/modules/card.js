@@ -1,10 +1,10 @@
 class Card {
-  constructor(id, suit, value, prompt1, prompt2 = null) {
+  constructor(id, suit, season, value) {
     this.id = id;
     this.suit = suit;
+    this.season = season;
     this.value = value;
-    this.prompt1 = prompt1;
-    this.prompt2 = prompt2;
+    this.prompts = new Array();
   }
 }
 
