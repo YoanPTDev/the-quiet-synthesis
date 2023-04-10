@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 const Card = ({ card }) => {
   if (!card) return null;
 
-  const { card_id, value, suit, season, prompts } = card;
+  const { id, value, suit, season, prompts } = card;
 
   return (
     <div
-      key={card_id}
+      key={id}
       className='card-item'>
       <h3>
         {value} of {suit}

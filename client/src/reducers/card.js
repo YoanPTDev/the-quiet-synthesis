@@ -2,7 +2,7 @@ import { CARD_DRAW } from '../actions/types';
 import fetchStates from './fetchStates';
 
 const DEFAULT_CARD = {
-  card_id: '',
+  id: '',
   suit: '',
   season: '',
   value: '',

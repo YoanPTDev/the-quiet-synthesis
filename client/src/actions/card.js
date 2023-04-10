@@ -4,10 +4,10 @@ import { CARD_DRAW } from './types';
 const socket = io('http://localhost:3000');
 
 export const fetchCardSuccess = (cardJSON) => {
-  const { card_id, suit, season, value, prompts } = cardJSON;
+  const { id, suit, season, value, prompts } = cardJSON;
   return {
     type: CARD_DRAW.FETCH_SUCCESS,
-    card_id,
+    id,
     suit,
     season,
     value,
@@ -25,7 +25,9 @@ export const fetchCard = () => (dispatch) => {
   console.log(socket);
 
   socket.on('cardData', (cardData) => {
-    dispatch(fetchCardSuccess(cardData));
+    const cardDataObject = JSON.parse(cardData);
+    console.log(cardDataObject);
+    dispatch(fetchCardSuccess(cardDataObject));
   });
 
   socket.on('error', (error) => {
