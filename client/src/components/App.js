@@ -20,20 +20,15 @@ class App extends Component {
         {this.props.gameStarted ? (
           <div>
             <h3>Draw!</h3>
-            <br />
             <Map className='map' />
-            <br />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
-            <br />
             <div className='log'>
               <Adventurelog />
             </div>
             <div className='log'>
               <Notebook />
             </div>
-            <br />
             <DrawCard/>
-            <br/>
             <Card />
           </div>
         ) : (
