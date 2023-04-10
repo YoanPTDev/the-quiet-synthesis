@@ -14,7 +14,7 @@ const cardReducer = (state = DEFAULT_CARD, action) => {
   console.log('action', action);
   switch (action.type) {
     case CARD_DRAW.FETCH_SUCCESS:
-      ({ id, suit, season, value, prompts } = action);
+      const { id, suit, season, value, prompts } = action;
       return {
         ...state,
         id,
