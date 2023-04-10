@@ -15,6 +15,8 @@ store.subscribe(() => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // Le store est maintenant provided au component App
+  // Chaque component doit être connecté individuellement au store
   <Provider store={store}>
     <App />
   </Provider>

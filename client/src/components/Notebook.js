@@ -25,9 +25,23 @@ const Notebook = (props) => {
   );
 };
 
-export default connect(
-  (state) => ({
+
+const mapStateToProps = (state) => {
+  return {
     notebookExpanded: state.settings.notebookExpanded,
-  }),
-  { expandNotebook, collapseNotebook }
-)(Notebook);
+  };
+};
+
+// Spécifier quel action creator methods on veut attacher à notre component
+// Donnant un accès automatique méthode de dispatch de Redux
+const mapDispatchToProps = dispatch => {
+  return {
+    expandNotebook: () => dispatch(expandNotebook()), 
+    collapseNotebook: () => dispatch(collapseNotebook()) 
+  }
+}
+
+const componentConnector =  connect(mapStateToProps, mapDispatchToProps);
+
+
+export default componentConnector(Notebook);

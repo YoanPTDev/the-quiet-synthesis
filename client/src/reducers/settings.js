@@ -5,14 +5,14 @@ import {
 } from '../actions/types';
 
 const DEFAULT_SETTINGS = {
-  gameStarted: false,
+  gameStarted: true,
   adventureLogExpanded: false,
   notebookExpanded: false,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
   switch (action.type) {
-    case SET_GAME_STARTED:
+    case SET_GAME_STARTED: 
       return {
         ...state,
         gameStarted: action.gameStarted,
