@@ -13,7 +13,7 @@ const app = express();
 const server = http.createServer(app);
 
 const corsOptions = {
-  origin: 'http://localhost:1234',
+  origin: ['http://localhost:1234', 'http://thequietsynthesis.com'],
 };
 
 const io = new Server(server, {
