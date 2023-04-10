@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // Cette fonction retourne une fonction
 import { connect } from 'react-redux'; 
 import { startGame, cancelGame } from '../actions/settings';
-import { fetchCard } from '../actions/card';
 import Adventurelog from './Adventurelog';
 import Notebook from './Notebook';
 import Map from './Map';
@@ -12,7 +11,6 @@ import DrawCard from './DrawCard';
 class App extends Component {
   startGame = () => {
     this.props.startGame();
-    this.props.fetchCard();
   };
 
   render() {
