@@ -11,10 +11,10 @@ const playerStates = {
 };
 
 class GameEngine {
-  constructor(gameConfig, deckConfig, mapConfig) {
+  constructor(gameConfig, mapConfig) {
     this.game = new Game(gameConfig);
     this.notebook = new Notebook();
-    this.deck = new Deck(deckConfig);
+    this.deck = null;
     this.players = new Array(); // Liste de Player
     this.map = new Map(mapConfig);
     this.log = new AdventureLog();
@@ -23,6 +23,10 @@ class GameEngine {
     this.nbrContempts = 0; // Nombre de contempt tokens
     this.reduceTimers = false; // Determine si on reduit les projets durant le tour
     this.currentPlayerIndex = 0;
+  }
+
+  async buildDeck(deckName) {
+    this.deck = await Deck.build(deckName);
   }
 
   start() {

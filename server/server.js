@@ -7,6 +7,8 @@ import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
 import { DeckConfig } from './modules/deck.js';
 
+const gameEngine = null;
+
 const app = express();
 const server = http.createServer(app);
 
@@ -37,49 +39,40 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('mouse', data);
   });
 
+  socket.on('drawCard', () => {
+    let card = gameEngine.deck.drawCard();
+    if (card != null) {
+      socket.emit('cardData', JSON.stringify(card));
+    } else {
+      socket.emit('error', { message: 'No cards left.' });
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-});
-
-io.on('startGame', () => {
-  console.log('creating game engine');
-  const game_engine = new GameEngine(
-    null,
-    new DeckConfig('default deck'),
-    null
-  );
 });
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
   init();
-
 });
 
 async function init() {
   const connectionString = 'mongodb://localhost:27017/your-database';
   await connectToDatabase();
+  return new Promise(async (resolve) => {
+    gameEngine = new GameEngine(null, null);
+    await gameEngine.buildDeck('default deck');
+    console.log('build finished');
+    resolve();
+  });
   //Code de test -> retirer apres
-  const deckConfig = await createDeckConfig();
-  console.log(deckConfig);
-  const game_engine = new GameEngine(
-    null,
-    deckConfig,
-    null
-  );
-  console.log('build finished')
-  console.log(game_engine);
   // let card = game_engine.deck.drawCard();
   // console.log(card.suit);
   // console.log(card.value);
   // console.log(card.prompt1);
   // console.log(card.prompt2);
   //----------------------------
-}
-
-const createDeckConfig = async () => {
-  console.log('creating deck configuration');
-  return new DeckConfig('default deck');
 }
