@@ -24,7 +24,7 @@ const Map = () => {
     console.log('mounted');
 
     // const newSocket = io.connect('http://localhost:3000');
-    const newSocket = io.connect('http://thequietsynthesis.com:3000');
+    const newSocket = io.connect('http://thequietsynthesis.com:3001');
     setSocket(newSocket);
     newSocket.on('mouse', function (data) {
       if (!data.isPressed) {

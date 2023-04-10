@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 import { CARD_DRAW } from './types';
 
-const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3001');
 
 export const fetchCardSuccess = (cardJSON) => {
   const { id, suit, season, value, prompts } = cardJSON;
