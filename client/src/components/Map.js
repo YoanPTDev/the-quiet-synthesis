@@ -5,6 +5,8 @@ import io from 'socket.io-client';
 
 const Map = () => {
   const [isPressed, setIsPressed] = useState(null);
+  const [receivedIsPressed, setReceivedIsPressed] = useState(false);
+  const [receivedData, setReceivedData] = useState({});
   const [socket, setSocket] = useState(null);
   const [prevMouseX, setPrevMouseX] = useState(null);
   const [prevMouseY, setPrevMouseY] = useState(null);
@@ -14,35 +16,43 @@ const Map = () => {
   const [receivedMouseY, setReceivedMouseY] = useState(null);
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(window.innerWidth - 400, window.innerHeight - 600).parent(
+    p5.createCanvas(window.innerWidth, window.innerHeight).parent(
       canvasParentRef
     );
     p5.background(200);
   };
 
   useEffect(() => {
-    console.log('mounted');
-
     const newSocket = io.connect('http://localhost:3001');
     // const newSocket = io.connect('http://thequietsynthesis.com:3001');
     setSocket(newSocket);
     newSocket.on('mouse', function (data) {
+      setReceivedData(data); // Store the received data in the state
+
       if (!data.isPressed) {
-        setPrevReceivedMouses(data.x, data.y);
+        setPrevReceivedMouses(null, null); // Set previous mouse positions to null on mouseReleased event
+        setReceivedIsPressed(false);
       } else {
+        setPrevReceivedMouses(receivedMouseX, receivedMouseY); // Update previous mouse positions here
         setReceivedMouses(data.x, data.y);
+        setReceivedIsPressed(true);
+
+        if (data.newLineStart) {
+          setPrevReceivedMouses(null, null);
+        }
       }
     });
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [receivedMouseX, receivedMouseY]);
 
-  const sendMouse = (xpos, ypos, isPressed) => {
+  const sendMouse = (xpos, ypos, isPressed, newLineStart) => {
     let data = {
       x: xpos,
       y: ypos,
       isPressed: isPressed,
+      newLineStart: newLineStart,
     };
 
     socket.emit('mouse', data);
@@ -60,13 +70,32 @@ const Map = () => {
   const drawLine = (p5) => {
     if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
       setIsPressed(true);
-      if (prevMouseX !== null && prevMouseY !== null) {
+      const newLineStart = prevMouseX === null && prevMouseY === null;
+
+      if (!newLineStart) {
         p5.line(prevMouseX, prevMouseY, p5.mouseX, p5.mouseY);
-        sendMouse(p5.mouseX, p5.mouseY, isPressed);
       }
 
+      sendMouse(p5.mouseX, p5.mouseY, isPressed, newLineStart);
       setPrevMouseX(p5.mouseX);
       setPrevMouseY(p5.mouseY);
+    }
+  };
+
+  const drawReceivedLine = (p5) => {
+    if (
+      receivedIsPressed &&
+      prevReceivedMouseX !== null &&
+      prevReceivedMouseY !== null &&
+      !receivedData.newLineStart // Check if newLineStart is false
+    ) {
+      p5.line(
+        prevReceivedMouseX,
+        prevReceivedMouseY,
+        receivedMouseX,
+        receivedMouseY
+      );
+      setPrevReceivedMouses(receivedMouseX, receivedMouseY);
     }
   };
 
@@ -85,29 +114,24 @@ const Map = () => {
   };
 
   const setPrevReceivedMouses = (mouseX, mouseY) => {
-    setPrevReceivedMouseX(mouseX);
-    setPrevReceivedMouseY(mouseY);
+    if (!isPressed) {
+      setPrevReceivedMouseX(mouseX);
+      setPrevReceivedMouseY(mouseY);
+    } else {
+      setPrevReceivedMouseX(null);
+      setPrevReceivedMouseY(null);
+    }
   };
 
-  const drawReceivedLine = (p5) => {
-    if (prevReceivedMouseX !== null && prevReceivedMouseY !== null) {
-      p5.line(
-        prevReceivedMouseX,
-        prevReceivedMouseY,
-        receivedMouseX,
-        receivedMouseY
-      );
-    }
-    setPrevReceivedMouses(receivedMouseX, receivedMouseY);
+  const draw = (p5) => {
+    drawLine(p5);
+    drawReceivedLine(p5, receivedData);
   };
 
   return (
     <Sketch
       setup={setup}
-      draw={(p5) => {
-        drawLine(p5);
-        drawReceivedLine(p5);
-      }}
+      draw={draw}
       mouseReleased={mouseReleased}
     />
   );

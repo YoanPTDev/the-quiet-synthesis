@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // Cette fonction retourne une fonction
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 import { startGame, cancelGame } from '../actions/settings';
 import Adventurelog from './AdventureLog';
 import Notebook from './Notebook';
@@ -22,14 +22,16 @@ class App extends Component {
             <h3>Draw!</h3>
             <Map className='map' />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
-            <div className='log'>
+            <div className='log bottom-left component-container'>
               <Adventurelog />
             </div>
-            <div className='log'>
+            <div className='log bottom-right component-container'>
               <Notebook />
             </div>
-            <Card />
-            <DrawCard/>
+            <div className="card-picker top-right component-container">
+              <Card />
+              <DrawCard />
+            </div>
           </div>
         ) : (
           <div>
