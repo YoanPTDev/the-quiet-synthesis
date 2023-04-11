@@ -102,7 +102,7 @@ const Map = () => {
   const mouseReleased = (p5) => {
     if (isMouseInsideCanvas(p5)) {
       setIsPressed(false);
-      sendMouse(p5.mouseX, p5.mouseY, isPressed);
+      sendMouse(p5.mouseX, p5.mouseY, isPressed, true);
     }
     setPrevMouseX(null);
     setPrevMouseY(null);

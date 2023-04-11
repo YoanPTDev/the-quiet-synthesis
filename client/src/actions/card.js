@@ -34,35 +34,4 @@ export const fetchCard = () => (dispatch) => {
     dispatch(fetchCardError(error));
     socket.off('error');
   });
-
-  // return fetch(`${API_ADDRESS}`)
-  //   .then((response) => {
-  //     if (response.status !== 200) {
-  //       throw new Error('La requête pour retourner une carte a échoué.');
-  //     }
-
-  //     return response.json();
-  //   })
-  //   .then((json) => dispatch(fetchCardSuccess(json)))
-  //   .catch((error) => dispatch(fetchCardError(error)));
 };
-
-// export const fetchDrawCard = () => (dispatch) => {
-//   return fetch(`${API_ADDRESS}`)
-//     .then((response) => {
-//       if (response.status !== 200) {
-//         throw new Error('La requête pour retourner une carte a échoué');
-//       }
-
-//       return response.json();
-//     })
-//     .then((json) => {
-//       dispatch({
-//         type: CARD_DRAW.FETCH_SUCCESS,
-//         cards: json.cards,
-//       });
-//     })
-//     .catch((error) =>
-//       dispatch({ type: CARD_DRAW.FETCH_ERROR, message: error.message })
-//     );
-// };

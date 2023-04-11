@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { fetchCard } from '../actions/card';
 
 const Card = ({ card }) => {
   if (card.id === '') return null;
