@@ -6,6 +6,7 @@ import cors from 'cors';
 import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
 import { DeckConfig } from './modules/deck.js';
+import Player from './modules/player.js';
 
 let gameEngine = null;
 
@@ -31,8 +32,17 @@ app.use((req, res, next) => {
   next();
 });
 
+let playerCount = 0;
+
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  playerCount++;
+  const playerName = `Player ${playerCount}`;
+  socket.playerName = playerName;
+  gameEngine.players.push(new Player(null, socket));
+
+  console.log(`${playerName} connected`);
+
+  gameEngine.start();
 
   socket.on('mouse', (data) => {
     console.log('Received:', data.x, data.y);
@@ -46,10 +56,15 @@ io.on('connection', (socket) => {
     } else {
       socket.emit('error', { message: 'No cards left.' });
     }
+    gameEngine.endTurn();
   });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    const index = gameEngine.players.findIndex((p) => p.socket.id === socket.id);
+    if (index !== -1) {
+      gameEngine.players.splice(index, 1);
+    }
+    console.log(`${socket.playerName} disconnected`);
   });
 });
 
@@ -73,3 +88,5 @@ async function init() {
   // console.log(card.prompt2);
   //----------------------------
 }
+
+export default io;
