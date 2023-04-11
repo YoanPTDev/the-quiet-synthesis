@@ -48,8 +48,17 @@ const Map = () => {
     socket.emit('mouse', data);
   };
 
+  const isMouseInsideCanvas = (p5) => {
+    return (
+      p5.mouseX >= 0 &&
+      p5.mouseX <= p5.width &&
+      p5.mouseY >= 0 &&
+      p5.mouseY <= p5.height
+    );
+  };
+
   const drawLine = (p5) => {
-    if (p5.mouseIsPressed) {
+    if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
       setIsPressed(true);
       if (prevMouseX !== null && prevMouseY !== null) {
         p5.line(prevMouseX, prevMouseY, p5.mouseX, p5.mouseY);
@@ -62,9 +71,13 @@ const Map = () => {
   };
 
   const mouseReleased = (p5) => {
-    setIsPressed(false);
-    sendMouse(p5.mouseX, p5.mouseY, isPressed);
-  }
+    if (isMouseInsideCanvas(p5)) {
+      setIsPressed(false);
+      sendMouse(p5.mouseX, p5.mouseY, isPressed);
+    }
+    setPrevMouseX(null);
+    setPrevMouseY(null);
+  };
 
   const setReceivedMouses = (mouseX, mouseY) => {
     setReceivedMouseX(mouseX);

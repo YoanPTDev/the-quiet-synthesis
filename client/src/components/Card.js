@@ -15,7 +15,7 @@ const Card = ({ card }) => {
       </h3>
       <h4>{season}</h4>
       {prompts.map((prompt) => {
-        return <div>{prompt}</div>;
+        return <div key={prompts.indexOf(prompt)}>{prompt}</div>;
       })}
     </div>
   );
