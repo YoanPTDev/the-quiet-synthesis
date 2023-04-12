@@ -6,7 +6,7 @@ import Adventurelog from './AdventureLog';
 import Notebook from './Notebook';
 import Map from './Map';
 import Card from './Card';
-import DrawCard from './DrawCard';
+import DrawCardWrapper from './DrawCard';
 
 class App extends Component {
   startGame = () => {
@@ -30,7 +30,7 @@ class App extends Component {
             </div>
             <div className="card-picker top-right component-container">
               <Card />
-              <DrawCard />
+              <DrawCardWrapper />
             </div>
           </div>
         ) : (

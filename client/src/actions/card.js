@@ -1,7 +1,8 @@
-import { io } from 'socket.io-client';
+import { SocketContext } from '../middleware/socketcontext';
+import { useContext } from 'react';
 import { CARD_DRAW } from './types';
 
-const socket = io('http://localhost:3001');
+// const socket = useContext(SocketContext);
 // const socket = io('http://thequietsynthesis.com:3001');
 
 export const fetchCardSuccess = (cardJSON) => {
@@ -20,7 +21,7 @@ export const fetchCardError = (error) => {
   return { type: CARD_DRAW.FETCH_ERROR, message: error.message };
 };
 
-export const fetchCard = () => (dispatch) => {
+export const fetchCard = (socket) => (dispatch) => {
   socket.emit('drawCard');
 
   socket.on('cardData', (cardData) => {

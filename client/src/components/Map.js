@@ -1,13 +1,14 @@
 import Sketch from 'react-p5';
 import { connect } from 'react-redux';
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useState, useEffect, useContext } from 'react';
+import { SocketContext } from '../middleware/socketcontext';
 
 const Map = () => {
+  const socket = useContext(SocketContext);
+
   const [isPressed, setIsPressed] = useState(null);
   const [receivedIsPressed, setReceivedIsPressed] = useState(false);
   const [receivedData, setReceivedData] = useState({});
-  const [socket, setSocket] = useState(null);
   const [prevMouseX, setPrevMouseX] = useState(null);
   const [prevMouseY, setPrevMouseY] = useState(null);
   const [prevReceivedMouseX, setPrevReceivedMouseX] = useState(null);
@@ -23,29 +24,29 @@ const Map = () => {
   };
 
   useEffect(() => {
-    const newSocket = io.connect('http://localhost:3001');
     // const newSocket = io.connect('http://thequietsynthesis.com:3001');
-    setSocket(newSocket);
-    newSocket.on('mouse', function (data) {
-      setReceivedData(data); // Store the received data in the state
-
-      if (!data.isPressed) {
-        setPrevReceivedMouses(null, null); // Set previous mouse positions to null on mouseReleased event
-        setReceivedIsPressed(false);
-      } else {
-        setPrevReceivedMouses(receivedMouseX, receivedMouseY); // Update previous mouse positions here
-        setReceivedMouses(data.x, data.y);
-        setReceivedIsPressed(true);
-
-        if (data.newLineStart) {
-          setPrevReceivedMouses(null, null);
+    if (socket) {
+      socket.on('mouse', function (data) {
+        setReceivedData(data); // Store the received data in the state
+  
+        if (!data.isPressed) {
+          setPrevReceivedMouses(null, null); // Set previous mouse positions to null on mouseReleased event
+          setReceivedIsPressed(false);
+        } else {
+          setPrevReceivedMouses(receivedMouseX, receivedMouseY); // Update previous mouse positions here
+          setReceivedMouses(data.x, data.y);
+          setReceivedIsPressed(true);
+  
+          if (data.newLineStart) {
+            setPrevReceivedMouses(null, null);
+          }
         }
-      }
-    });
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [receivedMouseX, receivedMouseY]);
+      });
+      return () => {
+        socket.off('mouse');
+      };
+    }
+  }, [socket, receivedMouseX, receivedMouseY]);
 
   const sendMouse = (xpos, ypos, isPressed, newLineStart) => {
     let data = {
