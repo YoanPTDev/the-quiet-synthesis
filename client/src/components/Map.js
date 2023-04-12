@@ -6,17 +6,15 @@ import { SocketContext } from '../middleware/socketcontext';
 const Map = () => {
   const socket = useContext(SocketContext);
 
-  const [isPressed, setIsPressed] = useState(null);
-  const [prevMouseX, setPrevMouseX] = useState(null);
-  const [prevMouseY, setPrevMouseY] = useState(null);
-  
-  const [receivedData, setReceivedData] = useState({});
-  const [receivedIsPressed, setReceivedIsPressed] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const [prevMouse, setPrevMouse] = useState({ x: null, y: null });
 
-  const [receivedMouseX, setReceivedMouseX] = useState(null);
-  const [receivedMouseY, setReceivedMouseY] = useState(null);
-  const [prevReceivedMouseX, setPrevReceivedMouseX] = useState(null);
-  const [prevReceivedMouseY, setPrevReceivedMouseY] = useState(null);
+  const [receivedIsPressed, setReceivedIsPressed] = useState(false);
+  const [receivedMouse, setReceivedMouse] = useState({ x: null, y: null });
+  const [prevReceivedMouse, setPrevReceivedMouse] = useState({
+    x: null,
+    y: null,
+  });
 
   const setup = (p5, canvasParentRef) => {
     p5.createCanvas(window.innerWidth, window.innerHeight).parent(
@@ -26,31 +24,31 @@ const Map = () => {
   };
 
   useEffect(() => {
-    // const newSocket = io.connect('http://thequietsynthesis.com:3001');
     if (socket) {
       socket.on('mouse', function (data) {
-        setReceivedData(data); // Store the received data in the state
-  
-        if (!data.isPressed) {
-          setPrevReceivedMouses(null, null); // Set previous mouse positions to null on mouseReleased event
-          setReceivedIsPressed(false);
+        console.log('data', data);
+
+        if (!data.isPressed || data.isReleased) {
+          setPrevReceivedMouse({ x: null, y: null });
+          setReceivedMouse({ x: null, y: null });
         } else {
-          setPrevReceivedMouses(receivedMouseX, receivedMouseY); // Update previous mouse positions here
-          setReceivedMouses(data.x, data.y);
-          setReceivedIsPressed(true);
+          setPrevReceivedMouse({ ...receivedMouse });
+          setReceivedMouse({ x: data.x, y: data.y });
         }
+        setReceivedIsPressed(data.isPressed);
       });
       return () => {
         socket.off('mouse');
       };
     }
-  }, [socket, receivedMouseX, receivedMouseY]);
+  }, [socket, receivedMouse]);
 
-  const sendMouse = (xpos, ypos, isPressed) => {
+  const sendMouse = (xpos, ypos, isPressed, isReleased) => {
     let data = {
       x: xpos,
       y: ypos,
       isPressed: isPressed,
+      isReleased: isReleased,
     };
 
     socket.emit('mouse', data);
@@ -69,56 +67,41 @@ const Map = () => {
     if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
       setIsPressed(true);
 
-      if (!newLineStart) {
+      if (prevMouse.x !== null && prevMouse.y !== null) {
         p5.stroke(100, 0, 200);
-        p5.line(prevMouseX, prevMouseY, p5.mouseX, p5.mouseY);
+        p5.line(prevMouse.x, prevMouse.y, p5.mouseX, p5.mouseY);
       }
 
       sendMouse(p5.mouseX, p5.mouseY, isPressed);
-      setPrevMouseX(p5.mouseX);
-      setPrevMouseY(p5.mouseY);
+      setPrevMouse({ x: p5.mouseX, y: p5.mouseY });
+    } else {
+      setIsPressed(false);
+      setPrevMouse({ x: null, y: null });
     }
   };
 
   const drawReceivedLine = (p5) => {
     if (
       receivedIsPressed &&
-      prevReceivedMouseX !== null &&
-      prevReceivedMouseY !== null
+      prevReceivedMouse.x !== null &&
+      prevReceivedMouse.y !== null
     ) {
       p5.stroke(255, 0, 100);
       p5.line(
-        prevReceivedMouseX,
-        prevReceivedMouseY,
-        receivedMouseX,
-        receivedMouseY
+        prevReceivedMouse.x,
+        prevReceivedMouse.y,
+        receivedMouse.x,
+        receivedMouse.y
       );
-      setPrevReceivedMouses(receivedMouseX, receivedMouseY);
+      setPrevReceivedMouse({ ...receivedMouse });
+    } else if (!receivedIsPressed) {
+      setPrevReceivedMouse({ x: null, y: null });
     }
   };
 
   const mouseReleased = (p5) => {
-    if (isMouseInsideCanvas(p5)) {
-      setIsPressed(false);
-      sendMouse(p5.mouseX, p5.mouseY, isPressed, true);
-    }
-    setPrevMouseX(null);
-    setPrevMouseY(null);
-  };
-
-  const setReceivedMouses = (mouseX, mouseY) => {
-    setReceivedMouseX(mouseX);
-    setReceivedMouseY(mouseY);
-  };
-
-  const setPrevReceivedMouses = (mouseX, mouseY) => {
-    if (!receivedIsPressed) {
-      setPrevReceivedMouseX(mouseX);
-      setPrevReceivedMouseY(mouseY);
-    } else {
-      setPrevReceivedMouseX(null);
-      setPrevReceivedMouseY(null);
-    }
+    setIsPressed(false);
+    sendMouse(p5.mouseX, p5.mouseY, isPressed, true);
   };
 
   const draw = (p5) => {
