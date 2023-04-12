@@ -1,10 +1,10 @@
-import Game from "./game.js";
-import Notebook from "./notebook.js";
-import { Deck } from "./deck.js";
-import Map from "./map.js";
-import AdventureLog from "./adventure_log.js";
+import Game from './game.js';
+import Notebook from './notebook.js';
+import { Deck } from './deck.js';
+import Map from './map.js';
+import AdventureLog from './adventure_log.js';
 
-import io from "../server.js";
+import io from '../server.js';
 
 const playerStates = {
   WAITING: 'WAITING',
@@ -43,6 +43,11 @@ class GameEngine {
     playerTurnStateMachine.endTurn();
     this.currentPlayerIndex =
       (this.currentPlayerIndex + 1) % this.players.length;
+    console.log(
+      `Current player index: ${
+        this.currentPlayerIndex
+      }, Current player: ${this.currentPlayer()}`
+    );
     playerTurnStateMachine.startTurn(this.currentPlayer());
   }
 
@@ -64,6 +69,7 @@ const playerTurnStateMachine = {
         if (this.currentState === playerStates.WAITING) {
           this.currentState = playerStates.PLAYING;
           io.to(this.currentPlayer.socket.id).emit('start turn');
+          console.log(`${this.currentPlayer.socket.playerName} start turn`);
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -74,6 +80,7 @@ const playerTurnStateMachine = {
         if (this.currentState === playerStates.PLAYING) {
           this.currentState = playerStates.FINISHED;
           io.to(this.currentPlayer.socket.id).emit('end turn');
+          console.log(`${this.currentPlayer.socket.playerName} end turn`);
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -93,6 +100,7 @@ const playerTurnStateMachine = {
   endTurn() {
     this.transition(playerStates.FINISHED);
     this.currentPlayer = null;
+    this.transition(playerStates.WAITING);
   },
 
   isWaiting() {

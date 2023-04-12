@@ -2,9 +2,6 @@ import { SocketContext } from '../middleware/socketcontext';
 import { useContext } from 'react';
 import { CARD_DRAW } from './types';
 
-// const socket = useContext(SocketContext);
-// const socket = io('http://thequietsynthesis.com:3001');
-
 export const fetchCardSuccess = (cardJSON) => {
   const { id, suit, season, value, prompts } = cardJSON;
   return {

@@ -35,14 +35,19 @@ app.use((req, res, next) => {
 let playerCount = 0;
 
 io.on('connection', (socket) => {
-  playerCount++;
-  const playerName = `Player ${playerCount}`;
-  socket.playerName = playerName;
-  gameEngine.players.push(new Player(null, socket));
 
-  console.log(`${playerName} connected`);
+  socket.on('addPlayer', () => {
+    playerCount++;
+    const playerName = `Player ${playerCount}`;
+    socket.playerName = playerName;
+    gameEngine.players.push(new Player(null, socket));
+  
+    console.log(`${playerName} connected`);
+  });
 
-  gameEngine.start();
+  socket.on('startGame', () => {
+    gameEngine.start();
+  });
 
   socket.on('mouse', (data) => {
     console.log('Received:', data.x, data.y);
