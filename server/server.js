@@ -61,6 +61,9 @@ io.on('connection', (socket) => {
     } else {
       socket.emit('error', { message: 'No cards left.' });
     }
+  });
+  
+  socket.on('endTurn', () => {
     gameEngine.endTurn();
   });
 
