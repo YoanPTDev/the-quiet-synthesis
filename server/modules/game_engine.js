@@ -4,6 +4,8 @@ import { Deck } from "./deck.js";
 import Map from "./map.js";
 import AdventureLog from "./adventure_log.js";
 
+import io from "../server.js";
+
 const playerStates = {
   WAITING: 'WAITING',
   PLAYING: 'PLAYING',
@@ -23,6 +25,7 @@ class GameEngine {
     this.nbrContempts = 0; // Nombre de contempt tokens
     this.reduceTimers = false; // Determine si on reduit les projets durant le tour
     this.currentPlayerIndex = 0;
+    this.isGameRunning = false;
   }
 
   async buildDeck(deckName) {
@@ -30,7 +33,10 @@ class GameEngine {
   }
 
   start() {
-    playerTurnStateMachine.startTurn(this.currentPlayer());
+    if (!this.isGameRunning) {
+      playerTurnStateMachine.startTurn(this.currentPlayer());
+      this.isGameRunning = true;
+    }
   }
 
   endTurn() {
@@ -57,7 +63,7 @@ const playerTurnStateMachine = {
       case playerStates.PLAYING:
         if (this.currentState === playerStates.WAITING) {
           this.currentState = playerStates.PLAYING;
-          io.to(this.currentPlayer.id).emit('start turn');
+          io.to(this.currentPlayer.socket.id).emit('start turn');
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -67,7 +73,7 @@ const playerTurnStateMachine = {
       case playerStates.FINISHED:
         if (this.currentState === playerStates.PLAYING) {
           this.currentState = playerStates.FINISHED;
-          io.to(this.currentPlayer.id).emit('end turn');
+          io.to(this.currentPlayer.socket.id).emit('end turn');
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
