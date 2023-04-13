@@ -34,13 +34,13 @@ class GameEngine {
 
   start() {
     if (!this.isGameRunning) {
-      playerTurnStateMachine.startTurn(this.currentPlayer());
+      playerTurnStateMachine.startTurn(this, this.currentPlayer());
       this.isGameRunning = true;
     }
   }
 
   endTurn() {
-    playerTurnStateMachine.endTurn();
+    playerTurnStateMachine.endTurn(this);
     this.currentPlayerIndex =
       (this.currentPlayerIndex + 1) % this.players.length;
     console.log(
@@ -48,7 +48,7 @@ class GameEngine {
         this.currentPlayerIndex
       }, Current player: ${this.currentPlayer()}`
     );
-    playerTurnStateMachine.startTurn(this.currentPlayer());
+    playerTurnStateMachine.startTurn(this, this.currentPlayer());
   }
 
   currentPlayer() {
@@ -59,6 +59,11 @@ class GameEngine {
 const playerTurnStateMachine = {
   currentPlayer: null,
   currentState: playerStates.WAITING,
+  gameEngine: null,
+
+  setGameEngine(gameEngine) {
+    this.gameEngine = gameEngine;
+  },
 
   transition(newState) {
     switch (newState) {
@@ -70,6 +75,8 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.PLAYING;
           io.to(this.currentPlayer.socket.id).emit('start turn');
           console.log(`${this.currentPlayer.socket.playerName} start turn`);
+          
+          this.drawCard();
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -92,12 +99,14 @@ const playerTurnStateMachine = {
     }
   },
 
-  startTurn(player) {
+  startTurn(gameEngine, player) {
+    this.setGameEngine(gameEngine);
     this.currentPlayer = player;
     this.transition(playerStates.PLAYING);
   },
 
-  endTurn() {
+  endTurn(gameEngine) {
+    this.setGameEngine(gameEngine);
     this.transition(playerStates.FINISHED);
     this.currentPlayer = null;
     this.transition(playerStates.WAITING);
@@ -113,6 +122,15 @@ const playerTurnStateMachine = {
 
   isFinished() {
     return this.currentState === playerStates.FINISHED;
+  },
+
+  drawCard() {
+    let card = this.gameEngine.deck.drawCard();
+    if (card != null) {
+      this.currentPlayer.socket.emit('cardData', JSON.stringify(card));
+    } else {
+      this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
+    }
   },
 };
 

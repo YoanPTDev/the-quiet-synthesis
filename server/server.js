@@ -54,14 +54,14 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('mouse', data);
   });
 
-  socket.on('drawCard', () => {
-    let card = gameEngine.deck.drawCard();
-    if (card != null) {
-      socket.emit('cardData', JSON.stringify(card));
-    } else {
-      socket.emit('error', { message: 'No cards left.' });
-    }
-  });
+  // socket.on('drawCard', () => {
+  //   let card = gameEngine.deck.drawCard();
+  //   if (card != null) {
+  //     socket.emit('cardData', JSON.stringify(card));
+  //   } else {
+  //     socket.emit('error', { message: 'No cards left.' });
+  //   }
+  // });
   
   socket.on('endTurn', () => {
     gameEngine.endTurn();
