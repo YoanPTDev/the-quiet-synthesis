@@ -11,7 +11,7 @@ const AdventureLog = (props) => {
     return (
       <div>
         <h2>Adventure Log</h2>
-        <p>Ceci est le carnet d'aventure</p>
+        <p>Ceci est le carnet d'aventure ! </p>
         <br />
         <Log />
         <hr />
