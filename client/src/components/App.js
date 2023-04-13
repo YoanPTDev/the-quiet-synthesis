@@ -9,10 +9,6 @@ import Card from './Card';
 import DrawCardWrapper from './DrawCard';
 
 class App extends Component {
-  startGame = () => {
-    this.props.startGame();
-  };
-
   render() {
     return (
       <div>
@@ -28,7 +24,7 @@ class App extends Component {
             <div className='log bottom-right component-container'>
               <Notebook />
             </div>
-            <div className="card-picker top-right component-container">
+            <div className='card-picker top-right component-container'>
               <Card />
               <DrawCardWrapper />
             </div>
@@ -37,7 +33,7 @@ class App extends Component {
           <div>
             <h3>A new adventure is on the horizon!</h3>
             <br />
-            <button onClick={this.startGame}>Go on an adventure!</button>
+            <button onClick={this.props.startGame}>Go on an adventure!</button>
           </div>
         )}
       </div>
