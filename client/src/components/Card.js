@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { fetchCard } from '../actions/card';
 import { SocketContext } from '../middleware/socketcontext';
 
-const Card = ({ card }) => {
+const Card = ({ card, fetchCard }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
     if (socket) {
       socket.on('cardData', (data) => {
+        console.log('received', data);
         fetchCard(data);
       });
 
@@ -44,7 +45,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCard: () => dispatch(fetchCard()),
+    fetchCard: (data) => dispatch(fetchCard(data)),
   };
 };
 

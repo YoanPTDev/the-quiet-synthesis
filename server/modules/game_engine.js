@@ -43,11 +43,6 @@ class GameEngine {
     playerTurnStateMachine.endTurn(this);
     this.currentPlayerIndex =
       (this.currentPlayerIndex + 1) % this.players.length;
-    console.log(
-      `Current player index: ${
-        this.currentPlayerIndex
-      }, Current player: ${this.currentPlayer()}`
-    );
     playerTurnStateMachine.startTurn(this, this.currentPlayer());
   }
 
@@ -128,6 +123,7 @@ const playerTurnStateMachine = {
     let card = this.gameEngine.deck.drawCard();
     if (card != null) {
       this.currentPlayer.socket.emit('cardData', JSON.stringify(card));
+      console.log(card);
     } else {
       this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
     }

@@ -16,18 +16,8 @@ export const fetchCardError = (error) => {
   return { type: CARD_DRAW.FETCH_ERROR, message: error.message };
 };
 
-export const fetchCard = (socket) => (dispatch) => {
-  socket.emit('drawCard');
-
-  socket.on('cardData', (cardData) => {
-    const cardDataObject = JSON.parse(cardData);
-    dispatch(fetchCardSuccess(cardDataObject));
-    socket.off('cardData');
-    console.log('socket off');
-  });
-
-  socket.on('error', (error) => {
-    dispatch(fetchCardError(error));
-    socket.off('error');
-  });
+export const fetchCard = (data) => (dispatch) => {
+  console.log('fetched', data);
+  const cardDataObject = JSON.parse(data);
+  dispatch(fetchCardSuccess(cardDataObject));
 };
