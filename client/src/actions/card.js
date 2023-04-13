@@ -1,5 +1,3 @@
-import { SocketContext } from '../middleware/socketcontext';
-import { useContext } from 'react';
 import { CARD_DRAW } from './types';
 
 export const fetchCardSuccess = (cardJSON) => {

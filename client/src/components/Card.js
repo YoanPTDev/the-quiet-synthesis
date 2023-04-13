@@ -1,8 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchCard } from '../actions/card';
+import { SocketContext } from '../middleware/socketcontext';
 
 const Card = ({ card }) => {
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('cardData', (data) => {
+        fetchCard(data);
+      });
+
+      // Clean up event listeners when the component is unmounted
+      return () => {
+        socket.off('cardData');
+      };
+    }
+  }, [socket, fetchCard]);
+
   if (card.id === '') return null;
 
   const { id, value, suit, season, prompts } = card;
