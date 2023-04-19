@@ -17,7 +17,6 @@ export const fetchCardError = (error) => {
 };
 
 export const fetchCard = (data) => (dispatch) => {
-  console.log('fetched', data);
   const cardDataObject = JSON.parse(data);
   dispatch(fetchCardSuccess(cardDataObject));
 };

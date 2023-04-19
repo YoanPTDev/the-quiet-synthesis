@@ -17,7 +17,7 @@ const Map = () => {
   });
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(window.innerWidth, window.innerHeight).parent(
+    p5.createCanvas(window.innerWidth - 300, window.innerHeight - 300).parent(
       canvasParentRef
     );
     p5.background(200);

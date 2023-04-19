@@ -11,8 +11,6 @@ const AdventureLog = (props) => {
     return (
       <div>
         <h2>Adventure Log</h2>
-        <p>Ceci est le carnet d'aventure ! </p>
-        <br />
         <Log />
         <hr />
         <button onClick={collapseAdventureLog}>show less</button>

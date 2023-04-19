@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import { SocketContext } from '../middleware/socketcontext';
 import { connect } from 'react-redux';
+import { fetchLog } from '../actions/log';
 
-const Log = ({ weeks }) => {
+const Log = ({ weeks, fetchLog }) => {
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('logData', (data) => {
+        console.log(data);
+        fetchLog(data);
+      });
+
+      // Clean up event listeners when the component is unmounted
+      return () => {
+        socket.off('logData');
+      };
+    }
+  }, [socket, fetchLog]);
+
   if (!weeks) return null;
 
   return (
@@ -29,7 +47,5 @@ const Log = ({ weeks }) => {
     </>
   );
 };
-
-
 
 export default connect()(Log);

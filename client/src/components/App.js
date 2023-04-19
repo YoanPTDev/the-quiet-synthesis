@@ -6,7 +6,7 @@ import Adventurelog from './AdventureLog';
 import Notebook from './Notebook';
 import Map from './Map';
 import Card from './Card';
-import DrawCardWrapper from './DrawCard';
+import TurnActionWrapper from './TurnAction';
 
 class App extends Component {
   render() {
@@ -15,7 +15,6 @@ class App extends Component {
         <h1>The Quiet Year</h1>
         {this.props.gameStarted ? (
           <div>
-            <h3>Draw!</h3>
             <Map className='map' />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
             <div className='log bottom-left component-container'>
@@ -24,9 +23,9 @@ class App extends Component {
             <div className='log bottom-right component-container'>
               <Notebook />
             </div>
-            <div className='card-picker top-right component-container'>
+            <div className='turn-action top-right component-container'>
               <Card />
-              <DrawCardWrapper />
+              <TurnActionWrapper />
             </div>
           </div>
         ) : (
