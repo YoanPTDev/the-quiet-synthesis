@@ -1,16 +1,25 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { connect } from 'react-redux';
 import { expandNotebook, collapseNotebook } from '../actions/settings';
+import NotebookInput from './NotebookInput';
+import { SocketContext } from '../middleware/socketcontext';
 
 const Notebook = (props) => {
   const { notebookExpanded, expandNotebook, collapseNotebook } = props;
+  const socket = useContext(SocketContext);
 
   if (notebookExpanded) {
     return (
       <div>
         <h2>Notebook</h2>
-        <p>Ceci est le carnet de notes</p>
-        <br />
+        <hr />
+        <NotebookInput
+          onSave={(data) => {
+            console.log('data', data);
+            socket.emit('saveData', data);
+          }}
+        />
+        <hr />
         <button onClick={collapseNotebook}>show less</button>
       </div>
     );
@@ -25,7 +34,6 @@ const Notebook = (props) => {
   );
 };
 
-
 const mapStateToProps = (state) => {
   return {
     notebookExpanded: state.settings.notebookExpanded,
@@ -34,14 +42,13 @@ const mapStateToProps = (state) => {
 
 // Spécifier quel action creator methods on veut attacher à notre component
 // Donnant un accès automatique méthode de dispatch de Redux
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    expandNotebook: () => dispatch(expandNotebook()), 
-    collapseNotebook: () => dispatch(collapseNotebook()) 
-  }
-}
+    expandNotebook: () => dispatch(expandNotebook()),
+    collapseNotebook: () => dispatch(collapseNotebook()),
+  };
+};
 
-const componentConnector =  connect(mapStateToProps, mapDispatchToProps);
-
+const componentConnector = connect(mapStateToProps, mapDispatchToProps);
 
 export default componentConnector(Notebook);
