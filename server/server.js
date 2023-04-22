@@ -35,13 +35,12 @@ app.use((req, res, next) => {
 let playerCount = 0;
 
 io.on('connection', (socket) => {
-
   socket.on('addPlayer', () => {
     playerCount++;
     const playerName = `Player ${playerCount}`;
     socket.playerName = playerName;
     gameEngine.players.push(new Player(null, socket));
-  
+
     console.log(`${playerName} connected`);
   });
 
@@ -49,26 +48,41 @@ io.on('connection', (socket) => {
     gameEngine.start();
   });
 
+  socket.on('endTurn', () => {
+    gameEngine.endTurn();
+  });
+
+  // --------TESTING----------
+  socket.on('saveData', (data) => {
+    // Process the data based on its type
+    switch (data.type) {
+      case 'AdventureLog':
+        // Save the AdventureLog entry to your mongoDB collection
+        break;
+      case 'Notebook':
+        // Save the Notebook entry to your mongoDB collection
+        break;
+      case 'Name':
+        // Save the Name entry to your mongoDB collection
+        break;
+      case 'Gamertag':
+        // Save the Gamertag entry to your mongoDB collection
+        break;
+      default:
+        console.log('Unknown data type');
+    }
+  });
+  // --------TESTING----------
+
   socket.on('mouse', (data) => {
     console.log('Received:', data.x, data.y);
     socket.broadcast.emit('mouse', data);
   });
 
-  // socket.on('drawCard', () => {
-  //   let card = gameEngine.deck.drawCard();
-  //   if (card != null) {
-  //     socket.emit('cardData', JSON.stringify(card));
-  //   } else {
-  //     socket.emit('error', { message: 'No cards left.' });
-  //   }
-  // });
-  
-  socket.on('endTurn', () => {
-    gameEngine.endTurn();
-  });
-
   socket.on('disconnect', () => {
-    const index = gameEngine.players.findIndex((p) => p.socket.id === socket.id);
+    const index = gameEngine.players.findIndex(
+      (p) => p.socket.id === socket.id
+    );
     if (index !== -1) {
       gameEngine.players.splice(index, 1);
     }
@@ -83,18 +97,11 @@ server.listen(port, () => {
 });
 
 async function init() {
-  const connectionString = 'mongodb://localhost:27017/your-database';
+  //const connectionString = 'mongodb://localhost:27017/your-database';
   await connectToDatabase();
   gameEngine = new GameEngine(null, null);
   await gameEngine.buildDeck('default deck');
   console.log('build finished');
-  //Code de test -> retirer apres
-  // let card = game_engine.deck.drawCard();
-  // console.log(card.suit);
-  // console.log(card.value);
-  // console.log(card.prompt1);
-  // console.log(card.prompt2);
-  //----------------------------
 }
 
 export default io;
