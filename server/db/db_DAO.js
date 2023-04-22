@@ -20,6 +20,9 @@ let theQuietYearDB = getDatabase();
 // OBTENIR UNE CARTE À PARTIR DES CONSTANTES DE CARTES
 //    const card = await getCardById(cardConstants.SPRING_A);
 
+// CRÉER UN NOUVEAU ADVENTURE LOG
+//    structure requise:
+
 // ======================================================
 // MON CODE DAO (please no touch)
 // ======================================================
@@ -44,4 +47,30 @@ async function getCardById(cardId) {
   }
 }
 
-export { getDeckByName, getCardById };
+async function createAdventureLog(adventureLog) {
+  try {
+    const adventureLogCollection = theQuietYearDB.collection('adventure_logs');
+    const result = await adventureLogCollection.insertOne(adventureLog);
+    return result.ops[0];
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function addWeekToAdventureLog(adventureLogId, week) {
+  try {
+    const adventureLogCollection = theQuietYearDB.collection('adventure_logs');
+    const result = await adventureLogCollection.updateOne(
+      { _id: new ObjectId(adventureLogId) },
+      { $push: { weeks: week } }
+    );
+    return result.modifiedCount === 1;    // Va retourner "true" si mis à jour avec succès
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
+
+export { getDeckByName, getCardById, createAdventureLog, addWeekToAdventureLog };
+
