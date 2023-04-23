@@ -5,13 +5,21 @@ import NotebookInput from './NotebookInput';
 import { SocketContext } from '../middleware/socketcontext';
 
 const Notebook = (props) => {
-  const { notebookExpanded, expandNotebook, collapseNotebook } = props;
+  const { notebookData, notebookExpanded, expandNotebook, collapseNotebook } = props;
   const socket = useContext(SocketContext);
+
+  const renderNotebookData = () => {
+    return notebookData.map((data, index) => (
+      <p key={index}>{data.value}</p>
+    ));
+  };
 
   if (notebookExpanded) {
     return (
       <div>
         <h2>Notebook</h2>
+        <hr/>
+        {renderNotebookData()}
         <hr />
         <NotebookInput
           onSave={(data) => {
@@ -36,6 +44,7 @@ const Notebook = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    notebookData: state.notebook.data,
     notebookExpanded: state.settings.notebookExpanded,
   };
 };

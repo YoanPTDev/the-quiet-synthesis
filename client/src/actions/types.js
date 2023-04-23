@@ -15,6 +15,11 @@ export const LOG = {
   FETCH_ERROR: 'LOG_FETCH_ERROR',
 };
 
+export const NOTE = {
+  FETCH_SUCCESS: 'NOTE_FETCH_SUCCESS',
+  FETCH_ERROR: 'NOTE_FETCH_ERROR',
+};
+
 // test code
 export const SEND_WEBSOCKET_MESSAGE = 'SEND_WEBSOCKET_MESSAGE';
 export const SOCKET_CONNECTED = 'SOCKET_CONNECTED';

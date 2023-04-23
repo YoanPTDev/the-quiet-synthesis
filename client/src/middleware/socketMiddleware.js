@@ -18,7 +18,8 @@
 //   };
 // };
 
-import { fetchLog } from "../actions/log";
+import { fetchLog } from '../actions/log';
+import { fetchNote } from '../actions/note';
 
 let socketInstance;
 
@@ -31,6 +32,9 @@ const setupSocketListeners = () => {
   if (socketInstance) {
     socketInstance.on('updatedLogs', (data) => {
       storeReference.dispatch(fetchLog(data));
+    });
+    socketInstance.on('updateNotebook', (data) => {
+      storeReference.dispatch(fetchNote(data));
     });
   }
 };
