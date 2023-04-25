@@ -27,25 +27,37 @@ const Log = ({ weeks, fetchLog }) => {
       {weeks.map((weekItem) => {
         const { weekNb, playerId, cardDrawnId, promptChosen, actions } =
           weekItem;
-        <div className='log-node'>
-          {weekNb}
-          {playerId}
-          {cardDrawnId}
-          {promptChosen}
-          {actions.map((action) => {
-            const { type, tokens, turnsLeft, imageId, description } = action;
-            <div>
-              {type}
-              {tokens}
-              {turnsLeft}
-              {imageId}
-              {description}
-            </div>;
-          })}
-        </div>;
+        return (
+          <div
+            className='log-node'
+            key={weekNb}>
+            {weekNb}
+            {playerId}
+            {cardDrawnId}
+            {promptChosen}
+            {actions.map((action) => {
+              const { type, tokens, turnsLeft, imageId, description } = action;
+              return (
+                <div key={type}>
+                  {type}
+                  {tokens}
+                  {turnsLeft}
+                  {imageId}
+                  {description}
+                </div>
+              );
+            })}
+          </div>
+        );
       })}
     </>
   );
 };
 
-export default connect()(Log);
+const mapStateToProps = (state) => {
+  return {
+    weeks: state.log.weeks,
+  };
+};
+
+export default connect(mapStateToProps, { fetchLog })(Log);

@@ -51,6 +51,7 @@ class GameEngine {
   }
 }
 
+//Concept de base fourni par ChatGPT
 const playerTurnStateMachine = {
   currentPlayer: null,
   currentState: playerStates.WAITING,

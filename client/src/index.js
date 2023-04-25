@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { SocketProvider } from './middleware/socketcontext';
+import { socketMiddleware } from './middleware/socketMiddleware';
 import rootReducer from './reducers';
 import App from './components/App';
 import './index.css';
 
 const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(socketMiddleware),
 });
 store.subscribe(() => {
   console.log('store.getState()', store.getState());
@@ -16,8 +18,6 @@ store.subscribe(() => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // Le store est maintenant provided au component App
-  // Chaque component doit être connecté individuellement au store
   <Provider store={store}>
     <SocketProvider>
       <App />

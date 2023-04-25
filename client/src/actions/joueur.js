@@ -1,3 +1,3 @@
-export const addPlayer = (socket) => (dispatch) => {
+export const addPlayer = (socket) => () => {
   socket.emit('addPlayer');
 };
