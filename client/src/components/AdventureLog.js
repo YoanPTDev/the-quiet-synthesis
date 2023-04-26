@@ -18,7 +18,6 @@ const AdventureLog = (props) => {
         <hr />
         <AdventureLogInput
           onSave={(data) => {
-            console.log('data', data);
             socket.emit('saveData', data);
           }}
         />
