@@ -19,7 +19,7 @@ class GameEngine {
     this.deck = null;
     this.players = new Array(); // Liste de Player
     this.map = new Map(mapConfig);
-    this.log = new AdventureLog();
+    this.log = null;
     this.gameId = 1; // ID de la partie (encore necessaire?)
     this.timeElapsed = 0; // Sert a calculer le temps passé pour la sauvegarde
     this.nbrContempts = 0; // Nombre de contempt tokens
@@ -33,7 +33,7 @@ class GameEngine {
   }
 
   async buildAdventureLog(mapName, mapImage) {
-    this.AdventureLog = await AdventureLog.build(mapName, mapImage)
+    this.log = await AdventureLog.build(mapName, mapImage)
   }
 
   start() {

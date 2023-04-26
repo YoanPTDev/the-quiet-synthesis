@@ -10,8 +10,8 @@ class AdventureLog {
   }
 
   static async build(mapName, mapImage) {
-    const ID = await createNewAdventureLog(mapName, mapImage);
-    return new AdventureLog(ID, mapName, mapImage);
+    //const ID = await createNewAdventureLog(mapName, mapImage);
+    return new AdventureLog('1', mapName, mapImage);
   }
 
   async addEntry(entry) {
