@@ -34,7 +34,7 @@ async function createNewAdventureLog(mapName, mapImage) {
   try {
     const createdAdventureLog = await createAdventureLog(newAdventureLog);
     console.log("Adventure log created:", createdAdventureLog);
-    return createdAdventureLog._id;
+    return createdAdventureLog;
   } catch (err) {
     console.error(err);
   }
