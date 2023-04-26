@@ -5,7 +5,7 @@ const initialState = {
   data: [],
 };
 
-export const notebookReducer = (state = initialState, action) => {
+const notebookReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_NOTEBOOK_DATA:
       return {
@@ -16,3 +16,5 @@ export const notebookReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default notebookReducer;

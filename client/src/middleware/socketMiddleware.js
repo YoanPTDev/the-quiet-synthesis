@@ -1,23 +1,3 @@
-// import { fetchLog } from "../actions/log";
-
-// let socketInstance;
-
-// export const setSocketInstance = (socket) => {
-//   socketInstance = socket;
-// };
-
-// export const socketMiddleware = () => {
-//   return (store) => {
-//     socketInstance.on('updatedLogs', (data) => {
-//       store.dispatch(fetchLog(data));
-//     });
-
-//     return (next) => (action) => {
-//       return next(action);
-//     };
-//   };
-// };
-
 import { fetchLog } from '../actions/log';
 import { fetchNote } from '../actions/note';
 
@@ -41,13 +21,13 @@ const setupSocketListeners = () => {
 
 let storeReference;
 
-export const socketMiddleware = () => {
-  return (store) => {
-    storeReference = store;
-    setupSocketListeners();
+export const socketMiddleware = (store) => {
+  storeReference = store;
+  setupSocketListeners();
 
-    return (next) => (action) => {
-      return next(action);
-    };
+  return (next) => (action) => {
+    console.log('next', next);
+    console.log('action', action);
+    return next(action);
   };
 };
