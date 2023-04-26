@@ -10,7 +10,7 @@ import './index.css';
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false }).concat(socketMiddleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: true }).concat(socketMiddleware),
 });
 
 store.subscribe(() => {

@@ -26,8 +26,6 @@ export const socketMiddleware = (store) => {
   setupSocketListeners();
 
   return (next) => (action) => {
-    console.log('next', next);
-    console.log('action', action);
     return next(action);
   };
 };

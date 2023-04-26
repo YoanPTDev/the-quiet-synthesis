@@ -13,6 +13,7 @@ class App extends Component {
     return (
       <div>
         <h1>The Quiet Year</h1>
+        <TurnActionWrapper />
         {this.props.gameStarted ? (
           <div>
             <Map className='map' />
@@ -25,7 +26,6 @@ class App extends Component {
             </div>
             <div className='turn-action top-right component-container'>
               <Card />
-              <TurnActionWrapper />
             </div>
           </div>
         ) : (

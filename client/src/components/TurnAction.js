@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { addPlayer } from '../actions/joueur';
-import { startGame } from '../actions/partie';
-import { endTurn } from '../actions/partie';
+import { startGame, endTurn } from '../actions/partie';
 
 const TurnAction = ({ addPlayer, startGame, endTurn }) => {
   return (
