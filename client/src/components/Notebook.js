@@ -1,24 +1,25 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { expandNotebook, collapseNotebook } from '../actions/settings';
 import NotebookInput from './NotebookInput';
 import { SocketContext } from '../middleware/socketcontext';
 
 const Notebook = (props) => {
-  const { notebookData, notebookExpanded, expandNotebook, collapseNotebook } = props;
+  const { notebookData, notebookExpanded, expandNotebook, collapseNotebook } =
+    props;
   const socket = useContext(SocketContext);
 
   const renderNotebookData = () => {
-    return notebookData.map((data, index) => (
-      <p key={index}>{data.value}</p>
-    ));
+    if (notebookData) {
+      return notebookData.map((data, index) => <p key={index}>{data.value}</p>);
+    }
   };
 
   if (notebookExpanded) {
     return (
       <div>
         <h2>Notebook</h2>
-        <hr/>
+        <hr />
         {renderNotebookData()}
         <hr />
         <NotebookInput
@@ -44,8 +45,8 @@ const Notebook = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    notebookData: state.notebook.data,
     notebookExpanded: state.settings.notebookExpanded,
+    notebookData: state.note.data,
   };
 };
 
