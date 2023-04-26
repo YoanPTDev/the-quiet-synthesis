@@ -5,7 +5,6 @@ import cors from 'cors';
 
 import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
-import { DeckConfig } from './modules/deck.js';
 import Player from './modules/player.js';
 
 let gameEngine = null;
@@ -100,6 +99,7 @@ async function init() {
   //const connectionString = 'mongodb://localhost:27017/your-database';
   await connectToDatabase();
   gameEngine = new GameEngine(null, null);
+  await gameEngine.buildAdventureLog('Test map', null);
   await gameEngine.buildDeck('default deck');
   console.log('build finished');
 }
