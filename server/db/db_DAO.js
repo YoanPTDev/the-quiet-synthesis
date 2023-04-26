@@ -83,7 +83,7 @@ async function createAdventureLog(adventureLog) {
   try {
     const adventureLogCollection = theQuietYearDB.collection('adventure_logs');
     const result = await adventureLogCollection.insertOne(adventureLog);
-    return result.ops[0];
+    return result.insertedId.toHexString();
   } catch (err) {
     console.error(err);
   }

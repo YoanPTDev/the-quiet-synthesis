@@ -32,6 +32,10 @@ class GameEngine {
     this.deck = await Deck.build(deckName);
   }
 
+  async buildAdventureLog(mapName, mapImage) {
+    this.AdventureLog = await AdventureLog.build(mapName, mapImage)
+  }
+
   start() {
     if (!this.isGameRunning) {
       playerTurnStateMachine.startTurn(this, this.currentPlayer());
