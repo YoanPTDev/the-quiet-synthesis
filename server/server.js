@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
   socket.on('saveData', async (data) => {
     // Process the data based on its type
     switch (data.type) {
-      case 'AdventureLog':
+      case 'AdventureLogDescription':
         // Save the AdventureLog entry to your mongoDB collection
         console.log(data.value);
         await gameEngine.log.addEntry(data.value);
