@@ -10,8 +10,8 @@ class AdventureLog {
   }
 
   static async build(mapName, mapImage) {
-    //const ID = await createNewAdventureLog(mapName, mapImage);
-    return new AdventureLog('1', mapName, mapImage);
+    const ID = await createNewAdventureLog(mapName, mapImage);
+    return new AdventureLog(ID, mapName, mapImage);
   }
 
   async addEntry(entry) {
@@ -41,8 +41,12 @@ async function createNewAdventureLog(mapName, mapImage) {
 }
 
 async function addNewWeekToAdventureLog(adventureLogId, weekData) {
+  const newWeek = {
+    weekData,
+  };
+
   try {
-    const success = await addWeekToAdventureLog(adventureLogId, weekData);
+    const success = await addWeekToAdventureLog(adventureLogId, newWeek);
 
     if (success) {
       console.log(`Week added to adventure log with ID: ${adventureLogId}`);
