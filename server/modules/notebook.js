@@ -17,7 +17,7 @@ class Notebook {
   }
 
   addNote(note) {
-    let newIndex = Object.keys(this.notes).length + 1;
+    let newIndex = this.notes.notes.length + 1;
     this.notes.notes.push({id : 'note' + newIndex, value : note});
   }
 
