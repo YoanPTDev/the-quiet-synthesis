@@ -3,17 +3,17 @@ import { NOTE } from '../actions/types';
 import fetchStates from './fetchStates';
 
 const initialState = {
-  data: [],
+  notes: [],
 };
 
 const notebookReducer = (state = initialState, action) => {
   switch (action.type) {
     case NOTE.FETCH_SUCCESS:
-      const { id, value } = action;
+      const { notes } = action;
+      console.log('action', notes);
       return {
         ...state,
-        id,
-        value,
+        notes,
         fetchstate: fetchStates.success,
       };
     case NOTE.FETCH_ERROR:

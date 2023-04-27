@@ -1,6 +1,7 @@
 import { LOG } from './types';
 
 export const fetchLogSuccess = (logJSON) => {
+  console.log('logJSON', logJSON);
   const { weekNb, playerId, cardDrawnId, promptChosen, actions } = logJSON;
   return {
     type: LOG.FETCH_SUCCESS,
@@ -17,6 +18,5 @@ export const fetchLogError = (error) => {
 };
 
 export const fetchLog = (data) => (dispatch) => {
-  const logObject = JSON.parse(data);
-  dispatch(fetchLogSuccess(logObject));
+  dispatch(fetchLogSuccess(data));
 };
