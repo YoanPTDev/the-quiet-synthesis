@@ -13,12 +13,12 @@ class Page {
 class Notebook {
   constructor() {
     // this.pages = new Array(); //Array de Page
-    this.notes = {};
+    this.notes = {notes : []};
   }
 
   addNote(note) {
     let newIndex = Object.keys(this.notes).length + 1;
-    this.notes["note" + newIndex] = {id : newIndex, value : note};
+    this.notes.notes.push({id : 'note' + newIndex, value : note});
   }
 
   addPage(title, color) {
