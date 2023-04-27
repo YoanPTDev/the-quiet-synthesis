@@ -1,7 +1,7 @@
 class GameAction {
   // type, description, nbrTokens
-  build(type, desc, nbTokens) {
-    newAction = {
+  static build(type, desc, nbTokens) {
+    let newAction = {
       type : type,
       tokens : nbTokens,
       description : desc,
@@ -17,8 +17,8 @@ class GameAction {
 
 class ProjectAction extends GameAction {
   //nbrTour, imageID, coords
-  build(type, desc, nbTokens, nbTour, imageID, coords) {
-    newAction = super.build(type, desc, nbTokens);
+  static build(type, desc, nbTokens, nbTour, imageID, coords) {
+    let newAction = super.build(type, desc, nbTokens);
     newAction.turns = nbTour;
     newAction.imageId = imageID;
     newAction.coordinates = coords;
@@ -33,8 +33,8 @@ class ProjectAction extends GameAction {
 
 class DiscoverAction extends GameAction {
   //nbrTour = 0, imageID, coords
-  build(type, desc, nbTokens, imageID, coords) {
-    newAction = super.build(type, desc, nbTokens);
+  static build(type, desc, nbTokens, imageID, coords) {
+    let newAction = super.build(type, desc, nbTokens);
     newAction.turns = 0;
     newAction.imageId = imageID;
     newAction.coordinates = coords;

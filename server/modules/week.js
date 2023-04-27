@@ -9,8 +9,8 @@ import {
 
 class Week {
 
-  build(nbWeek, pID, cardID, prompt) {
-    newWeek = {
+  static build(nbWeek, pID, cardID, prompt) {
+    let newWeek = {
       weekNb : nbWeek,
       playerId : pID,
       cardIdDrawn : cardID,

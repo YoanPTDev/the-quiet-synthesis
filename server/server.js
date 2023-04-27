@@ -59,10 +59,20 @@ io.on('connection', (socket) => {
     switch (data.type) {
       case 'AdventureLogDescription':
         // Save the AdventureLog entry to your mongoDB collection
-        let newWeek = Week.build(gameEngine.log.weeks.length + 1, 
-          socket.playerName, null, 0);
-        newAction = ProjectAction.build("StartProject", data.value, 
-        2, 4, null, [200, 515]);
+        let newWeek = Week.build(
+          gameEngine.log.weeks.length + 1,
+          socket.playerName,
+          null,
+          0
+        );
+        let newAction = ProjectAction.build(
+          'StartProject',
+          data.value,
+          2,
+          4,
+          null,
+          [200, 515]
+        );
         newWeek.actions.push(newAction);
         console.log(newWeek);
         await gameEngine.log.addEntry(newWeek);
