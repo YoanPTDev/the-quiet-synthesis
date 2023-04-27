@@ -1,15 +1,12 @@
 import { LOG } from './types';
 
 export const fetchLogSuccess = (logJSON) => {
-  console.log('logJSON', logJSON);
-  const { weekNb, playerId, cardDrawnId, promptChosen, actions } = logJSON;
+  const { weeks } = logJSON;
+  console.log( 'logJSON', logJSON );
+  console.log( 'logs', weeks );
   return {
     type: LOG.FETCH_SUCCESS,
-    weekNb,
-    playerId,
-    cardDrawnId,
-    promptChosen,
-    actions,
+    weeks,
   };
 };
 

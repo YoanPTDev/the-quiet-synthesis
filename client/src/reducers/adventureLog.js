@@ -2,26 +2,18 @@ import { LOG } from '../actions/types';
 import fetchStates from './fetchStates';
 
 const DEFAULT_LOG = {
-  weekNb: '',
-  playerId: '',
-  cardDrawnId: '',
-  promptChosen: '',
-  message: '',
-  actions: [],
+  logs: [],
 };
 
-const logReducer = (state = DEFAULT_LOG, action) => {
+const adventureLogReducer = (state = DEFAULT_LOG, action) => {
   switch (action.type) {
     case LOG.FETCH_SUCCESS:
-      const { weekNb, playerId, cardDrawnId, promptChosen, actions } = action;
-      
+      const { weeks } = action;
+      console.log('reducer log', weeks);
+      console.log('reducer action', action);
       return {
         ...state,
-        weekNb,
-        playerId,
-        cardDrawnId,
-        promptChosen,
-        actions,
+        weeks,
         fetchstate: fetchStates.success,
       };
     case LOG.FETCH_ERROR:
@@ -35,4 +27,4 @@ const logReducer = (state = DEFAULT_LOG, action) => {
   }
 };
 
-export default logReducer;
+export default adventureLogReducer;

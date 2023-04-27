@@ -10,7 +10,6 @@ const notebookReducer = (state = initialState, action) => {
   switch (action.type) {
     case NOTE.FETCH_SUCCESS:
       const { notes } = action;
-      console.log('action', notes);
       return {
         ...state,
         notes,
