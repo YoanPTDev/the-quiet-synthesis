@@ -10,7 +10,7 @@ const Notebook = (props) => {
 
   const renderNotebookData = () => {
     if (notes) {
-      return notes.map((id, value) => <p key={id}>{value}</p>);
+      return notes.map((note) => <p key={note.id}>{note.value}</p>);
     }
   };
 
