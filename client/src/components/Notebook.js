@@ -5,12 +5,12 @@ import NotebookInput from './NotebookInput';
 import { SocketContext } from '../middleware/socketcontext';
 
 const Notebook = (props) => {
-  const { notebookData } = props;
+  const { notes } = props;
   const socket = useContext(SocketContext);
 
   const renderNotebookData = () => {
-    if (notebookData) {
-      return notebookData.map((data, index) => <p key={index}>{data.value}</p>);
+    if (notes) {
+      return notes.map((id, value) => <p key={id}>{value}</p>);
     }
   };
 
@@ -33,7 +33,7 @@ const Notebook = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    notebookData: state.note.data,
+    notes: state.note.notes,
   };
 };
 
