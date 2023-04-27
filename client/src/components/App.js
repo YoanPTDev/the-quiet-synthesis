@@ -12,14 +12,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>The Quiet Year</h1>
-        <TurnActionWrapper />
-        <AdventureLogWrapper />
-        <NotebookWrapper />
+        <div className='action-buttons'>
+          <h1>The Quiet Year</h1>
+          <TurnActionWrapper />
+          <AdventureLogWrapper />
+          <NotebookWrapper />
+        </div>
         {this.props.gameStarted ? (
           <div>
-            <Map className='map' />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
+            <Map className='map' />
             <div className='turn-action top-right component-container'>
               <Card />
             </div>
@@ -27,7 +29,6 @@ class App extends Component {
         ) : (
           <div>
             <h3>A new adventure is on the horizon!</h3>
-            <br />
             <button onClick={this.props.startGame}>Go on an adventure!</button>
           </div>
         )}

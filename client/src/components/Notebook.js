@@ -10,7 +10,7 @@ const Notebook = (props) => {
 
   const renderNotebookData = () => {
     if (notes) {
-      return notes.map((note) => <p key={note.id}>{note.value}</p>);
+      return notes.map((note) => <li key={note.id}>{note.value}</li>);
     }
   };
 
@@ -18,7 +18,9 @@ const Notebook = (props) => {
     <div className='notebook-container'>
       <h2>Notebook</h2>
       <hr />
-      {renderNotebookData()}
+      <ul className='liste-note'>
+        {renderNotebookData()}
+      </ul>
       <hr />
       <NotebookInput
         onSave={(data) => {

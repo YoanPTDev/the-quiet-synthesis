@@ -7,6 +7,7 @@ const InputField = ({ placeholder, onSave, value }) => {
   const handleSave = () => {
     if (onSave) {
       onSave(inputValue);
+      setInputValue('');
     }
   };
 
