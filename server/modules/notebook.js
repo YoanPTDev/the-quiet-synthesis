@@ -17,7 +17,8 @@ class Notebook {
   }
 
   addNote(note) {
-    this.notes["note" + Object.keys(this.notes).length + 1] = note;
+    let newIndex = Object.keys(this.notes).length + 1;
+    this.notes["note" + newIndex] = {id : newIndex, value : note};
   }
 
   addPage(title, color) {
