@@ -59,6 +59,7 @@ io.on('connection', (socket) => {
         // Save the AdventureLog entry to your mongoDB collection
         console.log(data.value);
         await gameEngine.log.addEntry(data.value);
+        io.emit('updateLogs', gameEngine.log.weeks);
         break;
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection
