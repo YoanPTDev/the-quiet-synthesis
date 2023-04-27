@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 // Cette fonction retourne une fonction
 import { connect } from 'react-redux';
 import { startGame, cancelGame } from '../actions/settings';
-import Adventurelog from './AdventureLog';
-import Notebook from './Notebook';
+import AdventureLogWrapper from './AdventureLogWrapper';
+import NotebookWrapper from './NotebookWrapper';
 import Map from './Map';
 import Card from './Card';
 import TurnActionWrapper from './TurnAction';
@@ -14,16 +14,12 @@ class App extends Component {
       <div>
         <h1>The Quiet Year</h1>
         <TurnActionWrapper />
+        <AdventureLogWrapper />
+        <NotebookWrapper />
         {this.props.gameStarted ? (
           <div>
             <Map className='map' />
             <button onClick={this.props.cancelGame}>Quit the adventure!</button>
-            <div className='log bottom-left component-container'>
-              <Adventurelog />
-            </div>
-            <div className='log bottom-right component-container'>
-              <Notebook />
-            </div>
             <div className='turn-action top-right component-container'>
               <Card />
             </div>

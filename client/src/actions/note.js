@@ -1,10 +1,10 @@
 import { NOTE } from './types';
 
 export const fetchNoteSuccess = (logJSON) => {
-  const { _id, value } = logJSON;
+  const { id, value } = logJSON;
   return {
     type: NOTE.FETCH_SUCCESS,
-    _id,
+    id,
     value,
   };
 };

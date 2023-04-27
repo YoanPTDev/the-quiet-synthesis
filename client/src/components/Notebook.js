@@ -1,12 +1,11 @@
+// components/Notebook.js
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
-import { expandNotebook, collapseNotebook } from '../actions/settings';
 import NotebookInput from './NotebookInput';
 import { SocketContext } from '../middleware/socketcontext';
 
 const Notebook = (props) => {
-  const { notebookData, notebookExpanded, expandNotebook, collapseNotebook } =
-    props;
+  const { notebookData } = props;
   const socket = useContext(SocketContext);
 
   const renderNotebookData = () => {
@@ -15,50 +14,27 @@ const Notebook = (props) => {
     }
   };
 
-  if (notebookExpanded) {
-    return (
-      <div>
-        <h2>Notebook</h2>
-        <hr />
-        {renderNotebookData()}
-        <hr />
-        <NotebookInput
-          onSave={(data) => {
-            console.log('data', data);
-            socket.emit('saveData', data);
-          }}
-        />
-        <hr />
-        <button onClick={collapseNotebook}>show less</button>
-      </div>
-    );
-  }
-
   return (
-    <div>
+    <div className='notebook-container'>
       <h2>Notebook</h2>
-      <br />
-      <button onClick={expandNotebook}>read more</button>
+      <hr />
+      {renderNotebookData()}
+      <hr />
+      <NotebookInput
+        onSave={(data) => {
+          console.log('data', data);
+          socket.emit('saveData', data);
+        }}
+      />
+      <hr />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    notebookExpanded: state.settings.notebookExpanded,
     notebookData: state.note.data,
   };
 };
 
-// Spécifier quel action creator methods on veut attacher à notre component
-// Donnant un accès automatique méthode de dispatch de Redux
-const mapDispatchToProps = (dispatch) => {
-  return {
-    expandNotebook: () => dispatch(expandNotebook()),
-    collapseNotebook: () => dispatch(collapseNotebook()),
-  };
-};
-
-const componentConnector = connect(mapStateToProps, mapDispatchToProps);
-
-export default componentConnector(Notebook);
+export default connect(mapStateToProps)(Notebook);

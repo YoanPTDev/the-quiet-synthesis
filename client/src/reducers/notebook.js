@@ -1,5 +1,6 @@
 // reducers/notebook.js
-import { SET_NOTEBOOK_DATA } from '../actions/types';
+import { NOTE } from '../actions/types';
+import fetchStates from './fetchStates';
 
 const initialState = {
   data: [],
@@ -7,10 +8,19 @@ const initialState = {
 
 const notebookReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_NOTEBOOK_DATA:
+    case NOTE.FETCH_SUCCESS:
+      const { id, value } = action;
       return {
         ...state,
-        data: action.payload,
+        id,
+        value,
+        fetchstate: fetchStates.success,
+      };
+    case NOTE.FETCH_ERROR:
+      return {
+        ...state,
+        message: action.message,
+        fetchstate: fetchStates.error,
       };
     default:
       return state;
