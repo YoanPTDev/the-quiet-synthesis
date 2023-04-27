@@ -12,15 +12,16 @@ class Page {
 
 class Notebook {
   constructor() {
-    this.pages = new Array(); //Array de Page
+    // this.pages = new Array(); //Array de Page
+    this.notes = {};
+  }
+
+  addNote(note) {
+    this.notes["note" + Object.keys(this.notes).length + 1] = note;
   }
 
   addPage(title, color) {
     this.pages.push(new Page(title, color));
-  }
-
-  display() {
-    //WIP
   }
 }
 

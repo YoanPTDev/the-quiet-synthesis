@@ -63,6 +63,9 @@ io.on('connection', (socket) => {
         break;
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection
+        gameEngine.notebook.addNote(data.value);
+        console.log(gameEngine.notebook.notes);
+        io.emit('updateNotebook', gameEngine.notebook.notes);
         break;
       case 'Name':
         // Save the Name entry to your mongoDB collection
