@@ -8,14 +8,11 @@ import {
 } from './game_action_strategy.js';
 
 class TurnAction {
-  constructor() {
-    this.contempts = new Array(); //Array de contempt tokens
-    this.action = null; //Un des objets Action importe plus haut
+
+  build(weekNb, playerID, cardID, prompt) {
+    //nothing
   }
 
-  setAction(action) {
-    this.action = action;
-  }
 }
 
 export default TurnAction;

@@ -6,6 +6,8 @@ import cors from 'cors';
 import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
 import Player from './modules/player.js';
+import Week from './modules/week.js';
+import { ProjectAction } from './modules/game_action_strategy.js';
 
 let gameEngine = null;
 
@@ -57,15 +59,18 @@ io.on('connection', (socket) => {
     switch (data.type) {
       case 'AdventureLogDescription':
         // Save the AdventureLog entry to your mongoDB collection
-        console.log(data.value);
-        await gameEngine.log.addEntry(data.value);
-        console.log('updateLogs', gameEngine.log);
+        let newWeek = Week.build(gameEngine.log.weeks.length + 1, 
+          socket.playerName, null, 0);
+        newAction = ProjectAction.build("StartProject", data.value, 
+        2, 4, null, [200, 515]);
+        newWeek.actions.push(newAction);
+        console.log(newWeek);
+        await gameEngine.log.addEntry(newWeek);
         io.emit('updateLogs', gameEngine.log.weeks);
         break;
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection
         gameEngine.notebook.addNote(data.value);
-        console.log(gameEngine.notebook.notes);
         io.emit('updateNotebook', gameEngine.notebook.notes);
         break;
       case 'Name':
