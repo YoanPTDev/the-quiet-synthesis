@@ -7,11 +7,11 @@ import { SocketContext } from '../middleware/socketcontext';
 const AdventureLog = (props) => {
   const socket = useContext(SocketContext);
   console.log(props);
-  const { weeks } = props;
+  const { logs } = props;
 
   const renderAdventureLogData = () => {
-    if (weeks) {
-      return weeks.map((week) => <p>{week}</p>)
+    if (logs) {
+      return logs.map((log) => <p key={log.weekNb}>{log.actions[0].description}</p>)
     }
   }
 
@@ -32,7 +32,7 @@ const AdventureLog = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    weeks: state.week.weeks,
+    logs: state.log.logs,
   };
 };
 

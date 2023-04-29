@@ -9,7 +9,7 @@ const rootReducer = {
   card: cardReducer,
   socket: socketReducer,
   note: notebookReducer,
-  week: adventureLogReducer,
+  log: adventureLogReducer,
 };
 
 export default rootReducer;

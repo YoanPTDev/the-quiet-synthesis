@@ -1,12 +1,12 @@
 import { LOG } from './types';
 
 export const fetchLogSuccess = (logJSON) => {
-  const { weeks } = logJSON;
+  const { logs } = logJSON;
   console.log('logJSON', logJSON);
-  console.log('logs', weeks);
+  console.log('logs', logs);
   return {
     type: LOG.FETCH_SUCCESS,
-    weeks,
+    logs,
   };
 };
 
