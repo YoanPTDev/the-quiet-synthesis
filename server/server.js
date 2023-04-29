@@ -76,11 +76,13 @@ io.on('connection', (socket) => {
         newWeek.actions.push(newAction);
         console.log(newWeek);
         await gameEngine.log.addEntry(newWeek);
+        console.log(gameEngine.log.weeks);
         io.emit('updateLogs', gameEngine.log.weeks);
         break;
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection
         gameEngine.notebook.addNote(data.value);
+        console.log('notes', gameEngine.notebook.notes);
         io.emit('updateNotebook', gameEngine.notebook.notes);
         break;
       case 'Name':

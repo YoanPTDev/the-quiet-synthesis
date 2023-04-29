@@ -11,6 +11,7 @@ export const setSocketInstance = (socket) => {
 const setupSocketListeners = () => {
   if (socketInstance) {
     socketInstance.on('updateLogs', (data) => {
+      console.log('data', data);
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on('updateNotebook', (data) => {

@@ -6,6 +6,7 @@ import { SocketContext } from '../middleware/socketcontext';
 
 const AdventureLog = (props) => {
   const socket = useContext(SocketContext);
+  console.log(props);
   const { weeks } = props;
 
   const renderAdventureLogData = () => {
