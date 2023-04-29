@@ -2,8 +2,6 @@ import { LOG } from './types';
 
 export const fetchLogSuccess = (logJSON) => {
   const { logs } = logJSON;
-  console.log('logJSON', logJSON);
-  console.log('logs', logs);
   return {
     type: LOG.FETCH_SUCCESS,
     logs,
