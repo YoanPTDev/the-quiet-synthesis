@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
       case 'AdventureLogDescription':
         // Save the AdventureLog entry to your mongoDB collection
         let newWeek = Week.build(
-          gameEngine.log.weeks.length + 1,
+          gameEngine.log.weeks.logs.length + 1,
           socket.playerName,
           null,
           0

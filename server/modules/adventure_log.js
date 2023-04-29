@@ -6,7 +6,7 @@ class AdventureLog {
     this.ID = ID;
     this.mapName = mapName;
     this.mapImage = mapImage;
-    this.weeks = new Array();
+    this.weeks = {logs : []};
   }
 
   static async build(mapName, mapImage) {
@@ -15,7 +15,7 @@ class AdventureLog {
   }
 
   async addEntry(entry) {
-    this.weeks.push(entry);
+    this.weeks.logs.push(entry);
     await addNewWeekToAdventureLog(this.ID, entry);
   }
 
