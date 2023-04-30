@@ -18,7 +18,7 @@ const Notebook = (props) => {
     <div className='notebook-container'>
       <h2>Notebook</h2>
       <hr />
-      <ul className='liste-note'>
+      <ul className='list-note'>
         {renderNotebookData()}
       </ul>
       <hr />

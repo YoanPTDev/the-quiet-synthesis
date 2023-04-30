@@ -60,12 +60,6 @@ body,
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.liste-note {
-  height: 300px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
 li {
   list-style-position: inside;
 }
@@ -96,15 +90,6 @@ li {
   padding: 0;
 }
 
-.log {
-  border: 2px solid black;
-  border-radius: 2px;
-  margin: 1px;
-  width: 380px;
-  height: 100px;
-  padding: 20px;
-}
-
 .map {
   position: absolute;
   z-index: 0;
@@ -122,4 +107,24 @@ li {
 
 .prompt {
   margin: 10px;
+}
+
+.log {
+  border: 2px solid black;
+  border-radius: 2px;
+  margin: 1px;
+  margin-bottom: -3px;
+  width: 350px;
+  height: 100px;
+  padding: 20px 0px 0px 20px;
+}
+
+.list-note, .list-log {
+  height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.list-log {
+  height: 450px;
 }
