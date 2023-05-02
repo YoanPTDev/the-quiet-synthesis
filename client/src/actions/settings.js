@@ -2,6 +2,7 @@ import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
+  SET_SCARCITY_ABUNDANCE_EXPANDED
 } from './types';
 
 export const startGame = () => {
@@ -43,5 +44,19 @@ export const collapseNotebook = () => {
   return {
     type: SET_NOTEBOOK_EXPANDED,
     notebookExpanded: false,
+  };
+};
+
+export const expandScarcityAbundanceLog = () => {
+  return {
+    type: SET_SCARCITY_ABUNDANCE_EXPANDED,
+    scarcityAbundanceLogExpanded: true,
+  };
+};
+
+export const collapseScarcityAbundanceLog = () => {
+  return {
+    type: SET_SCARCITY_ABUNDANCE_EXPANDED,
+    scarcityAbundanceLogExpanded: false,
   };
 };

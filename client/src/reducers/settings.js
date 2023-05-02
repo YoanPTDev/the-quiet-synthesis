@@ -2,17 +2,19 @@ import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
+  SET_SCARCITY_ABUNDANCE_EXPANDED,
 } from '../actions/types';
 
 const DEFAULT_SETTINGS = {
   gameStarted: true,
   adventureLogExpanded: false,
   notebookExpanded: false,
+  scarcityAbundanceLogExpanded: false,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
   switch (action.type) {
-    case SET_GAME_STARTED: 
+    case SET_GAME_STARTED:
       return {
         ...state,
         gameStarted: action.gameStarted,
@@ -26,6 +28,11 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
       return {
         ...state,
         notebookExpanded: action.notebookExpanded,
+      };
+    case SET_SCARCITY_ABUNDANCE_EXPANDED:
+      return {
+        ...state,
+        scarcityAbundanceLogExpanded: action.scarcityAbundanceLogExpanded,
       };
     default:
       return state;

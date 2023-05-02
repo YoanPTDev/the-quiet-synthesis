@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startGame, cancelGame } from '../actions/settings';
 import AdventureLogWrapper from './AdventureLogWrapper';
 import NotebookWrapper from './NotebookWrapper';
+import ScarcityAbundanceWrapper from './ScarcityAbundanceWrapper';
 import Map from './Map';
 import Card from './Card';
 import TurnActionWrapper from './TurnAction';
@@ -26,6 +27,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
         <div className='note-log-wrapper'>
           <AdventureLogWrapper />
           <NotebookWrapper />
+          <ScarcityAbundanceWrapper/>
         </div>
       </div>
       {gameStarted ? (

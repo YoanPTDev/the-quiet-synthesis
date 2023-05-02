@@ -1,5 +1,7 @@
 import { fetchLog } from '../actions/log';
 import { fetchNote } from '../actions/note';
+import { fetchAbundance } from '../actions/abundance';
+import { fetchScarcity } from '../actions/scarcity';
 
 let socketInstance;
 
@@ -15,6 +17,12 @@ const setupSocketListeners = () => {
     });
     socketInstance.on('updateNotebook', (data) => {
       storeReference.dispatch(fetchNote(data));
+    });
+    socketInstance.on('updateScarcity', (data) => {
+      storeReference.dispatch(fetchScarcity(data));
+    });
+    socketInstance.on('updateAbundance', (data) => {
+      storeReference.dispatch(fetchAbundance(data));
     });
   }
 };
