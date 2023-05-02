@@ -106,7 +106,7 @@ const playerTurnStateMachine = {
           }
 
           this.newWeek = Week.build(
-            gameEngine.log.weeks.logs.length + 1,
+            this.gameEngine.log.weeks.logs.length + 1,
             this.currentPlayer.socket.playerName,
             '',
             ''

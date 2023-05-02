@@ -9,6 +9,7 @@ const abundanceReducer = (state = initialState, action) => {
   switch (action.type) {
     case ABUNDANCE.FETCH_SUCCESS:
       const { abundances } = action;
+      console.log('abundanceReducer', abundances);
       return {
         ...state,
         abundances,

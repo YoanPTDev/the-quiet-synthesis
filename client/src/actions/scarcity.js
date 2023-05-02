@@ -1,10 +1,11 @@
 import { SCARCITY } from './types';
 
 export const fetchScarcitySuccess = (logJSON) => {
-  const { scarcities } = logJSON;
+  const { scarcities, abundances } = logJSON;
   return {
     type: SCARCITY.FETCH_SUCCESS,
     scarcities,
+    abundances,
   };
 };
 

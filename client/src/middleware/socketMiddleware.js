@@ -22,6 +22,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchScarcity(data));
     });
     socketInstance.on('updateAbundance', (data) => {
+      console.log('updateAbundance', data);
       storeReference.dispatch(fetchAbundance(data));
     });
   }
