@@ -17,11 +17,9 @@ class GameAction {
 
 class ProjectAction extends GameAction {
   //nbrTour, imageID, coords
-  static build(desc, nbTokens, nbTour, imageID, coords) {
+  static build(desc, nbTokens, nbTour) {
     let newAction = super.build('StartProject', desc, nbTokens);
     newAction.turns = nbTour;
-    newAction.imageId = imageID;
-    newAction.coordinates = coords;
 
     return newAction;
   }
@@ -33,11 +31,9 @@ class ProjectAction extends GameAction {
 
 class DiscoverAction extends GameAction {
   //nbrTour = 0, imageID, coords
-  static build(desc, nbTokens, imageID, coords) {
+  static build(desc, nbTokens) {
     let newAction = super.build('Discovery', desc, nbTokens);
     newAction.turns = 0;
-    newAction.imageId = imageID;
-    newAction.coordinates = coords;
 
     return newAction;
   }

@@ -4,8 +4,7 @@ import { Deck } from './deck.js';
 import Map from './map.js';
 import AdventureLog from './adventure_log.js';
 import Week from './week.js';
-
-import io from '../server.js';
+import Project from './project.js';
 import {
   AddLoreAction,
   AddWeeksAction,
@@ -19,6 +18,8 @@ import {
   ProjectAction,
   RemoveMapElementAction,
 } from './game_action_strategy.js';
+
+import io from '../server.js';
 
 const playerStates = {
   WAITING: 'WAITING',
@@ -39,9 +40,10 @@ class GameEngine {
     this.gameId = 1; // ID de la partie (encore necessaire?)
     this.timeElapsed = 0; // Sert a calculer le temps passé pour la sauvegarde
     this.nbrContempts = 0; // Nombre de contempt tokens
-    this.notReduceTimers = false; // Determine si on reduit les projets durant le tour
+    this.reduceTimers = true; // Determine si on reduit les projets durant le tour
     this.currentPlayerIndex = 0;
     this.isGameRunning = false;
+    this.scarc_abund = {scarcities: [], abundances: []};
   }
 
   async buildDeck(deckName) {
@@ -93,6 +95,16 @@ const playerTurnStateMachine = {
         if (this.currentState === playerStates.WAITING) {
           this.currentState = playerStates.DRAW;
 
+          if (this.gameEngine.reduceTimers) {
+            this.gameEngine.map.projects.forEach(project => {
+              project.turns -= 1;
+
+              if (project.turns = 0) {
+                //Gerer la fin d'un projet
+              }
+            });
+          }
+
           this.newWeek = Week.build(
             gameEngine.log.weeks.logs.length + 1,
             this.currentPlayer.socket.playerName,
@@ -119,9 +131,15 @@ const playerTurnStateMachine = {
 
           this.currentPlayer.socket.on('saveData', (data) => {
             this.weekBuilder(data, this.newAction1);
+            this.currentPlayer.socket.broadcast.emit('updateWeek', this.newAction1)
           });
 
           this.currentPlayer.socket.on('submitAction', () => {
+            if ((this.newAction1.type = 'StartProject')) {
+              this.gameEngine.map.projects.push(
+                new Project(this.newAction1.turns, this.newAction1.description)
+              );
+            }
             this.newWeek.actions.push(this.newAction1);
             this.transition(playerStates.ACTION2);
           });
@@ -137,9 +155,15 @@ const playerTurnStateMachine = {
 
           this.currentPlayer.socket.on('saveData', (data) => {
             this.weekBuilder(data, this.newAction2);
+            this.currentPlayer.socket.broadcast.emit('updateWeek', this.newAction2)
           });
 
           this.currentPlayer.socket.on('submitAction', () => {
+            if ((this.newAction2.type = 'StartProject')) {
+              this.gameEngine.map.projects.push(
+                new Project(this.newAction2.turns, this.newAction2.description)
+              );
+            }
             this.newWeek.actions.push(this.newAction2);
           });
         } else {
@@ -216,14 +240,28 @@ const playerTurnStateMachine = {
 
   weekBuilder(data, action) {
     switch (data.type) {
+      case 'ActionDesc':
+        if (action != null) {
+          action.description = data.value;
+        } else {
+          console.log('Action does not exit');
+        }
+        break;
+      case 'NbTurns':
+        if (action != null) {
+          action.turns = data.value;
+        } else {
+          console.log('Action does not exit');
+        }
+        break;
       case 'ChosenPrompt':
         this.newWeek.promptChosen = data.value;
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
           case 'start project':
-            action = ProjectAction.build('', 0, '', null, null);
+            action = ProjectAction.build('', 0, 0);
             break;
           case 'discovery':
-            action = DiscoverAction.build('', 0, null, null);
+            action = DiscoverAction.build('', 0);
             break;
           case 'discussion':
             action = DiscussAction.build('', 0);
@@ -245,7 +283,7 @@ const playerTurnStateMachine = {
             break;
           case 'pause projects':
             action = PauseProjectsAction.build('', 0);
-            this.gameEngine.notReduceTimers = true;
+            this.gameEngine.reduceTimers = false;
             break;
           case 'modify ressource':
             action = ModifyRessourcesAction.build('', 0);
@@ -254,7 +292,7 @@ const playerTurnStateMachine = {
           case 'end game':
             action = EndGameAction.build('', 0);
             break;
-          case 'end turn':  //A tester, incertain
+          case 'end turn': //A tester, incertain
             this.transition(playerStates.ACTION2);
             this.gameEngine.endTurn();
             break;

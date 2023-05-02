@@ -57,10 +57,17 @@ io.on('connection', (socket) => {
   socket.on('saveData', async (data) => {
     // Process the data based on its type
     switch (data.type) {
+      case 'Scarcity':
+        this.gameEngine.scarc_abund.scarcities.push(data.value);
+        io.emit('updateScarcity', this.gameEngine.scarc_abund.scarcities);
+        break;
+      case 'Abundance':
+        this.gameEngine.scarc_abund.abundances.push(data.value);
+        io.emit('updateAbundance', this.gameEngine.scarc_abund.abundances);
+        break;  
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection
         gameEngine.notebook.addNote(data.value);
-        console.log('notes', gameEngine.notebook.notes);
         io.emit('updateNotebook', gameEngine.notebook.notes);
         break;
       case 'Name':
