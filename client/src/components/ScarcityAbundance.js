@@ -9,7 +9,7 @@ const ScarcityInput = (props) => (
     placeholder='Add a scarcity'
     onSave={(value) => {
       const data = {
-        type: 'ScarcityInput',
+        type: 'Scarcity',
         value: value,
       };
       props.onSave(data);
@@ -23,7 +23,7 @@ const AbundanceInput = (props) => (
     placeholder='Add an abundance'
     onSave={(value) => {
       const data = {
-        type: 'AbundanceInput',
+        type: 'Abundance',
         value: value,
       };
       props.onSave(data);
