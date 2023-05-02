@@ -3,12 +3,28 @@ import Notebook from './notebook.js';
 import { Deck } from './deck.js';
 import Map from './map.js';
 import AdventureLog from './adventure_log.js';
+import Week from './week.js';
 
 import io from '../server.js';
+import {
+  AddLoreAction,
+  AddWeeksAction,
+  CompleteProjectAction,
+  DiscoverAction,
+  DiscussAction,
+  EndGameAction,
+  ModifyAction,
+  ModifyRessourcesAction,
+  PauseProjectsAction,
+  ProjectAction,
+  RemoveMapElementAction,
+} from './game_action_strategy.js';
 
 const playerStates = {
   WAITING: 'WAITING',
-  PLAYING: 'PLAYING',
+  DRAW: 'DRAW',
+  ACTION1: 'ACTION1',
+  ACTION2: 'ACTION2',
   FINISHED: 'FINISHED',
 };
 
@@ -23,7 +39,7 @@ class GameEngine {
     this.gameId = 1; // ID de la partie (encore necessaire?)
     this.timeElapsed = 0; // Sert a calculer le temps passé pour la sauvegarde
     this.nbrContempts = 0; // Nombre de contempt tokens
-    this.reduceTimers = false; // Determine si on reduit les projets durant le tour
+    this.notReduceTimers = false; // Determine si on reduit les projets durant le tour
     this.currentPlayerIndex = 0;
     this.isGameRunning = false;
   }
@@ -33,7 +49,7 @@ class GameEngine {
   }
 
   async buildAdventureLog(mapName, mapImage) {
-    this.log = await AdventureLog.build(mapName, mapImage)
+    this.log = await AdventureLog.build(mapName, mapImage);
   }
 
   start() {
@@ -60,6 +76,9 @@ const playerTurnStateMachine = {
   currentPlayer: null,
   currentState: playerStates.WAITING,
   gameEngine: null,
+  newWeek: null,
+  newAction1: null,
+  newAction2: null,
 
   setGameEngine(gameEngine) {
     this.gameEngine = gameEngine;
@@ -70,13 +89,59 @@ const playerTurnStateMachine = {
       case playerStates.WAITING:
         this.currentState = playerStates.WAITING;
         break;
-      case playerStates.PLAYING:
+      case playerStates.DRAW:
         if (this.currentState === playerStates.WAITING) {
-          this.currentState = playerStates.PLAYING;
+          this.currentState = playerStates.DRAW;
+
+          this.newWeek = Week.build(
+            gameEngine.log.weeks.logs.length + 1,
+            this.currentPlayer.socket.playerName,
+            '',
+            ''
+          ); //Reset newWeek
+
           io.to(this.currentPlayer.socket.id).emit('start turn');
           console.log(`${this.currentPlayer.socket.playerName} start turn`);
-          
+
           this.drawCard();
+          this.newWeek.cardIdDrawn = this.gameEngine.deck.currentCard.id;
+
+          this.transition(playerStates.ACTION1);
+        } else {
+          throw new Error(
+            'Invalid state transition: ' + this.currentState + ' to ' + newState
+          );
+        }
+        break;
+      case playerStates.ACTION1:
+        if (this.currentState === playerStates.DRAW) {
+          this.currentState = playerStates.ACTION1;
+
+          this.currentPlayer.socket.on('saveData', (data) => {
+            this.weekBuilder(data, this.newAction1);
+          });
+
+          this.currentPlayer.socket.on('submitAction', () => {
+            this.newWeek.actions.push(this.newAction1);
+            this.transition(playerStates.ACTION2);
+          });
+        } else {
+          throw new Error(
+            'Invalid state transition: ' + this.currentState + ' to ' + newState
+          );
+        }
+        break;
+      case playerStates.ACTION2:
+        if (this.currentState === playerStates.ACTION1) {
+          this.currentState = playerStates.ACTION2;
+
+          this.currentPlayer.socket.on('saveData', (data) => {
+            this.weekBuilder(data, this.newAction2);
+          });
+
+          this.currentPlayer.socket.on('submitAction', () => {
+            this.newWeek.actions.push(this.newAction2);
+          });
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -84,8 +149,15 @@ const playerTurnStateMachine = {
         }
         break;
       case playerStates.FINISHED:
-        if (this.currentState === playerStates.PLAYING) {
+        if (this.currentState === playerStates.ACTION2) {
           this.currentState = playerStates.FINISHED;
+
+          this.gameEngine.log.addEntry(this.newWeek);
+          this.currentPlayer.socket.broadcast.emit(
+            'updateLogs',
+            this.gameEngine.log.weeks
+          );
+
           io.to(this.currentPlayer.socket.id).emit('end turn');
           console.log(`${this.currentPlayer.socket.playerName} end turn`);
         } else {
@@ -102,7 +174,7 @@ const playerTurnStateMachine = {
   startTurn(gameEngine, player) {
     this.setGameEngine(gameEngine);
     this.currentPlayer = player;
-    this.transition(playerStates.PLAYING);
+    this.transition(playerStates.DRAW);
   },
 
   endTurn(gameEngine) {
@@ -116,8 +188,16 @@ const playerTurnStateMachine = {
     return this.currentState === playerStates.WAITING;
   },
 
-  isPlaying() {
-    return this.currentState === playerStates.PLAYING;
+  isDrawing() {
+    return this.currentState === playerStates.DRAW;
+  },
+
+  isAction1() {
+    return this.currentState === playerStates.ACTION1;
+  },
+
+  isAction2() {
+    return this.currentState === playerStates.ACTION2;
   },
 
   isFinished() {
@@ -131,6 +211,64 @@ const playerTurnStateMachine = {
       console.log(card);
     } else {
       this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
+    }
+  },
+
+  weekBuilder(data, action) {
+    switch (data.type) {
+      case 'ChosenPrompt':
+        this.newWeek.promptChosen = data.value;
+        switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
+          case 'start project':
+            action = ProjectAction.build('', 0, '', null, null);
+            break;
+          case 'discovery':
+            action = DiscoverAction.build('', 0, null, null);
+            break;
+          case 'discussion':
+            action = DiscussAction.build('', 0);
+            break;
+          case 'prolong project':
+            action = AddWeeksAction.build('', 0);
+            break;
+          case 'modify project':
+            action = ModifyAction.build('', 0);
+            break;
+          case 'remove POI':
+            action = RemoveMapElementAction.build('', 0);
+            break;
+          case 'lore':
+            action = AddLoreAction.build('', 0);
+            break;
+          case 'complete project':
+            action = CompleteProjectAction.build('', 0);
+            break;
+          case 'pause projects':
+            action = PauseProjectsAction.build('', 0);
+            this.gameEngine.notReduceTimers = true;
+            break;
+          case 'modify ressource':
+            action = ModifyRessourcesAction.build('', 0);
+            //Changer le futur scarcities-abundances object
+            break;
+          case 'end game':
+            action = EndGameAction.build('', 0);
+            break;
+          case 'end turn':  //A tester, incertain
+            this.transition(playerStates.ACTION2);
+            this.gameEngine.endTurn();
+            break;
+          case 'discard cards':
+            this.gameEngine.deck.discard(2);
+            break;
+          default:
+            console.log('Unknown Error');
+            break;
+        }
+        break;
+      default:
+        console.log('Unknown data type');
+        break;
     }
   },
 };

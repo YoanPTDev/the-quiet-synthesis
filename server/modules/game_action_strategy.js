@@ -17,8 +17,8 @@ class GameAction {
 
 class ProjectAction extends GameAction {
   //nbrTour, imageID, coords
-  static build(type, desc, nbTokens, nbTour, imageID, coords) {
-    let newAction = super.build(type, desc, nbTokens);
+  static build(desc, nbTokens, nbTour, imageID, coords) {
+    let newAction = super.build('StartProject', desc, nbTokens);
     newAction.turns = nbTour;
     newAction.imageId = imageID;
     newAction.coordinates = coords;
@@ -33,8 +33,8 @@ class ProjectAction extends GameAction {
 
 class DiscoverAction extends GameAction {
   //nbrTour = 0, imageID, coords
-  static build(type, desc, nbTokens, imageID, coords) {
-    let newAction = super.build(type, desc, nbTokens);
+  static build(desc, nbTokens, imageID, coords) {
+    let newAction = super.build('Discovery', desc, nbTokens);
     newAction.turns = 0;
     newAction.imageId = imageID;
     newAction.coordinates = coords;
@@ -48,27 +48,92 @@ class DiscoverAction extends GameAction {
 }
 
 class DiscussAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('Discussion', desc, nbTokens);
+
+    return newAction;
+  }
+
   execute() {
     //WIP
   }
 }
 
 class AddWeeksAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('AddWeeks', desc, nbTokens);
+
+    return newAction;
+  }
+
   execute(project, ammount) {
     project.timer += ammount;
   }
 }
 
 class ModifyAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('ModifyProject', desc, nbTokens);
+
+    return newAction;
+  }
+
   execute(project, modification) {
     project.description = modification;
   }
 }
 
 class RemoveMapElementAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('Removal', desc, nbTokens);
+
+    return newAction;
+  }
+
   execute() {
     //WIP
   }
 }
 
-export { ProjectAction, DiscoverAction, DiscussAction, AddWeeksAction, ModifyAction, RemoveMapElementAction };
+class AddLoreAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('Lore', desc, nbTokens);
+
+    return newAction;
+  }
+}
+
+class CompleteProjectAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('Complete Project', desc, nbTokens);
+
+    return newAction;
+  }
+}
+
+class PauseProjectsAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('PauseProjects', desc, nbTokens);
+
+    return newAction;
+  }
+}
+
+class ModifyRessourcesAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('ModifyRessources', desc, nbTokens);
+
+    return newAction;
+  }
+}
+
+class EndGameAction extends GameAction {
+  static build(desc, nbTokens) {
+    let newAction = super.build('GameOver', desc, nbTokens);
+
+    return newAction;
+  }
+}
+
+export { ProjectAction, DiscoverAction, DiscussAction, AddWeeksAction, ModifyAction, RemoveMapElementAction,
+  AddLoreAction, CompleteProjectAction, PauseProjectsAction, ModifyRessourcesAction, EndGameAction };

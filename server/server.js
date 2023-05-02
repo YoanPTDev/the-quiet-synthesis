@@ -57,28 +57,6 @@ io.on('connection', (socket) => {
   socket.on('saveData', async (data) => {
     // Process the data based on its type
     switch (data.type) {
-      case 'AdventureLogDescription':
-        // Save the AdventureLog entry to your mongoDB collection
-        let newWeek = Week.build(
-          gameEngine.log.weeks.logs.length + 1,
-          socket.playerName,
-          null,
-          0
-        );
-        let newAction = ProjectAction.build(
-          'StartProject',
-          data.value,
-          2,
-          4,
-          null,
-          [200, 515]
-        );
-        newWeek.actions.push(newAction);
-        console.log(newWeek);
-        await gameEngine.log.addEntry(newWeek);
-        console.log(gameEngine.log.weeks);
-        io.emit('updateLogs', gameEngine.log.weeks);
-        break;
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection
         gameEngine.notebook.addNote(data.value);

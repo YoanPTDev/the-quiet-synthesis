@@ -23,7 +23,7 @@ class DeckConfig {
           dataCard.value
         );
         for (let j = 0; j < dataCard.prompts.length; j++) {
-          card.prompts[j] = dataCard.prompts[j].description;
+          card.prompts[j] = dataCard.prompts[j];
         }
           
         if (dataCard.season == 'Spring') {
@@ -74,6 +74,7 @@ class Deck {
       config.fallCards,
       config.winterCards
     );
+    this.currentCard;
   }
 
   static async build(deckName) {
@@ -84,7 +85,8 @@ class Deck {
 
   drawCard() {
     //Retourne un objet Card
-    return this.fullDeck.shift();
+    this.currentCard = this.fullDeck.shift();
+    return this.currentCard;
   }
 
   discard(amount) {

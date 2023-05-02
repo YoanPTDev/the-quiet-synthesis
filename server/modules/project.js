@@ -1,10 +1,10 @@
 import MapElement from './map_element.js';
 
 class Project {
-  constructor(timer, desc, mapElem) {
+  constructor(timer, desc) {
     this.timer = timer;
     this.desc = desc;
-    this.mapElem = mapElem; //Objet MapElement
+    //this.mapElem = mapElem; //Objet MapElement
   }
 
   endProject() {
