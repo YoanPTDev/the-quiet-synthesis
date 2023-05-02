@@ -1,8 +1,24 @@
 // components/Notebook.js
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
-import NotebookInput from './NotebookInput';
+import InputField from './InputField'
 import { SocketContext } from '../middleware/socketcontext';
+
+const NotebookInput = (props) => (
+  <InputField
+    {...props}
+    placeholder='Add a Notebook entry'
+    onSave={(value) => {
+      if (value !== '') {
+        const data = {
+          type: 'Notebook',
+          value: value,
+        };
+        props.onSave(data);
+      }
+    }}
+  />
+);
 
 const Notebook = (props) => {
   const { notes } = props;

@@ -15,8 +15,10 @@ class App extends Component {
         <div className='action-buttons'>
           <h1>The Quiet Year</h1>
           <TurnActionWrapper />
-          <AdventureLogWrapper />
-          <NotebookWrapper />
+          <div className='note-log-wrapper'>
+            <AdventureLogWrapper />
+            <NotebookWrapper />
+          </div>
         </div>
         {this.props.gameStarted ? (
           <div>

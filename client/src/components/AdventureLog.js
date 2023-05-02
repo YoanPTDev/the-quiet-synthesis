@@ -1,8 +1,22 @@
 // components/AdventureLog.js
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
-import AdventureLogInput from './AdventurelogInput';
+import InputField from './InputField'
 import { SocketContext } from '../middleware/socketcontext';
+
+const AdventureLogInput = (props) => (
+  <InputField
+    {...props}
+    placeholder="Add an AdventureLog entry"
+    onSave={(value) => {
+      const data = {
+        type: 'AdventureLogDescription',
+        value: value,
+      };
+      props.onSave(data);
+    }}
+  />
+);
 
 const AdventureLog = (props) => {
   const socket = useContext(SocketContext);

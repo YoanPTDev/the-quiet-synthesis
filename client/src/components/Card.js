@@ -12,7 +12,6 @@ const Card = ({ card, fetchCard }) => {
         fetchCard(data);
       });
 
-      // Clean up event listeners when the component is unmounted
       return () => {
         socket.off('cardData');
       };
@@ -34,11 +33,11 @@ const Card = ({ card, fetchCard }) => {
       </div>
       {prompts.map((prompt) => {
         return (
-          <div
-            className='prompt'
+          <button
+            className='card-prompt'
             key={prompts.indexOf(prompt)}>
             {prompt}
-          </div>
+          </button>
         );
       })}
     </div>
