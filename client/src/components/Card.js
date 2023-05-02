@@ -22,6 +22,13 @@ const Card = ({ card, fetchCard }) => {
 
   const { id, value, suit, season, prompts } = card;
 
+  const handleButtonClick = (idxPrompt) => {
+    if (socket) {
+      console.log(idxPrompt);
+      socket.emit('sendChosenPrompt', idxPrompt);
+    }
+  };
+
   return (
     <div
       key={id}
@@ -35,7 +42,8 @@ const Card = ({ card, fetchCard }) => {
         return (
           <button
             className='card-prompt'
-            key={prompts.indexOf(prompt)}>
+            key={prompts.indexOf(prompt)}
+            onClick={() => handleButtonClick(prompts.indexOf(prompt))}>
             {prompt}
           </button>
         );

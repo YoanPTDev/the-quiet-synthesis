@@ -231,11 +231,11 @@
     "prompts": [
         {
             "description": "Summer is a time for production and tending to the\nearth. Start a project related to food production.",
-            "mechanic": "lore"
+            "mechanic": "start project"
         },
         {
             "description": "Summer is a time for conquest and the gathering of might.\nStart a project related to military readiness and conquest.",
-            "mechanic": "lore"
+            "mechanic": "start project"
         }
     ]
   },

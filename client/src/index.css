@@ -60,6 +60,32 @@ body,
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.scarcity-abundance-container {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.list-scarcities-abundances {
+  display: flex;
+  width: 400px;
+  height: 400px;
+}
+
+.scarcities-abundances {
+  justify-content: space-around;
+  height: 380px;
+  width: 190px;
+}
+
 li {
   list-style-position: inside;
 }
@@ -119,7 +145,8 @@ li {
   padding: 20px 0px 0px 20px;
 }
 
-.list-note, .list-log {
+.list-note,
+.list-log {
   height: 300px;
   overflow: scroll;
   overflow-x: hidden;

@@ -37,6 +37,7 @@ const Map = () => {
         }
         setReceivedIsPressed(data.isPressed);
       });
+
       return () => {
         socket.off('mouse');
       };
