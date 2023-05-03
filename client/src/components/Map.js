@@ -1,7 +1,7 @@
 import Sketch from 'react-p5';
 import { connect } from 'react-redux';
 import React, { useState, useEffect, useContext } from 'react';
-import { enableDrawing, disableDrawing } from '../actions/settings';
+import { disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
 
 const Map = (props) => {
