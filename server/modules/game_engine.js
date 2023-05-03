@@ -99,7 +99,7 @@ const playerTurnStateMachine = {
             this.gameEngine.map.projects.forEach(project => {
               project.turns -= 1;
 
-              if (project.turns = 0) {
+              if (project.turns == 0) {
                 //Gerer la fin d'un projet
               }
             });
@@ -262,28 +262,28 @@ const playerTurnStateMachine = {
       case 'ChosenPrompt':
         this.newWeek.promptChosen = data.value;
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
-          case 'start project':
+          case 'start project': // enable map for current player
             action = ProjectAction.build('', 0, 0);
             break;
-          case 'discovery':
+          case 'discovery': // enable map for current player
             action = DiscoverAction.build('', 0);
             break;
           case 'discussion':
             action = DiscussAction.build('', 0);
             break;
-          case 'prolong project':
+          case 'prolong project': 
             action = AddWeeksAction.build('', 0);
             break;
-          case 'modify project':
+          case 'modify project': // enable map for current player
             action = ModifyAction.build('', 0);
             break;
           case 'remove POI':
             action = RemoveMapElementAction.build('', 0);
             break;
-          case 'lore':
+          case 'lore': // enable map for current player
             action = AddLoreAction.build('', 0);
             break;
-          case 'complete project':
+          case 'complete project': // enable map for current player
             action = CompleteProjectAction.build('', 0);
             break;
           case 'pause projects':
@@ -292,7 +292,7 @@ const playerTurnStateMachine = {
             break;
           case 'modify ressource':
             action = ModifyRessourcesAction.build('', 0);
-            //Changer le futur scarcities-abundances object
+            // Changer le futur scarcities-abundances object
             break;
           case 'end game':
             action = EndGameAction.build('', 0);

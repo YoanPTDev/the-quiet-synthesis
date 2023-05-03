@@ -2,7 +2,8 @@ import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
-  SET_SCARCITY_ABUNDANCE_EXPANDED
+  SET_SCARCITY_ABUNDANCE_EXPANDED,
+  SET_DRAWING_ENABLED
 } from './types';
 
 export const startGame = () => {
@@ -58,5 +59,19 @@ export const collapseScarcityAbundanceLog = () => {
   return {
     type: SET_SCARCITY_ABUNDANCE_EXPANDED,
     scarcityAbundanceLogExpanded: false,
+  };
+};
+
+export const enableDrawing = () => {
+  return {
+    type: SET_DRAWING_ENABLED,
+    drawingEnabled: true,
+  };
+};
+
+export const disableDrawing = () => {
+  return {
+    type: SET_DRAWING_ENABLED,
+    drawingEnabled: false,
   };
 };

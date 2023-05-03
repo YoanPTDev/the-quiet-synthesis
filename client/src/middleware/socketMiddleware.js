@@ -25,6 +25,9 @@ const setupSocketListeners = () => {
       console.log('updateAbundance', data);
       storeReference.dispatch(fetchAbundance(data));
     });
+    socketInstance.on('enableDrawing', () => {
+      console.log('enableDrawing');
+    })
   }
 };
 

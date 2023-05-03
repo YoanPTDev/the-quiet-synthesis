@@ -1,10 +1,13 @@
 import Sketch from 'react-p5';
 import { connect } from 'react-redux';
 import React, { useState, useEffect, useContext } from 'react';
+import { enableDrawing, disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
 
-const Map = () => {
+const Map = (props) => {
   const socket = useContext(SocketContext);
+
+  const { enableDrawing, disableDrawing, drawingEnabled } = props;
 
   const [isPressed, setIsPressed] = useState(false);
   const [prevMouse, setPrevMouse] = useState({ x: null, y: null });
@@ -119,4 +122,17 @@ const Map = () => {
   );
 };
 
-export default connect()(Map);
+const mapStateToProps = (state) => {
+  return {
+    drawingEnabled: state.settings.drawingEnabled,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    enableDrawing: () => dispatch(enableDrawing()),
+    disableDrawing: () => dispatch(disableDrawing()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
