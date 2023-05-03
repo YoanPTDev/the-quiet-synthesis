@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 import { fetchCard } from '../actions/card';
 import { SocketContext } from '../middleware/socketcontext';
 
+const cardColor = {
+  'Spring': '#9fb261',
+  'Summer': '#e0bc66',
+  'Fall': '#ac6f43',
+  'Winter': '#5882b2' 
+}
+
 const Card = ({ card, fetchCard }) => {
   const socket = useContext(SocketContext);
 
@@ -31,24 +38,53 @@ const Card = ({ card, fetchCard }) => {
 
   return (
     <div
-      key={id}
-      className='card-item'>
-      <div>
-        <h3>
-          {value} of {suit} {season}
-        </h3>
-      </div>
-      {prompts.map((prompt) => {
-        return (
+    key={id}
+    className='card-item' style={{ backgroundColor: cardColor[season] }}>
+    <div>
+      <h3 className='card-title'>
+        {suit} {value} {season}
+      </h3>
+    </div>
+    <div className='card-prompts'>
+      {prompts && prompts.map((prompt, index) => (
+        <div className='prompt-wrapper' key={`${id}-${index}`}>
           <button
             className='card-prompt'
-            key={prompts.indexOf(prompt)}
-            onClick={() => handleButtonClick(prompts.indexOf(prompt))}>
-            {prompt}
+            onClick={() => handleButtonClick(index)}>
+            {prompt.description}
           </button>
-        );
-      })}
+          {prompts.length === 2 && index === 0 && (
+            <div>
+              <br />
+              <h3>-or-</h3>
+              <br />
+            </div>
+          )}
+        </div>
+      ))}
     </div>
+  </div>
+    // <div
+    //   key={id}
+    //   className='card-item' style={{ backgroundColor: cardColor[season] }}>
+    //   <div>
+    //     <h3 className='card-title'>
+    //       {suit} {value}    {season}
+    //     </h3>
+    //   </div>
+    //   <div className='card-prompts'>
+    //     {prompts.map((prompt) => {
+    //       return (
+    //         <button
+    //           className='card-prompt'
+    //           key={prompts.indexOf(prompt)}
+    //           onClick={() => handleButtonClick(prompts.indexOf(prompt))}>
+    //           {prompt.description}
+    //         </button>
+    //       );
+    //     })}
+    //   </div>
+    // </div>
   );
 };
 

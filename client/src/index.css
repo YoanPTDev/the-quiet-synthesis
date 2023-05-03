@@ -124,16 +124,43 @@ li {
 /* CARD */
 .card-item {
   border-radius: 20px;
-  background-color: beige;
-  border: solid rgb(34, 34, 34) 5px;
+  border: solid rgb(51, 51, 51) 1px;
+  box-shadow: 10px 10px 2px 1px rgba(0, 0, 255, .2);
   padding: 10px;
   width: 250px;
   height: 400px;
 }
 
+.card-title {
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.card-prompts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 366px;
+}
+
+.prompt-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .card-prompt {
   margin: 10px;
+  border: none;
+  background-color: transparent;
+  width: 100%;
 }
+  .card-prompt:hover {
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px -1px rgba(0, 0, 0, 0.5);
+  }
 
 .log {
   border: 2px solid black;
