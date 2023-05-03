@@ -244,6 +244,7 @@ const playerTurnStateMachine = {
   },
 
   weekBuilder(data, action) {
+    console.log('data', data);
     switch (data.type) {
       case 'ActionDesc':
         if (action != null) {
@@ -259,8 +260,10 @@ const playerTurnStateMachine = {
           console.log('Action does not exit');
         }
         break;
-      case 'sendChosenPrompt':
+      case 'chosenPrompt':
         this.newWeek.promptChosen = data.value;
+        console.log('data value', data.value)
+        console.log('switch mechanic', this.gameEngine.deck.currentCard.prompts[data.value].mechanic)
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
           case 'start project': // enable map for current player
             action = ProjectAction.build('', 0, 0);
@@ -268,6 +271,7 @@ const playerTurnStateMachine = {
             break;
           case 'discovery': // enable map for current player
             action = DiscoverAction.build('', 0);
+            console.log('enableDrawing');
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'discussion':
@@ -278,6 +282,7 @@ const playerTurnStateMachine = {
             break;
           case 'modify project': // enable map for current player
             action = ModifyAction.build('', 0);
+            console.log('enableDrawing');
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'remove POI':
@@ -285,10 +290,12 @@ const playerTurnStateMachine = {
             break;
           case 'lore': // enable map for current player
             action = AddLoreAction.build('', 0);
+            console.log('enableDrawing');
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'complete project': // enable map for current player
             action = CompleteProjectAction.build('', 0);
+            console.log('enableDrawing');
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'pause projects':
@@ -315,7 +322,7 @@ const playerTurnStateMachine = {
         }
         break;
       default:
-        console.log('Unknown data type');
+        console.log('Week Builder Unknown data type');
         break;
     }
   },
