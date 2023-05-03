@@ -132,7 +132,7 @@ const playerTurnStateMachine = {
           this.currentPlayer.socket.on("saveData", (data) => {
             this.weekBuilder(data, this.newAction1);
             this.currentPlayer.socket.broadcast.emit(
-              "updateWeek",
+              "updateAction",
               this.newAction1
             );
           });
@@ -159,7 +159,7 @@ const playerTurnStateMachine = {
           this.currentPlayer.socket.on("saveData", (data) => {
             this.weekBuilder(data, this.newAction2);
             this.currentPlayer.socket.broadcast.emit(
-              "updateWeek",
+              "updateAction",
               this.newAction2
             );
           });
