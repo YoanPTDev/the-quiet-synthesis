@@ -5,7 +5,8 @@ import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn } from '../actions/partie';
 import { disableDrawing } from '../actions/settings';
 
-const TurnAction = ({ addPlayer, startGame, endTurn, drawingEnabled }) => {
+const TurnAction = ({ addPlayer, startGame, endTurn, drawingEnabled, disableDrawing }) => {
+
   return (
     <div>
       <button onClick={addPlayer}>Ajouter un joueur</button>
@@ -20,6 +21,10 @@ const TurnAction = ({ addPlayer, startGame, endTurn, drawingEnabled }) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return { drawingEnabled: state.settings.drawingEnabled }
+}
+
 const mapDispatchToProps = (dispatch, props) => {
   const { socket } = props;
   return {
@@ -30,7 +35,7 @@ const mapDispatchToProps = (dispatch, props) => {
   };
 };
 
-const componentConnector = connect(null, mapDispatchToProps);
+const componentConnector = connect(mapStateToProps, mapDispatchToProps);
 
 const ConnectedTurnAction = componentConnector(TurnAction);
 
