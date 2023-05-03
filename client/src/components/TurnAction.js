@@ -3,13 +3,19 @@ import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn } from '../actions/partie';
+import { disableDrawing } from '../actions/settings';
 
-const TurnAction = ({ addPlayer, startGame, endTurn }) => {
+const TurnAction = ({ addPlayer, startGame, endTurn, drawingEnabled }) => {
   return (
     <div>
       <button onClick={addPlayer}>Ajouter un joueur</button>
       <button onClick={startGame}>commencer Partie</button>
       <button onClick={endTurn}>Terminer tour</button>
+      {drawingEnabled && (
+        <button onClick={disableDrawing} style={{ marginLeft: '10px' }}>
+          Terminer dessin
+        </button>
+      )}
     </div>
   );
 };
@@ -20,6 +26,7 @@ const mapDispatchToProps = (dispatch, props) => {
     addPlayer: () => dispatch(addPlayer(socket)),
     startGame: () => dispatch(startGame(socket)),
     endTurn: () => dispatch(endTurn(socket)),
+    disableDrawing: () => dispatch(disableDrawing()),
   };
 };
 
