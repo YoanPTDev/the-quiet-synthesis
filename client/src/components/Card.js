@@ -31,8 +31,12 @@ const Card = ({ card, fetchCard }) => {
 
   const handleButtonClick = (idxPrompt) => {
     if (socket) {
-      console.log(idxPrompt);
-      socket.emit('sendChosenPrompt', idxPrompt);
+      let data = {
+        type: 'chosenPrompt',
+        value: idxPrompt
+      }
+
+      socket.emit('saveData', data);
     }
   };
 

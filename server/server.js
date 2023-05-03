@@ -77,7 +77,7 @@ io.on('connection', (socket) => {
         // Save the Gamertag entry to your mongoDB collection
         break;
       default:
-        console.log('Unknown data type');
+        console.log('Server Unknown data type');
     }
   });
   // --------TESTING----------

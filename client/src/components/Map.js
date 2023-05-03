@@ -1,10 +1,13 @@
 import Sketch from 'react-p5';
 import { connect } from 'react-redux';
 import React, { useState, useEffect, useContext } from 'react';
+import { enableDrawing, disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
 
-const Map = () => {
+const Map = (props) => {
   const socket = useContext(SocketContext);
+
+  const { disableDrawing, drawingEnabled } = props;
 
   const [isPressed, setIsPressed] = useState(false);
   const [prevMouse, setPrevMouse] = useState({ x: null, y: null });
@@ -65,19 +68,21 @@ const Map = () => {
   };
 
   const drawLine = (p5) => {
-    if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
-      setIsPressed(true);
-
-      if (prevMouse.x !== null && prevMouse.y !== null) {
-        p5.stroke(100, 0, 200);
-        p5.line(prevMouse.x, prevMouse.y, p5.mouseX, p5.mouseY);
+    if (drawingEnabled) {
+      if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
+        setIsPressed(true);
+  
+        if (prevMouse.x !== null && prevMouse.y !== null) {
+          p5.stroke(100, 0, 200);
+          p5.line(prevMouse.x, prevMouse.y, p5.mouseX, p5.mouseY);
+        }
+  
+        sendMouse(p5.mouseX, p5.mouseY, isPressed);
+        setPrevMouse({ x: p5.mouseX, y: p5.mouseY });
+      } else {
+        setIsPressed(false);
+        setPrevMouse({ x: null, y: null });
       }
-
-      sendMouse(p5.mouseX, p5.mouseY, isPressed);
-      setPrevMouse({ x: p5.mouseX, y: p5.mouseY });
-    } else {
-      setIsPressed(false);
-      setPrevMouse({ x: null, y: null });
     }
   };
 
@@ -119,4 +124,16 @@ const Map = () => {
   );
 };
 
-export default connect()(Map);
+const mapStateToProps = (state) => {
+  return {
+    drawingEnabled: state.settings.drawingEnabled,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    disableDrawing: () => dispatch(disableDrawing()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
