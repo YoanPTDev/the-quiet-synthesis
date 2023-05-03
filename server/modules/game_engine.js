@@ -112,7 +112,7 @@ const playerTurnStateMachine = {
             ''
           ); //Reset newWeek
 
-          io.to(this.currentPlayer.socket.id).emit('start turn');
+          this.currentPlayer.socket.emit('start turn');
           console.log(`${this.currentPlayer.socket.playerName} start turn`);
 
           this.drawCard();
@@ -182,7 +182,7 @@ const playerTurnStateMachine = {
             this.gameEngine.log.weeks
           );
 
-          io.to(this.currentPlayer.socket.id).emit('end turn');
+          this.currentPlayer.socket.emit('end turn');
           console.log(`${this.currentPlayer.socket.playerName} end turn`);
         } else {
           throw new Error(
@@ -259,14 +259,16 @@ const playerTurnStateMachine = {
           console.log('Action does not exit');
         }
         break;
-      case 'ChosenPrompt':
+      case 'sendChosenPrompt':
         this.newWeek.promptChosen = data.value;
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
           case 'start project': // enable map for current player
             action = ProjectAction.build('', 0, 0);
+            this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'discovery': // enable map for current player
             action = DiscoverAction.build('', 0);
+            this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'discussion':
             action = DiscussAction.build('', 0);
@@ -276,15 +278,18 @@ const playerTurnStateMachine = {
             break;
           case 'modify project': // enable map for current player
             action = ModifyAction.build('', 0);
+            this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'remove POI':
             action = RemoveMapElementAction.build('', 0);
             break;
           case 'lore': // enable map for current player
             action = AddLoreAction.build('', 0);
+            this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'complete project': // enable map for current player
             action = CompleteProjectAction.build('', 0);
+            this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'pause projects':
             action = PauseProjectsAction.build('', 0);
