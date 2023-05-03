@@ -81,6 +81,7 @@ const playerTurnStateMachine = {
   newWeek: null,
   newAction1: null,
   newAction2: null,
+  currentPrompt: null,
 
   setGameEngine(gameEngine) {
     this.gameEngine = gameEngine;
@@ -111,6 +112,7 @@ const playerTurnStateMachine = {
             "",
             ""
           ); //Reset newWeek
+          this.currentPrompt = null; //Reset prompt à chaque tour
 
           this.currentPlayer.socket.emit("start turn");
           console.log(`${this.currentPlayer.socket.playerName} start turn`);
@@ -133,7 +135,7 @@ const playerTurnStateMachine = {
             this.weekBuilder(data, this.newAction1);
             this.currentPlayer.socket.broadcast.emit(
               "updateAction",
-              this.newAction1
+              {action: this.newAction1, prompt: this.currentPrompt}
             );
           });
 
@@ -160,7 +162,7 @@ const playerTurnStateMachine = {
             this.weekBuilder(data, this.newAction2);
             this.currentPlayer.socket.broadcast.emit(
               "updateAction",
-              this.newAction2
+              {action: this.newAction2, prompt: this.currentPrompt}
             );
           });
 
@@ -267,7 +269,8 @@ const playerTurnStateMachine = {
         }
         break;
       case "chosenPrompt":
-        this.newWeek.promptChosen = this.gameEngine.deck.currentCard.prompts[data.value].description;
+        this.currentPrompt = this.gameEngine.deck.currentCard.prompts[data.value].description;
+        this.newWeek.promptChosen = this.currentPrompt
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
           case "start project": // enable map for current player
             action = ProjectAction.build("", 0, 0);
