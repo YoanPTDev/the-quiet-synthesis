@@ -203,6 +203,11 @@ const playerTurnStateMachine = {
 
   endTurn(gameEngine) {
     this.setGameEngine(gameEngine);
+    //--------- Testing purposes, remove after ---------------
+    if (this.isAction1) {
+      this.currentState = playerStates.ACTION2;
+    }
+    //--------------------------------------------------------
     this.transition(playerStates.FINISHED);
     this.currentPlayer = null;
     this.transition(playerStates.WAITING);
