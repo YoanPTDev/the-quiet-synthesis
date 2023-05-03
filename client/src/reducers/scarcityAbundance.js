@@ -1,20 +1,22 @@
-import { SCARCITY } from '../actions/types';
+import { SCARCITY_ABUNDANCE } from '../actions/types';
 import fetchStates from './fetchStates';
 
 const initialState = {
   scarcities: [],
+  abundances: []
 };
 
-const scarcityReducer = (state = initialState, action) => {
+const scarcityAbundanceReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SCARCITY.FETCH_SUCCESS:
-      const { scarcities } = action;
+    case SCARCITY_ABUNDANCE.FETCH_SUCCESS:
+      const { scarcities, abundances } = action;
       return {
         ...state,
         scarcities,
+        abundances,
         fetchstate: fetchStates.success,
       };
-    case SCARCITY.FETCH_ERROR:
+    case SCARCITY_ABUNDANCE.FETCH_ERROR:
       return {
         ...state,
         message: action.message,
@@ -25,4 +27,4 @@ const scarcityReducer = (state = initialState, action) => {
   }
 };
 
-export default scarcityReducer;
+export default scarcityAbundanceReducer;

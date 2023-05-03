@@ -33,17 +33,18 @@ const AbundanceInput = (props) => (
 
 const ScarcityAbundanceLog = (props) => {
   const socket = useContext(SocketContext);
-  const {scarcity, abundance} = props;
+  const {scarcities, abundances} = props;
+  console.log(props);
 
   const renderScarcityLogData = () => {
-    if (scarcity) {
+    if (scarcities) {
       return <div>scarcity</div>;
     }
     return <div>pas scarcity</div>
   };
 
   const renderAbundanceLogData = () => {
-    if (abundance) {
+    if (abundances) {
       return <div>abundance</div>;
     }
     return <div>pas abundance</div>
@@ -76,8 +77,8 @@ const ScarcityAbundanceLog = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    scarcities: state.scarcity.scarcities,
-    abundances: state.abundance.abundances
+    scarcities: state.scarcity_abundance.scarcities,
+    abundances: state.scarcity_abundance.abundances
   };
 };
 

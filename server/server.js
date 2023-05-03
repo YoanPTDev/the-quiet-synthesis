@@ -59,11 +59,11 @@ io.on('connection', (socket) => {
     switch (data.type) {
       case 'Scarcity':
         gameEngine.scarc_abund.scarcities.push(data.value);
-        io.emit('updateScarcity', gameEngine.scarc_abund);
+        io.emit('updateScarcityAbundance', gameEngine.scarc_abund);
         break;
       case 'Abundance':
         gameEngine.scarc_abund.abundances.push(data.value);
-        io.emit('updateAbundance', gameEngine.scarc_abund);
+        io.emit('updateScarcityAbundance', gameEngine.scarc_abund);
         break;  
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection
