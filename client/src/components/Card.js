@@ -42,7 +42,7 @@ const Card = ({ card, fetchCard }) => {
     className='card-item' style={{ backgroundColor: cardColor[season] }}>
     <div>
       <h3 className='card-title'>
-        {suit} {value} {season}
+        {suit} <span style={{ marginRight: '30px', marginLeft: '15px' }}>{value}</span> {season}
       </h3>
     </div>
     <div className='card-prompts'>
@@ -56,7 +56,7 @@ const Card = ({ card, fetchCard }) => {
           {prompts.length === 2 && index === 0 && (
             <div>
               <br />
-              <h3>-or-</h3>
+              <p style={{ fontStyle: 'italic', fontFamily: "'Martel', serif" }}>or...</p>
               <br />
             </div>
           )}
