@@ -9,9 +9,9 @@ const TurnAction = ({ addPlayer, startGame, endTurn, drawingEnabled, disableDraw
 
   return (
     <div>
-      <button onClick={addPlayer}>Ajouter un joueur</button>
-      <button onClick={startGame}>commencer Partie</button>
-      <button onClick={endTurn}>Terminer tour</button>
+      <button onClick={addPlayer} style={{ marginLeft: '10px' }}>Ajouter un joueur</button>
+      <button onClick={startGame} style={{ marginLeft: '10px' }}>commencer Partie</button>
+      <button onClick={endTurn} style={{ marginLeft: '10px' }}>Terminer tour</button>
       {drawingEnabled && (
         <button onClick={disableDrawing} style={{ marginLeft: '10px' }}>
           Terminer dessin

@@ -16,6 +16,9 @@ const setupSocketListeners = () => {
     socketInstance.on('updateLogs', (data) => {
       storeReference.dispatch(fetchLog(data));
     });
+    socketInstance.on('updateAction', (data) => {
+      console.log('updateAction', data);
+    });
     socketInstance.on('updateNotebook', (data) => {
       storeReference.dispatch(fetchNote(data));
     });
@@ -27,9 +30,8 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchAbundance(data));
     });
     socketInstance.on('enableDrawing', () => {
-      console.log('enableDrawing');
       storeReference.dispatch(enableDrawing());
-    })
+    });
   }
 };
 

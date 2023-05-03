@@ -32,7 +32,6 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
       </div>
       {gameStarted ? (
         <div>
-          <button onClick={cancelGame}>Quit the adventure!</button>
           <Map className='map' />
           <div className='turn-action top-right component-container'>
             <Card />
