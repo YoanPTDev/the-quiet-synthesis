@@ -3,6 +3,7 @@ import {
   SET_ADVENTURELOG_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
   SET_SCARCITY_ABUNDANCE_EXPANDED,
+  SET_DRAWING_ENABLED,
 } from '../actions/types';
 
 const DEFAULT_SETTINGS = {
@@ -10,6 +11,7 @@ const DEFAULT_SETTINGS = {
   adventureLogExpanded: false,
   notebookExpanded: false,
   scarcityAbundanceLogExpanded: false,
+  drawingEnabled: false,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
@@ -34,6 +36,11 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
         ...state,
         scarcityAbundanceLogExpanded: action.scarcityAbundanceLogExpanded,
       };
+    case SET_DRAWING_ENABLED:
+      return {
+        ...state,
+        drawingEnabled: action.drawingEnabled,
+      }
     default:
       return state;
   }

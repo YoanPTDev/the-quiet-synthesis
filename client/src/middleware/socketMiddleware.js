@@ -2,6 +2,7 @@ import { fetchLog } from '../actions/log';
 import { fetchNote } from '../actions/note';
 import { fetchAbundance } from '../actions/abundance';
 import { fetchScarcity } from '../actions/scarcity';
+import { enableDrawing } from '../actions/settings';
 
 let socketInstance;
 
@@ -27,6 +28,7 @@ const setupSocketListeners = () => {
     });
     socketInstance.on('enableDrawing', () => {
       console.log('enableDrawing');
+      storeReference.dispatch(enableDrawing());
     })
   }
 };

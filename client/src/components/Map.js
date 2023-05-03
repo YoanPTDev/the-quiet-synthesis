@@ -7,7 +7,7 @@ import { SocketContext } from '../middleware/socketcontext';
 const Map = (props) => {
   const socket = useContext(SocketContext);
 
-  const { enableDrawing, disableDrawing, drawingEnabled } = props;
+  const { disableDrawing, drawingEnabled } = props;
 
   const [isPressed, setIsPressed] = useState(false);
   const [prevMouse, setPrevMouse] = useState({ x: null, y: null });
@@ -68,19 +68,21 @@ const Map = (props) => {
   };
 
   const drawLine = (p5) => {
-    if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
-      setIsPressed(true);
-
-      if (prevMouse.x !== null && prevMouse.y !== null) {
-        p5.stroke(100, 0, 200);
-        p5.line(prevMouse.x, prevMouse.y, p5.mouseX, p5.mouseY);
+    if (drawingEnabled) {
+      if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
+        setIsPressed(true);
+  
+        if (prevMouse.x !== null && prevMouse.y !== null) {
+          p5.stroke(100, 0, 200);
+          p5.line(prevMouse.x, prevMouse.y, p5.mouseX, p5.mouseY);
+        }
+  
+        sendMouse(p5.mouseX, p5.mouseY, isPressed);
+        setPrevMouse({ x: p5.mouseX, y: p5.mouseY });
+      } else {
+        setIsPressed(false);
+        setPrevMouse({ x: null, y: null });
       }
-
-      sendMouse(p5.mouseX, p5.mouseY, isPressed);
-      setPrevMouse({ x: p5.mouseX, y: p5.mouseY });
-    } else {
-      setIsPressed(false);
-      setPrevMouse({ x: null, y: null });
     }
   };
 
@@ -130,7 +132,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    enableDrawing: () => dispatch(enableDrawing()),
     disableDrawing: () => dispatch(disableDrawing()),
   };
 };
