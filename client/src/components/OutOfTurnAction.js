@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const OutOfTurnAction = (props) => {
-  const { OutOfTurnActions } = props;
+  console.log('props', props);
+  const { OutOfTurnActions, prompt } = props;
 
   const renderOutOfTurnActions = () => {
     if (OutOfTurnActions) {
@@ -16,7 +17,7 @@ const OutOfTurnAction = (props) => {
 
   return (
     <div className='out-of-turn-action-container'>
-      <div className='out-of-turn-action-list'>{renderOutOfTurnActions}</div>
+      <div className='out-of-turn-action-list'>{renderOutOfTurnActions()}</div>
     </div>
   );
 };
@@ -24,6 +25,8 @@ const OutOfTurnAction = (props) => {
 const mapStateToProps = (state) => {
   return {
     outOfTurnActions: state.outOfTurnAction.outOfTurnActions,
+    prompt: state.outOfTurnAction.prompt,
+    cardExpanded: state.settings.cardExpanded,
   };
 };
 

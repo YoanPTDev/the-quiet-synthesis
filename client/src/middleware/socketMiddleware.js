@@ -13,12 +13,12 @@ export const setSocketInstance = (socket) => {
 };
 
 const setupSocketListeners = () => {
+  console.log('Setting up updateAction listener')
   if (socketInstance) {
     socketInstance.on('updateLogs', (data) => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on('updateAction', (data) => {
-      console.log('updateAction', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
     });
     socketInstance.on('updateNotebook', (data) => {
@@ -28,7 +28,6 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchScarcity(data));
     });
     socketInstance.on('updateAbundance', (data) => {
-      console.log('updateAbundance', data);
       storeReference.dispatch(fetchAbundance(data));
     });
     socketInstance.on('enableDrawing', () => {
