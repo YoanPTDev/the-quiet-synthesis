@@ -3,6 +3,7 @@ import { fetchNote } from '../actions/note';
 import { fetchAbundance } from '../actions/abundance';
 import { fetchScarcity } from '../actions/scarcity';
 import { enableDrawing } from '../actions/settings';
+import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 
 let socketInstance;
 
@@ -17,7 +18,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on('updateAction', (data) => {
-      console.log('updateAction', data);
+      storeReference.dispatch(fetchOutOfTurnAction(data));
     });
     socketInstance.on('updateNotebook', (data) => {
       storeReference.dispatch(fetchNote(data));

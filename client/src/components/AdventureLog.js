@@ -1,4 +1,3 @@
-// components/AdventureLog.js
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField'
