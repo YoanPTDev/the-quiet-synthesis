@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
   });
 
   // --------TESTING----------
-  socket.on('saveData', async (data) => {
+  socket.on('saveData', (data) => {
     // Process the data based on its type
     switch (data.type) {
       case 'Scarcity':

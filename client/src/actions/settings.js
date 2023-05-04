@@ -3,7 +3,8 @@ import {
   SET_ADVENTURELOG_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
   SET_SCARCITY_ABUNDANCE_EXPANDED,
-  SET_DRAWING_ENABLED
+  SET_DRAWING_ENABLED,
+  SET_CARD_EXPANDED
 } from './types';
 
 export const startGame = () => {
@@ -73,5 +74,19 @@ export const disableDrawing = () => {
   return {
     type: SET_DRAWING_ENABLED,
     drawingEnabled: false,
+  };
+};
+
+export const expandCard = () => {
+  return {
+    type: SET_CARD_EXPANDED,
+    cardExpanded: true,
+  };
+};
+
+export const collapseCard = () => {
+  return {
+    type: SET_CARD_EXPANDED,
+    cardExpanded: false,
   };
 };
