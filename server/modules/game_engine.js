@@ -93,6 +93,7 @@ const playerTurnStateMachine = {
   newAction1: null,
   newAction2: null,
   currentPrompt: null,
+  listenersSetUp: false,
 
   setGameEngine(gameEngine) {
     this.gameEngine = gameEngine;
@@ -143,24 +144,6 @@ const playerTurnStateMachine = {
       case playerStates.ACTION1:
         if (this.currentState === playerStates.DRAW) {
           this.currentState = playerStates.ACTION1;
-
-          this.currentPlayer.socket.on('saveData', (data) => {
-            this.weekBuilder(data, this.newAction1);
-            this.currentPlayer.socket.emit('updateAction', {
-              action: this.newAction1,
-              prompt: this.currentPrompt,
-            });
-          });
-
-          this.currentPlayer.socket.on('submitAction', () => {
-            if ((this.newAction1.type = 'StartProject')) {
-              this.gameEngine.map.projects.push(
-                new Project(this.newAction1.turns, this.newAction1.description)
-              );
-            }
-            this.newWeek.actions.push(this.newAction1);
-            this.transition(playerStates.ACTION2);
-          });
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -170,23 +153,6 @@ const playerTurnStateMachine = {
       case playerStates.ACTION2:
         if (this.currentState === playerStates.ACTION1) {
           this.currentState = playerStates.ACTION2;
-
-          this.currentPlayer.socket.on('saveData', (data) => {
-            this.weekBuilder(data, this.newAction2);
-            this.currentPlayer.socket.broadcast.emit('updateAction', {
-              action: this.newAction2,
-              prompt: this.currentPrompt,
-            });
-          });
-
-          this.currentPlayer.socket.on('submitAction', () => {
-            if ((this.newAction2.type = 'StartProject')) {
-              this.gameEngine.map.projects.push(
-                new Project(this.newAction2.turns, this.newAction2.description)
-              );
-            }
-            this.newWeek.actions.push(this.newAction2);
-          });
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -220,6 +186,48 @@ const playerTurnStateMachine = {
     this.setGameEngine(gameEngine);
     this.currentPlayer = player;
     this.transition(playerStates.DRAW);
+
+    // Set up the event listeners only once, when the turn starts
+    if (!this.listenersSetUp) {
+      this.currentPlayer.socket.on('saveData', (data) => {
+        if (this.currentState === playerStates.ACTION1) {
+          this.weekBuilder(data, this.newAction1);
+          this.currentPlayer.socket.emit('updateAction', {
+            //Changer pour broadcast apres tests
+            action: this.newAction1,
+            prompt: this.currentPrompt,
+          });
+          console.log('Emitting updateAction');
+        } else if (this.currentState === playerStates.ACTION2) {
+          this.weekBuilder(data, this.newAction2);
+          this.currentPlayer.socket.broadcast.emit('updateAction', {
+            action: this.newAction2,
+            prompt: this.currentPrompt,
+          });
+        }
+      });
+
+      this.currentPlayer.socket.on('submitAction', () => {
+        let action =
+          this.currentState === playerStates.ACTION1
+            ? this.newAction1
+            : this.newAction2;
+
+        if (action.type === 'StartProject') {
+          this.gameEngine.map.projects.push(
+            new Project(action.turns, action.description)
+          );
+        }
+
+        this.newWeek.actions.push(action);
+
+        if (this.currentState === playerStates.ACTION1) {
+          this.transition(playerStates.ACTION2);
+        }
+      });
+
+      this.listenersSetUp = true;
+    }
   },
 
   endTurn(gameEngine) {
