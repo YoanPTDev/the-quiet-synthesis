@@ -18,6 +18,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on('updateAction', (data) => {
+      console.log('updateAction', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
     });
     socketInstance.on('updateNotebook', (data) => {

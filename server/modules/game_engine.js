@@ -124,6 +124,8 @@ const playerTurnStateMachine = {
             ''
           ); //Reset newWeek
           this.currentPrompt = null; //Reset prompt à chaque tour
+          this.newAction1 = {};
+          this.newAction2 = {};
 
           this.currentPlayer.socket.emit('start turn');
           console.log(`${this.currentPlayer.socket.playerName} start turn`);
@@ -144,7 +146,7 @@ const playerTurnStateMachine = {
 
           this.currentPlayer.socket.on('saveData', (data) => {
             this.weekBuilder(data, this.newAction1);
-            this.currentPlayer.socket.broadcast.emit('updateAction', {
+            this.currentPlayer.socket.emit('updateAction', {
               action: this.newAction1,
               prompt: this.currentPrompt,
             });
@@ -285,44 +287,44 @@ const playerTurnStateMachine = {
         this.newWeek.promptChosen = this.currentPrompt;
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
           case 'start project': // enable map for current player
-            action = ProjectAction.build('', 0, 0);
+            Object.assign(action, ProjectAction.build('', 0, 0));
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'discovery': // enable map for current player
-            action = DiscoverAction.build('', 0);
+            Object.assign(action, DiscoverAction.build('', 0));
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'discussion':
-            action = DiscussAction.build('', 0);
+            Object.assign(action, DiscussAction.build('', 0));
             break;
           case 'prolong project':
-            action = AddWeeksAction.build('', 0);
+            Object.assign(action, AddWeeksAction.build('', 0));
             break;
           case 'modify project': // enable map for current player
-            action = ModifyAction.build('', 0);
+            Object.assign(action, ModifyAction.build('', 0));
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'remove POI':
-            action = RemoveMapElementAction.build('', 0);
+            Object.assign(action, RemoveMapElementAction.build('', 0));
             break;
           case 'lore': // enable map for current player
-            action = AddLoreAction.build('', 0);
+            Object.assign(action, AddLoreAction.build('', 0));
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'complete project': // enable map for current player
-            action = CompleteProjectAction.build('', 0);
+            Object.assign(action, CompleteProjectAction.build('', 0));
             this.currentPlayer.socket.emit('enableDrawing');
             break;
           case 'pause projects':
-            action = PauseProjectsAction.build('', 0);
+            Object.assign(action, PauseProjectsAction.build('', 0));
             this.gameEngine.reduceTimers = false;
             break;
           case 'modify ressource':
-            action = ModifyRessourcesAction.build('', 0);
+            Object.assign(action, ModifyRessourcesAction.build('', 0));
             // Changer le futur scarcities-abundances object
             break;
           case 'end game':
-            action = EndGameAction.build('', 0);
+            Object.assign(action, EndGameAction.build('', 0));
             break;
           case 'end turn': //A tester, incertain
             this.transition(playerStates.ACTION2);
