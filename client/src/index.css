@@ -71,26 +71,39 @@ body,
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
 }
+  .scarcities-abundances-title {
+    width: 100%;
+    height: 10%;
+  }
 
-.list-scarcities-abundances {
-  display: flex;
-  width: 400px;
-  height: 400px;
-}
-
-.scarcities-abundances {
-  justify-content: space-around;
-  height: 380px;
-  width: 190px;
-}
+  .list-scarcities-abundances {
+    display: flex;
+    width: 100%;
+    height: 80%;
+  }
+    .scarcities-section, .abundances-section {
+      height: 100%;
+      width:50%;
+    }
+      .list-scarcities, .list-abundances {
+        width: 90%;
+        height: 80%;
+      }
+      .scarcities-abundances-input {
+        width: 100%;
+        height: 20%;
+      }
+  .scarcities-abundance-mass-transfer-button {
+    width: 100%;
+    height: 10%;
+  }
 
 li {
   list-style-position: inside;
 }
 
-/* Adjust the position of your components using top, right, bottom, left properties */
 .top-left {
   top: 10px;
   left: 10px;
@@ -138,9 +151,20 @@ li {
   padding: 5px;
   margin-top: 10px;
   margin-right: 10px;
+  position: relative;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: space-between;
 }
     .title-spacing ­{
       margin-right: 30px;
+    }
+    .suit-icon {
+      height: 80px;
+      width: 80px;
+      position: absolute;
+      top: -15px;
+      left: 0px;
     }
 
 .card-prompts {
@@ -148,7 +172,7 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 366px;
+  height: 348px;
 }
 
 .prompt-wrapper {
@@ -165,7 +189,8 @@ li {
   font-family: 'Martel', serif;
 }
   .card-prompt:hover {
-    box-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px -1px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px -1px rgba(0, 0, 0, 0.5); */
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
   }
 
 .log {
