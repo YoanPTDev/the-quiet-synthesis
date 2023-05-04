@@ -28,7 +28,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
         <div className='note-log-wrapper'>
           <AdventureLogWrapper />
           <NotebookWrapper />
-          <ScarcityAbundanceWrapper/>
+          <ScarcityAbundanceWrapper />
         </div>
       </div>
       {gameStarted ? (
@@ -37,7 +37,9 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
           <Map className='map' />
           <div className='turn-action top-right component-container'>
             <Card />
-            <OutOfTurnAction/>
+            <OutOfTurnAction />
+          </div>
+          <div className='bottom-right component-container'>
           </div>
         </div>
       ) : (

@@ -1,7 +1,6 @@
 import { OUT_OF_TURN_ACTION } from './types';
 
 export const fetchOutOfTurnActionSuccess = (logJSON) => {
-  console.log('logJSON', logJSON);
   const { action, prompt } = logJSON;
   return {
     type: OUT_OF_TURN_ACTION.FETCH_SUCCESS,

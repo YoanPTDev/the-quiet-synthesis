@@ -36,7 +36,6 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
 
   const handleButtonClick = (idxPrompt) => {
     if (socket) {
-      
       let data = {};
       data = {
         type: 'chosenPrompt',

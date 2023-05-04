@@ -2,18 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const OutOfTurnAction = (props) => {
-  console.log('props', props);
-  const { OutOfTurnActions, prompt } = props;
+  const { outOfTurnActions, prompt, cardExpanded } = props;
 
   const renderOutOfTurnActions = () => {
-    if (OutOfTurnActions) {
-      let i = 0;
-      return OutOfTurnActions.map((action) => {
-        i++;
-        console.log('action ', i, action);
-      });
+    console.log('outOfTurnActions', outOfTurnActions);
+    console.log('prompt', prompt);
+    if (outOfTurnActions) {
+      return (
+        <div>
+          <p>{outOfTurnActions.type}</p>
+          <p>{prompt}</p>
+        </div>
+      )
     }
   };
+
+  if (cardExpanded) {
+    return null;
+  }
 
   return (
     <div className='out-of-turn-action-container'>
