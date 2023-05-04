@@ -6,6 +6,7 @@ import NotebookWrapper from './NotebookWrapper';
 import ScarcityAbundanceWrapper from './ScarcityAbundanceWrapper';
 import Map from './Map';
 import Card from './Card';
+import OutOfTurnAction from './OutOfTurnAction';
 import TurnActionWrapper from './TurnAction';
 import { SocketContext } from '../middleware/socketcontext';
 
@@ -36,6 +37,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
           <Map className='map' />
           <div className='turn-action top-right component-container'>
             <Card />
+            <OutOfTurnAction/>
           </div>
         </div>
       ) : (
