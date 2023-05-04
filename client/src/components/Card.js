@@ -2,12 +2,24 @@ import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchCard } from '../actions/card';
 import { SocketContext } from '../middleware/socketcontext';
+import Hearts from '../assets/Hearts.png'
+import Diamonds from '../assets/Diamonds.png'
+import Clubs from '../assets/Clubs.png'
+import Spades from '../assets/Spades.png'
+
 
 const cardColor = {
   'Spring': '#9fb261',
   'Summer': '#e0bc66',
   'Fall': '#ac6f43',
   'Winter': '#5882b2' 
+}
+
+const cardSuit = {
+  'Hearts': Hearts,
+  'Diamonds': Diamonds,
+  'Clubs': Clubs,
+  'Spades': Spades
 }
 
 const Card = ({ card, fetchCard }) => {
@@ -46,7 +58,10 @@ const Card = ({ card, fetchCard }) => {
     className='card-item' style={{ backgroundColor: cardColor[season] }}>
     <div>
       <h3 className='card-title'>
-        {suit} <span style={{ marginRight: '30px', marginLeft: '15px' }}>{value}</span> {season}
+        <img src={cardSuit[suit]} alt="suit-icon" className="suit-icon"/> 
+        <div style={{margin:'20px'}}></div>
+        <div>{value}</div> 
+        <div>{season}</div>
       </h3>
     </div>
     <div className='card-prompts'>
@@ -68,27 +83,6 @@ const Card = ({ card, fetchCard }) => {
       ))}
     </div>
   </div>
-    // <div
-    //   key={id}
-    //   className='card-item' style={{ backgroundColor: cardColor[season] }}>
-    //   <div>
-    //     <h3 className='card-title'>
-    //       {suit} {value}    {season}
-    //     </h3>
-    //   </div>
-    //   <div className='card-prompts'>
-    //     {prompts.map((prompt) => {
-    //       return (
-    //         <button
-    //           className='card-prompt'
-    //           key={prompts.indexOf(prompt)}
-    //           onClick={() => handleButtonClick(prompts.indexOf(prompt))}>
-    //           {prompt.description}
-    //         </button>
-    //       );
-    //     })}
-    //   </div>
-    // </div>
   );
 };
 

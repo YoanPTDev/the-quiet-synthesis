@@ -1,7 +1,6 @@
 import { fetchLog } from '../actions/log';
 import { fetchNote } from '../actions/note';
-import { fetchAbundance } from '../actions/abundance';
-import { fetchScarcity } from '../actions/scarcity';
+import { fetchScarcityAbundance } from '../actions/scarcityAbundance';
 import { enableDrawing } from '../actions/settings';
 
 let socketInstance;
@@ -22,12 +21,8 @@ const setupSocketListeners = () => {
     socketInstance.on('updateNotebook', (data) => {
       storeReference.dispatch(fetchNote(data));
     });
-    socketInstance.on('updateScarcity', (data) => {
-      storeReference.dispatch(fetchScarcity(data));
-    });
-    socketInstance.on('updateAbundance', (data) => {
-      console.log('updateAbundance', data);
-      storeReference.dispatch(fetchAbundance(data));
+    socketInstance.on('updateScarcityAbundance', (data) => {
+      storeReference.dispatch(fetchScarcityAbundance(data));
     });
     socketInstance.on('enableDrawing', () => {
       storeReference.dispatch(enableDrawing());

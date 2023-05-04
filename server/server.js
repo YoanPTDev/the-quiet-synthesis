@@ -58,12 +58,20 @@ io.on('connection', (socket) => {
     // Process the data based on its type
     switch (data.type) {
       case 'Scarcity':
+        if (data.action === 'transfer') {
+          const indexToRemove = gameEngine.scarc_abund.abundances.indexOf(data.value);
+          gameEngine.scarc_abund.abundances.splice(indexToRemove, 1);
+        }
         gameEngine.scarc_abund.scarcities.push(data.value);
-        io.emit('updateScarcity', gameEngine.scarc_abund);
+        io.emit('updateScarcityAbundance', gameEngine.scarc_abund);
         break;
       case 'Abundance':
+        if (data.action === 'transfer') {
+          const indexToRemove = gameEngine.scarc_abund.scarcities.indexOf(data.value);
+          gameEngine.scarc_abund.scarcities.splice(indexToRemove, 1);
+        }
         gameEngine.scarc_abund.abundances.push(data.value);
-        io.emit('updateAbundance', gameEngine.scarc_abund);
+        io.emit('updateScarcityAbundance', gameEngine.scarc_abund);
         break;  
       case 'Notebook':
         // Save the Notebook entry to your mongoDB collection

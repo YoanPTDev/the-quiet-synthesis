@@ -25,8 +25,7 @@ const ScarcityAbundanceWrapper = (props) => {
     <div>
       <button onClick={toggleScarcityAbundanceLog}>
         {scarcityAbundanceLogExpanded
-          ? 'Hide Scarcities and abundances Log'
-          : 'Show Scarcities and abundances Log'}
+          ? 'Hide': 'Show'} scarcities and abundances Log
       </button>
       {scarcityAbundanceLogExpanded && <ScarcityAbundanceLog />}
     </div>

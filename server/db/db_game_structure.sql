@@ -49,7 +49,7 @@
 --CARD COLLECTION
 {
   "_id": ObjectId
-    "suit": string                  --Hearts, Diamonds, Clovers, Spades
+    "suit": string                  --Hearts, Diamonds, Clubs, Spades
     "season": string                --Spring, Summer, Fall, Winter
     "value": string,                --A, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K
     "prompts": Array of Objects

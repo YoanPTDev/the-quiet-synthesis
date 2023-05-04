@@ -3,8 +3,7 @@ import settingsReducer from './settings';
 import notebookReducer from './notebook.js'
 import adventureLogReducer from './adventureLog';
 import socketReducer from './socket';
-import scarcityReducer from './scarcity';
-import abundanceReducer from './abundance';
+import scarcityAbundanceReducer from './scarcityAbundance';
 
 const rootReducer = {
   settings: settingsReducer,
@@ -12,8 +11,7 @@ const rootReducer = {
   socket: socketReducer,
   note: notebookReducer,
   log: adventureLogReducer,
-  scarcity: scarcityReducer,
-  abundance: abundanceReducer,
+  scarcity_abundance: scarcityAbundanceReducer,
 };
 
 export default rootReducer;
