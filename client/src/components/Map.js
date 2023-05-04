@@ -106,8 +106,10 @@ const Map = (props) => {
   };
 
   const mouseReleased = (p5) => {
-    setIsPressed(false);
-    sendMouse(p5.mouseX, p5.mouseY, isPressed, true);
+    if (drawingEnabled) {
+      setIsPressed(false);
+      sendMouse(p5.mouseX, p5.mouseY, isPressed, true);
+    }
   };
 
   const draw = (p5) => {

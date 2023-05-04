@@ -10,8 +10,8 @@ const OutOfTurnAction = (props) => {
     if (outOfTurnActions) {
       return (
         <div>
-          <p>{outOfTurnActions.type}</p>
-          <p>{prompt}</p>
+          <div>{outOfTurnActions.type}</div>
+          <div>{prompt}</div>
         </div>
       )
     }

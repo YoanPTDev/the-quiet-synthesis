@@ -197,7 +197,6 @@ const playerTurnStateMachine = {
             action: this.newAction1,
             prompt: this.currentPrompt,
           });
-          console.log('Emitting updateAction');
         } else if (this.currentState === playerStates.ACTION2) {
           this.weekBuilder(data, this.newAction2);
           this.currentPlayer.socket.broadcast.emit('updateAction', {
@@ -266,14 +265,12 @@ const playerTurnStateMachine = {
     let card = this.gameEngine.deck.drawCard();
     if (card != null) {
       this.currentPlayer.socket.emit('cardData', JSON.stringify(card));
-      console.log(card);
     } else {
       this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
     }
   },
 
   weekBuilder(data, action) {
-    console.log('data', data);
     switch (data.type) {
       case 'ActionDesc':
         if (action != null) {
