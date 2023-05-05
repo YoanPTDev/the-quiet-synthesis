@@ -7,6 +7,7 @@ import Hearts from '../assets/Hearts.png'
 import Diamonds from '../assets/Diamonds.png'
 import Clubs from '../assets/Clubs.png'
 import Spades from '../assets/Spades.png'
+import { SAVE_ACTION_DATA, CARD_DATA, CHOSEN_PROMPT } from '../../../utils/constants';
 
 
 const cardColor = {
@@ -28,12 +29,12 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
 
   useEffect(() => {
     if (socket) {
-      socket.on('cardData', (data) => {
+      socket.on(CARD_DATA, (data) => {
         fetchCard(data);
       });
 
       return () => {
-        socket.off('cardData');
+        socket.off(CARD_DATA);
       };
     }
   }, [socket, fetchCard]);
@@ -50,13 +51,13 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
     if (socket) {
       let data = {};
       data = {
-        type: 'chosenPrompt',
+        type: CHOSEN_PROMPT,
         value: idxPrompt,
       };
 
       collapseCard();
 
-      socket.emit('saveData', data);
+      socket.emit(SAVE_ACTION_DATA, data);
     }
   };
 

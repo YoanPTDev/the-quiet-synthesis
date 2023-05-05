@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect, useContext } from 'react';
 import { disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
+import { MOUSE_DATA } from '../../../utils/constants';
 
 const Map = (props) => {
   const socket = useContext(SocketContext);
@@ -28,9 +29,7 @@ const Map = (props) => {
 
   useEffect(() => {
     if (socket) {
-      socket.on('mouse', function (data) {
-        console.log('data', data);
-
+      socket.on(MOUSE_DATA, function (data) {
         if (!data.isPressed || data.isReleased) {
           setPrevReceivedMouse({ x: null, y: null });
           setReceivedMouse({ x: null, y: null });
@@ -42,7 +41,7 @@ const Map = (props) => {
       });
 
       return () => {
-        socket.off('mouse');
+        socket.off(MOUSE_DATA);
       };
     }
   }, [socket, receivedMouse]);
@@ -55,7 +54,7 @@ const Map = (props) => {
       isReleased: isReleased,
     };
 
-    socket.emit('mouse', data);
+    socket.emit(MOUSE_DATA, data);
   };
 
   const isMouseInsideCanvas = (p5) => {

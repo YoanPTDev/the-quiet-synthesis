@@ -2,9 +2,9 @@ class GameAction {
   // type, description, nbrTokens
   static build(type, desc, nbTokens) {
     let newAction = {
-      type : type,
-      tokens : nbTokens,
-      description : desc,
+      type: type,
+      tokens: nbTokens,
+      description: desc,
     };
 
     return newAction;
@@ -131,5 +131,16 @@ class EndGameAction extends GameAction {
   }
 }
 
-export { ProjectAction, DiscoverAction, DiscussAction, AddWeeksAction, ModifyAction, RemoveMapElementAction,
-  AddLoreAction, CompleteProjectAction, PauseProjectsAction, ModifyRessourcesAction, EndGameAction };
+export {
+  ProjectAction,
+  DiscoverAction,
+  DiscussAction,
+  AddWeeksAction,
+  ModifyAction,
+  RemoveMapElementAction,
+  AddLoreAction,
+  CompleteProjectAction,
+  PauseProjectsAction,
+  ModifyRessourcesAction,
+  EndGameAction,
+};

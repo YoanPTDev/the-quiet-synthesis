@@ -19,6 +19,20 @@ import {
   RemoveMapElementAction,
 } from './game_action_strategy.js';
 
+import {
+  ENABLE_DRAWING,
+  END_DRAWING,
+  END_TURN,
+  SAVE_ACTION_DATA,
+  START_TURN,
+  UPDATE_ACTION,
+  UPDATE_LOGS,
+  SUBMIT_ACTION,
+  START_PROJECT,
+  CARD_DATA,
+  CHOSEN_PROMPT,
+} from '../../utils/constants.js';
+
 import io from '../server.js';
 
 const playerStates = {
@@ -74,8 +88,8 @@ class GameEngine {
 
   gamePrep() {
     this.players.forEach((player) => {
-      player.socket.emit('enableDrawing');
-      player.socket.on('endDrawing');
+      player.socket.emit(ENABLE_DRAWING);
+      player.socket.on(END_DRAWING);
     });
 
     this.players.forEach((player) => {
@@ -128,7 +142,7 @@ const playerTurnStateMachine = {
           this.newAction1 = {};
           this.newAction2 = {};
 
-          this.currentPlayer.socket.emit('start turn');
+          this.currentPlayer.socket.emit(START_TURN);
           console.log(`${this.currentPlayer.socket.playerName} start turn`);
 
           this.drawCard();
@@ -165,11 +179,11 @@ const playerTurnStateMachine = {
 
           this.gameEngine.log.addEntry(this.newWeek);
           this.currentPlayer.socket.broadcast.emit(
-            'updateLogs',
+            UPDATE_LOGS,
             this.gameEngine.log.weeks
           );
 
-          this.currentPlayer.socket.emit('end turn');
+          this.currentPlayer.socket.emit(END_TURN);
           console.log(`${this.currentPlayer.socket.playerName} end turn`);
         } else {
           throw new Error(
@@ -189,30 +203,30 @@ const playerTurnStateMachine = {
 
     // Set up the event listeners only once, when the turn starts
     if (!this.listenersSetUp) {
-      this.currentPlayer.socket.on('saveData', (data) => {
+      this.currentPlayer.socket.on(SAVE_ACTION_DATA, (data) => {
         if (this.currentState === playerStates.ACTION1) {
           this.weekBuilder(data, this.newAction1);
-          this.currentPlayer.socket.emit('updateAction', {
+          this.currentPlayer.socket.emit(UPDATE_ACTION, {
             //Changer pour broadcast apres tests
             action: this.newAction1,
             prompt: this.currentPrompt,
           });
         } else if (this.currentState === playerStates.ACTION2) {
           this.weekBuilder(data, this.newAction2);
-          this.currentPlayer.socket.broadcast.emit('updateAction', {
+          this.currentPlayer.socket.broadcast.emit(UPDATE_ACTION, {
             action: this.newAction2,
             prompt: this.currentPrompt,
           });
         }
       });
 
-      this.currentPlayer.socket.on('submitAction', () => {
+      this.currentPlayer.socket.on(SUBMIT_ACTION, () => {
         let action =
           this.currentState === playerStates.ACTION1
             ? this.newAction1
             : this.newAction2;
 
-        if (action.type === 'StartProject') {
+        if (action.type === START_PROJECT) {
           this.gameEngine.map.projects.push(
             new Project(action.turns, action.description)
           );
@@ -264,7 +278,7 @@ const playerTurnStateMachine = {
   drawCard() {
     let card = this.gameEngine.deck.drawCard();
     if (card != null) {
-      this.currentPlayer.socket.emit('cardData', JSON.stringify(card));
+      this.currentPlayer.socket.emit(CARD_DATA, JSON.stringify(card));
     } else {
       this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
     }
@@ -286,18 +300,18 @@ const playerTurnStateMachine = {
           console.log('Action does not exit');
         }
         break;
-      case 'chosenPrompt':
+      case CHOSEN_PROMPT:
         this.currentPrompt =
           this.gameEngine.deck.currentCard.prompts[data.value].description;
         this.newWeek.promptChosen = this.currentPrompt;
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
           case 'start project': // enable map for current player
             Object.assign(action, ProjectAction.build('', 0, 0));
-            this.currentPlayer.socket.emit('enableDrawing');
+            this.currentPlayer.socket.emit(ENABLE_DRAWING);
             break;
           case 'discovery': // enable map for current player
             Object.assign(action, DiscoverAction.build('', 0));
-            this.currentPlayer.socket.emit('enableDrawing');
+            this.currentPlayer.socket.emit(ENABLE_DRAWING);
             break;
           case 'discussion':
             Object.assign(action, DiscussAction.build('', 0));
@@ -307,18 +321,18 @@ const playerTurnStateMachine = {
             break;
           case 'modify project': // enable map for current player
             Object.assign(action, ModifyAction.build('', 0));
-            this.currentPlayer.socket.emit('enableDrawing');
+            this.currentPlayer.socket.emit(ENABLE_DRAWING);
             break;
           case 'remove POI':
             Object.assign(action, RemoveMapElementAction.build('', 0));
             break;
           case 'lore': // enable map for current player
             Object.assign(action, AddLoreAction.build('', 0));
-            this.currentPlayer.socket.emit('enableDrawing');
+            this.currentPlayer.socket.emit(ENABLE_DRAWING);
             break;
           case 'complete project': // enable map for current player
             Object.assign(action, CompleteProjectAction.build('', 0));
-            this.currentPlayer.socket.emit('enableDrawing');
+            this.currentPlayer.socket.emit(ENABLE_DRAWING);
             break;
           case 'pause projects':
             Object.assign(action, PauseProjectsAction.build('', 0));

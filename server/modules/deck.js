@@ -15,7 +15,7 @@ class DeckConfig {
       for (let i = 0; i < dataDeck.cards.length; i++) {
         const dataCard = await getCardById(dataDeck.cards[i]);
         let card = null;
-        
+
         card = new Card(
           dataCard._id,
           dataCard.suit,
@@ -25,7 +25,7 @@ class DeckConfig {
         for (let j = 0; j < dataCard.prompts.length; j++) {
           card.prompts[j] = dataCard.prompts[j];
         }
-          
+
         if (dataCard.season == 'Spring') {
           this.springCards.push(card);
         } else if (dataCard.season == 'Summer') {

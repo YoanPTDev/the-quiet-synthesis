@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField'
 import { SocketContext } from '../middleware/socketcontext';
+import { NOTE_DATA, SAVE_LOG_DATA } from '../../../utils/constants';
 
 const NotebookInput = (props) => (
   <InputField
@@ -11,7 +12,7 @@ const NotebookInput = (props) => (
     onSave={(value) => {
       if (value !== '') {
         const data = {
-          type: 'Notebook',
+          type: NOTE_DATA,
           value: value,
         };
         props.onSave(data);
@@ -40,8 +41,7 @@ const Notebook = (props) => {
       <hr />
       <NotebookInput
         onSave={(data) => {
-          console.log('data', data);
-          socket.emit('saveData', data);
+          socket.emit(SAVE_LOG_DATA, data);
         }}
       />
       <hr />

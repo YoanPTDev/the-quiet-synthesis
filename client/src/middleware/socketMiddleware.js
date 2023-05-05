@@ -4,6 +4,8 @@ import { fetchScarcityAbundance } from '../actions/scarcityAbundance';
 import { enableDrawing } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 
+import { UPDATE_LOGS, UPDATE_ACTION, UPDATE_NOTEBOOK, UPDATE_SCARCITY_ABUNDANCE, ENABLE_DRAWING } from '../../../utils/constants';
+
 let socketInstance;
 
 export const setSocketInstance = (socket) => {
@@ -14,19 +16,19 @@ export const setSocketInstance = (socket) => {
 const setupSocketListeners = () => {
   console.log('Setting up updateAction listener')
   if (socketInstance) {
-    socketInstance.on('updateLogs', (data) => {
+    socketInstance.on(UPDATE_LOGS, (data) => {
       storeReference.dispatch(fetchLog(data));
     });
-    socketInstance.on('updateAction', (data) => {
+    socketInstance.on(UPDATE_ACTION, (data) => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
     });
-    socketInstance.on('updateNotebook', (data) => {
+    socketInstance.on(UPDATE_NOTEBOOK, (data) => {
       storeReference.dispatch(fetchNote(data));
     });
-    socketInstance.on('updateScarcityAbundance', (data) => {
+    socketInstance.on(UPDATE_SCARCITY_ABUNDANCE, (data) => {
       storeReference.dispatch(fetchScarcityAbundance(data));
     });
-    socketInstance.on('enableDrawing', () => {
+    socketInstance.on(ENABLE_DRAWING, () => {
       storeReference.dispatch(enableDrawing());
     });
   }

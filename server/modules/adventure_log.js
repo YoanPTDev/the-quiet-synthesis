@@ -1,12 +1,12 @@
-import Week from "./week.js";
-import { createAdventureLog, addWeekToAdventureLog } from "../db/db_DAO.js";
+import Week from './week.js';
+import { createAdventureLog, addWeekToAdventureLog } from '../db/db_DAO.js';
 
 class AdventureLog {
   constructor(ID, mapName, mapImage) {
     this.ID = ID;
     this.mapName = mapName;
     this.mapImage = mapImage;
-    this.weeks = {logs : []};
+    this.weeks = { logs: [] };
   }
 
   static async build(mapName, mapImage) {
@@ -33,7 +33,7 @@ async function createNewAdventureLog(mapName, mapImage) {
 
   try {
     const createdAdventureLog = await createAdventureLog(newAdventureLog);
-    console.log("Adventure log created:", createdAdventureLog);
+    console.log('Adventure log created:', createdAdventureLog);
     return createdAdventureLog;
   } catch (err) {
     console.error(err);

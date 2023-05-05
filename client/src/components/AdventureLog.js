@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField'
 import { SocketContext } from '../middleware/socketcontext';
+import { ADVENTURE_LOG_DESCRIPTION, SAVE_LOG_DATA } from '../../../utils/constants';
 
 const AdventureLogInput = (props) => (
   <InputField
@@ -9,7 +10,7 @@ const AdventureLogInput = (props) => (
     placeholder="Add an AdventureLog entry"
     onSave={(value) => {
       const data = {
-        type: 'AdventureLogDescription',
+        type: ADVENTURE_LOG_DESCRIPTION,
         value: value,
       };
       props.onSave(data);
@@ -54,7 +55,7 @@ const AdventureLog = (props) => {
       <div className='list-log'>{renderAdventureLogData()}</div>
       <AdventureLogInput
         onSave={(data) => {
-          socket.emit('saveData', data);
+          socket.emit(SAVE_LOG_DATA, data);
         }}
       />
       <hr />

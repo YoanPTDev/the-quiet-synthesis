@@ -10,13 +10,15 @@ import OutOfTurnAction from './OutOfTurnAction';
 import TurnActionWrapper from './TurnAction';
 import { SocketContext } from '../middleware/socketcontext';
 
+import { ADD_PLAYER } from '../../../utils/constants';
+
 const App = ({ gameStarted, startGame, cancelGame }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
     if (socket) {
       // Emit an event when the component mounts
-      socket.emit('addPlayer');
+      socket.emit(ADD_PLAYER);
     }
   }, [socket]);
 

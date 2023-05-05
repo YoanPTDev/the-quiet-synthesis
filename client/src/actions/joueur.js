@@ -1,3 +1,5 @@
+import { ADD_PLAYER } from "../../../utils/constants";
+
 export const addPlayer = (socket) => () => {
-  socket.emit('addPlayer');
+  socket.emit(ADD_PLAYER);
 };

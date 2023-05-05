@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField';
 import { SocketContext } from '../middleware/socketcontext';
+import { ABUNDANCE_DATA, SAVE_LOG_DATA, SCARCITY_DATA, TRANSFER } from '../../../utils/constants';
 
 const ScarcityInput = (props) => (
   <InputField
@@ -9,7 +10,7 @@ const ScarcityInput = (props) => (
     placeholder='Add a scarcity'
     onSave={(value) => {
       const data = {
-        type: 'Scarcity',
+        type: SCARCITY_DATA,
         value: value,
       };
       props.onSave(data);
@@ -23,7 +24,7 @@ const AbundanceInput = (props) => (
     placeholder='Add an abundance'
     onSave={(value) => {
       const data = {
-        type: 'Abundance',
+        type: ABUNDANCE_DATA,
         value: value,
       };
       props.onSave(data);
@@ -78,11 +79,11 @@ const ScarcityAbundanceLog = (props) => {
     if (source === 'scarcity') {
       setCurrentScarcities(currentScarcities.filter((s) => s !== item));
       setCurrentAbundances([...currentAbundances, item]);
-      socket.emit('saveData', { type: 'Abundance', value: item, action: 'transfer' });
+      socket.emit(SAVE_LOG_DATA, { type: ABUNDANCE_DATA, value: item, action: TRANSFER });
     } else {
       setCurrentAbundances(currentAbundances.filter((a) => a !== item));
       setCurrentScarcities([...currentScarcities, item]);
-      socket.emit('saveData', { type: 'Scarcity', value: item, action: 'transfer' });
+      socket.emit(SAVE_LOG_DATA, { type: SCARCITY_DATA, value: item, action: TRANSFER });
     }
   };
   // =======================================================================================
@@ -113,14 +114,14 @@ const ScarcityAbundanceLog = (props) => {
     checkedScarcities.forEach((item) => {
       setCurrentScarcities(prevScarcities => prevScarcities.filter((s) => s !== item));
       setCurrentAbundances(prevAbundances => [...prevAbundances, item]);
-      socket.emit('saveData', { type: 'Abundance', value: item, action: 'transfer' });
+      socket.emit(SAVE_LOG_DATA, { type: ABUNDANCE_DATA, value: item, action: TRANSFER });
     });
     setCheckedScarcities([]);
   
     checkedAbundances.forEach((item) => {
       setCurrentAbundances(prevAbundances => prevAbundances.filter((a) => a !== item));
       setCurrentScarcities(prevScarcities => [...prevScarcities, item]);
-      socket.emit('saveData', { type: 'Scarcity', value: item, action: 'transfer' });
+      socket.emit(SAVE_LOG_DATA, { type: SCARCITY_DATA, value: item, action: TRANSFER });
     });
     setCheckedAbundances([]);
   };
@@ -160,7 +161,7 @@ const ScarcityAbundanceLog = (props) => {
           <div className='scarcities-abundance-input'>
             <ScarcityInput
               onSave={(data) => {
-                socket.emit('saveData', data);
+                socket.emit(SAVE_LOG_DATA, data);
               }}
             />
           </div>
@@ -173,7 +174,7 @@ const ScarcityAbundanceLog = (props) => {
           <div className='scarcities-abundance-input'>
             <AbundanceInput
               onSave={(data) => {
-                socket.emit('saveData', data);
+                socket.emit(SAVE_LOG_DATA, data);
               }}
             />
           </div>
