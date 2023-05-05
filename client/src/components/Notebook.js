@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField'
 import { SocketContext } from '../middleware/socketcontext';
-import { NOTE_DATA, SAVE_LOG_DATA } from '../../../utils/constants';
+import { NOTE_DATA, SAVE_LOG_DATA } from '../../../utils/constants.mjs';
 
 const NotebookInput = (props) => (
   <InputField

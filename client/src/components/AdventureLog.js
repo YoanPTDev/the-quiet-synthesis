@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField'
 import { SocketContext } from '../middleware/socketcontext';
-import { ADVENTURE_LOG_DESCRIPTION, SAVE_LOG_DATA } from '../../../utils/constants';
+import { ADVENTURE_LOG_DESCRIPTION, SAVE_LOG_DATA } from '../../../utils/constants.mjs';
 
 const AdventureLogInput = (props) => (
   <InputField

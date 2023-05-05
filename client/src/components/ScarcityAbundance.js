@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField';
 import { SocketContext } from '../middleware/socketcontext';
-import { ABUNDANCE_DATA, SAVE_LOG_DATA, SCARCITY_DATA, TRANSFER } from '../../../utils/constants';
+import { ABUNDANCE_DATA, SAVE_LOG_DATA, SCARCITY_DATA, TRANSFER } from '../../../utils/constants.mjs';
 
 const ScarcityInput = (props) => (
   <InputField

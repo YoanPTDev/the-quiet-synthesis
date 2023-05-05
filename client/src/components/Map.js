@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect, useContext } from 'react';
 import { disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
-import { MOUSE_DATA } from '../../../utils/constants';
+import { MOUSE_DATA } from '../../../utils/constants.mjs';
 
 const Map = (props) => {
   const socket = useContext(SocketContext);

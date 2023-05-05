@@ -26,12 +26,12 @@ import {
   SAVE_ACTION_DATA,
   START_TURN,
   UPDATE_ACTION,
-  UPDATE_LOGS,
+  UPDATE_LOGS, 
   SUBMIT_ACTION,
   START_PROJECT,
-  CARD_DATA,
-  CHOSEN_PROMPT,
-} from '../../utils/constants.js';
+  DRAWN_CARD_DATA,
+  SELECTED_PROMPT, 
+} from '../../utils/constants.mjs';
 
 import io from '../server.js';
 
@@ -278,7 +278,7 @@ const playerTurnStateMachine = {
   drawCard() {
     let card = this.gameEngine.deck.drawCard();
     if (card != null) {
-      this.currentPlayer.socket.emit(CARD_DATA, JSON.stringify(card));
+      this.currentPlayer.socket.emit(DRAWN_CARD_DATA, JSON.stringify(card));
     } else {
       this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
     }
@@ -300,7 +300,7 @@ const playerTurnStateMachine = {
           console.log('Action does not exit');
         }
         break;
-      case CHOSEN_PROMPT:
+      case SELECTED_PROMPT:
         this.currentPrompt =
           this.gameEngine.deck.currentCard.prompts[data.value].description;
         this.newWeek.promptChosen = this.currentPrompt;

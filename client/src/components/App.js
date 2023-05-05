@@ -10,7 +10,7 @@ import OutOfTurnAction from './OutOfTurnAction';
 import TurnActionWrapper from './TurnAction';
 import { SocketContext } from '../middleware/socketcontext';
 
-import { ADD_PLAYER } from '../../../utils/constants';
+import { ADD_PLAYER } from '../../../utils/constants.mjs';
 
 const App = ({ gameStarted, startGame, cancelGame }) => {
   const socket = useContext(SocketContext);

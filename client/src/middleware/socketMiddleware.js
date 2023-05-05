@@ -4,7 +4,7 @@ import { fetchScarcityAbundance } from '../actions/scarcityAbundance';
 import { enableDrawing } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 
-import { UPDATE_LOGS, UPDATE_ACTION, UPDATE_NOTEBOOK, UPDATE_SCARCITY_ABUNDANCE, ENABLE_DRAWING } from '../../../utils/constants';
+import { UPDATE_LOGS, UPDATE_ACTION, UPDATE_NOTEBOOK, UPDATE_SCARCITY_ABUNDANCE, ENABLE_DRAWING } from '../../../utils/constants.mjs';
 
 let socketInstance;
 

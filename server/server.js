@@ -17,7 +17,7 @@ import {
   UPDATE_NOTEBOOK,
   NAME_DATA,
   GAMERTAG_DATA,
-} from '../utils/constants.js';
+} from '../utils/constants.mjs';
 
 import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
@@ -105,7 +105,8 @@ io.on('connection', (socket) => {
         // Save the Gamertag entry to your mongoDB collection
         break;
       default:
-        console.log('Server Unknown data type');
+        console.log(`${data.type} is not a recognized data type. Make sure that the data type 
+        exists on the server and that you have the proper syntax.`);
     }
   });
   // --------TESTING----------

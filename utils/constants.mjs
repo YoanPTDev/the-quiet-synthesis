@@ -1,6 +1,6 @@
 export const SAVE_LOG_DATA = 'SAVE_LOG_DATA';
 export const SAVE_ACTION_DATA = 'SAVE_ACTION_DATA';
-export const CARD_DATA = 'CARD_DATA';
+export const DRAWN_CARD_DATA = 'DRAWN_CARD_DATA';
 export const MOUSE_DATA = 'MOUSE_DATA';
 export const NOTE_DATA = 'NOTE_DATA';
 export const SCARCITY_DATA = 'SCARCITY_DATA';
@@ -18,7 +18,7 @@ export const SUBMIT_ACTION = 'SUBMIT_ACTION';
 export const TRANSFER = 'TRANSFER';
 
 export const ADVENTURE_LOG_DESCRIPTION = 'ADVENTURE_LOG_DESCRIPTION';
-export const CHOSEN_PROMPT = 'CHOSEN_PROMPT';
+export const SELECTED_PROMPT = 'SELECTED_PROMPT';
 
 export const UPDATE_LOGS = 'UPDATE_LOGS';
 export const UPDATE_ACTION = 'UPDATE_ACTION';

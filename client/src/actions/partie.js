@@ -1,4 +1,4 @@
-import { END_TURN, START_GAME } from "../../../utils/constants";
+import { END_TURN, START_GAME } from "../../../utils/constants.mjs";
 
 export const startGame = (socket) => () => {
   socket.emit(START_GAME);
