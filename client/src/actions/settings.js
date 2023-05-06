@@ -1,6 +1,7 @@
 import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,
+  SET_ADVENTURELOG_INPUT_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
   SET_SCARCITY_ABUNDANCE_EXPANDED,
   SET_DRAWING_ENABLED,
@@ -32,6 +33,20 @@ export const collapseAdventureLog = () => {
   return {
     type: SET_ADVENTURELOG_EXPANDED,
     adventureLogExpanded: false,
+  };
+};
+
+export const expandAdventureLogInput = () => {
+  return {
+    type: SET_ADVENTURELOG_INPUT_EXPANDED,
+    adventureLogInputExpanded: true,
+  };
+};
+
+export const collapseAdventureLogInput = () => {
+  return {
+    type: SET_ADVENTURELOG_INPUT_EXPANDED,
+    adventureLogInputExpanded: false,
   };
 };
 

@@ -134,6 +134,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     disableDrawing: () => dispatch(disableDrawing()),
+    expand
   };
 };
 

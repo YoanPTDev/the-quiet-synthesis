@@ -5,15 +5,40 @@ import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn } from '../actions/partie';
 import { disableDrawing } from '../actions/settings';
 
-const TurnAction = ({ addPlayer, startGame, endTurn, drawingEnabled, disableDrawing }) => {
+const TurnAction = ({
+  addPlayer,
+  startGame,
+  endTurn,
+  drawingEnabled,
+  disableDrawing,
+  expandAdventureLogInput,
+}) => {
+  const handleDrawingEnd = () => {
+    disableDrawing();
+    expandAdventureLogInput();
+  };
 
   return (
     <div>
-      <button onClick={addPlayer} style={{ marginLeft: '10px' }}>Ajouter un joueur</button>
-      <button onClick={startGame} style={{ marginLeft: '10px' }}>commencer Partie</button>
-      <button onClick={endTurn} style={{ marginLeft: '10px' }}>Terminer tour</button>
+      <button
+        onClick={addPlayer}
+        style={{ marginLeft: '10px' }}>
+        Ajouter un joueur
+      </button>
+      <button
+        onClick={startGame}
+        style={{ marginLeft: '10px' }}>
+        commencer Partie
+      </button>
+      <button
+        onClick={endTurn}
+        style={{ marginLeft: '10px' }}>
+        Terminer tour
+      </button>
       {drawingEnabled && (
-        <button onClick={disableDrawing} style={{ marginLeft: '10px' }}>
+        <button
+          onClick={handleDrawingEnd}
+          style={{ marginLeft: '10px' }}>
           Terminer dessin
         </button>
       )}
@@ -22,8 +47,8 @@ const TurnAction = ({ addPlayer, startGame, endTurn, drawingEnabled, disableDraw
 };
 
 const mapStateToProps = (state) => {
-  return { drawingEnabled: state.settings.drawingEnabled }
-}
+  return { drawingEnabled: state.settings.drawingEnabled };
+};
 
 const mapDispatchToProps = (dispatch, props) => {
   const { socket } = props;

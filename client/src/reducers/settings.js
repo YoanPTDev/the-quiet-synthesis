@@ -1,6 +1,7 @@
 import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,
+  SET_ADVENTURELOG_INPUT_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
   SET_SCARCITY_ABUNDANCE_EXPANDED,
   SET_DRAWING_ENABLED,
@@ -14,6 +15,7 @@ const DEFAULT_SETTINGS = {
   scarcityAbundanceLogExpanded: false,
   drawingEnabled: false,
   cardExpanded: false,
+  adventureLogInputExpanded: false,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
@@ -28,6 +30,11 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
         ...state,
         adventureLogExpanded: action.adventureLogExpanded,
       };
+      case SET_ADVENTURELOG_INPUT_EXPANDED:
+        return {
+          ...state,
+          adventureLogInputExpanded: action.adventureLogInputExpanded,
+        };
     case SET_NOTEBOOK_EXPANDED:
       return {
         ...state,
