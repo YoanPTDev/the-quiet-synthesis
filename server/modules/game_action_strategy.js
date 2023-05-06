@@ -46,6 +46,7 @@ class DiscoverAction extends GameAction {
 class DiscussAction extends GameAction {
   static build(desc, nbTokens) {
     let newAction = super.build('Discussion', desc, nbTokens);
+    newAction.discussion = [];
 
     return newAction;
   }

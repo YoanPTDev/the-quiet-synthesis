@@ -26,11 +26,11 @@ import {
   SAVE_ACTION_DATA,
   START_TURN,
   UPDATE_ACTION,
-  UPDATE_LOGS, 
+  UPDATE_LOGS,
   SUBMIT_ACTION,
   START_PROJECT,
   DRAWN_CARD_DATA,
-  SELECTED_PROMPT, 
+  SELECTED_PROMPT,
 } from '../../utils/constants.mjs';
 
 import io from '../server.js';
@@ -94,6 +94,8 @@ class GameEngine {
 
     this.players.forEach((player) => {
       //WIP
+      /*Voir si on utilise le meme systeme que les scarcities avec un different socket event
+      ou un autre component avec socket acknowledgement*/
     });
   }
 }
@@ -284,6 +286,41 @@ const playerTurnStateMachine = {
     }
   },
 
+  discuss(action) {
+    const currPlayerIdx = this.gameEngine.currentPlayerIndex;
+    const len = this.gameEngine.players.length;
+    const discussion = [];
+    const regex = /\?$/;
+
+    let isQuestion = false;
+    for (let i = currPlayerIdx; i < currPlayerIdx + len || isQuestion; i++) {
+      let reply = '';
+      const respondingPlayer = i % len;
+
+      this.gameEngine.players[respondingPlayer].socket.emit(
+        'discuss',
+        (response) => {
+          reply = response;
+        }
+      );
+
+      discussion.push({
+        player: this.gameEngine.players[respondingPlayer].socket.playerName,
+        reply: reply,
+      });
+      Object.assign(action.discussion, discussion);
+      io.emit('updateDiscussion', discussion);
+
+      if (respondingPlayer === currPlayerIdx) {
+        if (regex.test(reply)) {
+          isQuestion = true;
+        } else {
+          break;
+        }
+      }
+    }
+  },
+
   weekBuilder(data, action) {
     switch (data.type) {
       case 'ActionDesc':
@@ -315,6 +352,7 @@ const playerTurnStateMachine = {
             break;
           case 'discussion':
             Object.assign(action, DiscussAction.build('', 0));
+            this.discuss(action);
             break;
           case 'prolong project':
             Object.assign(action, AddWeeksAction.build('', 0));
