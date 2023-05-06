@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { startGame, cancelGame } from '../actions/settings';
 import AdventureLogWrapper from './AdventureLogWrapper';
+import AdventureLogInputWrapper from './AdventureLogInputWrapper';
 import NotebookWrapper from './NotebookWrapper';
 import ScarcityAbundanceWrapper from './ScarcityAbundanceWrapper';
 import Map from './Map';
@@ -31,6 +32,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
           <AdventureLogWrapper />
           <NotebookWrapper />
           <ScarcityAbundanceWrapper />
+          <AdventureLogInputWrapper/>
         </div>
       </div>
       {gameStarted ? (

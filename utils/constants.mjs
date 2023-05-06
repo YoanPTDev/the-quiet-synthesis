@@ -16,6 +16,7 @@ export const END_TURN = 'END_TURN';
 export const END_DRAWING = 'END_DRAWING';
 export const SUBMIT_ACTION = 'SUBMIT_ACTION';
 export const TRANSFER = 'TRANSFER';
+export const DISCUSS = 'DISCUSS';
 
 export const ADVENTURE_LOG_DESCRIPTION = 'ADVENTURE_LOG_DESCRIPTION';
 export const SELECTED_PROMPT = 'SELECTED_PROMPT';

@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
+import { collapseAdventureLogInput } from '../actions/settings';
 import TextAreaField from "./TextAreaField";
 import { ADVENTURE_LOG_DESCRIPTION, SAVE_LOG_DATA } from "../../../utils/constants.mjs";
 
@@ -15,12 +16,15 @@ const AdventureLogInput = (props) => (
       };
       props.onSave(data);
     }}
+    collapse={props.collapse}
   />
 );
 
 const AdventureLogInputWrapper = (props) => {
-  const { adventureLogInputExpanded, expandAdventureLogInput, collapseAdventureLogInput } =
+  const { dispatch, adventureLogInputExpanded } =
     props;
+
+    if(!adventureLogInputExpanded) return null;
 
     const socket = useContext(SocketContext);
 
@@ -30,6 +34,7 @@ const AdventureLogInputWrapper = (props) => {
         onSave={(data) => {
           socket.emit(SAVE_LOG_DATA, data);
         }}
+        collapse={() => dispatch(collapseAdventureLogInput())}
         />
       </div>
     )

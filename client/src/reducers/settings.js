@@ -11,11 +11,11 @@ import {
 const DEFAULT_SETTINGS = {
   gameStarted: true,
   adventureLogExpanded: false,
+  adventureLogInputExpanded: false,
   notebookExpanded: false,
   scarcityAbundanceLogExpanded: false,
-  drawingEnabled: false,
   cardExpanded: false,
-  adventureLogInputExpanded: false,
+  drawingEnabled: false,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {

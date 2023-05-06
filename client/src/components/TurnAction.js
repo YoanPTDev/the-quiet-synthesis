@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn } from '../actions/partie';
-import { disableDrawing } from '../actions/settings';
+import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
 
 const TurnAction = ({
   addPlayer,
@@ -57,6 +57,7 @@ const mapDispatchToProps = (dispatch, props) => {
     startGame: () => dispatch(startGame(socket)),
     endTurn: () => dispatch(endTurn(socket)),
     disableDrawing: () => dispatch(disableDrawing()),
+    expandAdventureLogInput: () => dispatch(expandAdventureLogInput())
   };
 };
 
