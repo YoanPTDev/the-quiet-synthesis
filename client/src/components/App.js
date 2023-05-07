@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startGame, cancelGame } from '../actions/settings';
 import AdventureLogWrapper from './AdventureLogWrapper';
 import AdventureLogInputWrapper from './AdventureLogInputWrapper';
+import DiscussionInputWrapper from './DiscussionInputWrapper';
 import NotebookWrapper from './NotebookWrapper';
 import ScarcityAbundanceWrapper from './ScarcityAbundanceWrapper';
 import Map from './Map';
@@ -33,6 +34,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
           <NotebookWrapper />
           <ScarcityAbundanceWrapper />
           <AdventureLogInputWrapper/>
+          <DiscussionInputWrapper/>
         </div>
       </div>
       {gameStarted ? (

@@ -34,7 +34,8 @@ body,
 .adventure-log-container,
 .notebook-container,
 .input-container,
-.scarcity-abundance-container {
+.scarcity-abundance-container,
+.input-container {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -45,14 +46,18 @@ body,
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.input-container {
+  width: 300px;
+  height: 100px;
+}
+
 .adventure-log-container {
   width: 400px;
   height: 500px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-.notebook-container,
-.input-container {
+.notebook-container {
   width: 300px;
   height: 400px;
 }
@@ -98,6 +103,10 @@ body,
 
 li {
   list-style-position: inside;
+}
+
+.out-of-turn-action-container {
+  width: 200px;
 }
 
 .top-left {

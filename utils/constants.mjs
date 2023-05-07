@@ -8,6 +8,7 @@ export const ABUNDANCE_DATA = 'ABUNDANCE_DATA';
 export const NAME_DATA = 'NAME_DATA';
 export const GAMERTAG_DATA = 'GAMERTAG_DATA';
 export const DISCUSSION_DATA = 'DISCUSSION_DATA';
+export const DESCRIPTION_DATA = 'DESCRIPTION_DATA';
 
 export const ADD_PLAYER = 'ADD_PLAYER';
 export const START_GAME = 'START_GAME';
@@ -19,7 +20,6 @@ export const SUBMIT_ACTION = 'SUBMIT_ACTION';
 export const TRANSFER = 'TRANSFER';
 export const DISCUSS = 'DISCUSS';
 
-export const DESCRIPTION = 'DESCRIPTION';
 export const SELECTED_PROMPT = 'SELECTED_PROMPT';
 
 export const UPDATE_LOGS = 'UPDATE_LOGS';

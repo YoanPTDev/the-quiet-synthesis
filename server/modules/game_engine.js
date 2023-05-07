@@ -33,7 +33,7 @@ import {
   DRAWN_CARD_DATA,
   SELECTED_PROMPT,
   DISCUSS,
-  DESCRIPTION,
+  DESCRIPTION_DATA,
 } from '../../utils/constants.mjs';
 
 import io from '../server.js';
@@ -305,19 +305,21 @@ const playerTurnStateMachine = {
     ) {
       const respondingPlayer = i % len;
 
-      new Promise((resolve) => {
+      const reply = await new Promise((resolve) => {
+        console.log('Promise sent', respondingPlayer);
         this.gameEngine.players[respondingPlayer].socket.emit(
           DISCUSS,
           (response) => {
             resolve(response);
           }
         );
-      }).then((reply) => {
-        discussion.push({
-          player: this.gameEngine.players[respondingPlayer].socket.playerName,
-          reply: reply,
-        });
       });
+      
+      discussion.push({
+        player: this.gameEngine.players[respondingPlayer].socket.playerName,
+        reply: reply,
+      });
+      
       Object.assign(action.discussion, discussion);
       io.emit(UPDATE_DISCUSSION, discussion);
 
@@ -373,7 +375,7 @@ const playerTurnStateMachine = {
 
   weekBuilder(data, action) {
     switch (data.type) {
-      case DESCRIPTION:
+      case DESCRIPTION_DATA:
         if (action != null) {
           console.log('DESCRIPTION', action.description);
           action.description = data.value;

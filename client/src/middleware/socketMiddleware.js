@@ -23,10 +23,10 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
     });
     socketInstance.on(DISCUSS, () => {
-      storeReference.dispatch(expandAdventureLogInput());
+      storeReference.dispatch(expandDiscussionInput());
     });
     socketInstance.on(UPDATE_DISCUSSION, (data) => {
-      console.log('update discussion', data);
+      console.log('update', data);
     });
     socketInstance.on(UPDATE_NOTEBOOK, (data) => {
       storeReference.dispatch(fetchNote(data));

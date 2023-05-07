@@ -17,7 +17,7 @@ import {
   UPDATE_NOTEBOOK,
   NAME_DATA,
   GAMERTAG_DATA,
-  DESCRIPTION,
+  DESCRIPTION_DATA,
 } from '../utils/constants.mjs';
 
 import { connectToDatabase } from './db/connection.js';
