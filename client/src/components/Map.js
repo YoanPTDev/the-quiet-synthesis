@@ -8,7 +8,7 @@ import { MOUSE_DATA } from '../../../utils/constants.mjs';
 const Map = (props) => {
   const socket = useContext(SocketContext);
 
-  const { disableDrawing, drawingEnabled } = props;
+  const { drawingEnabled } = props;
 
   const [isPressed, setIsPressed] = useState(false);
   const [prevMouse, setPrevMouse] = useState({ x: null, y: null });

@@ -17,6 +17,7 @@ import {
   UPDATE_NOTEBOOK,
   NAME_DATA,
   GAMERTAG_DATA,
+  DESCRIPTION,
 } from '../utils/constants.mjs';
 
 import { connectToDatabase } from './db/connection.js';
@@ -71,6 +72,7 @@ io.on('connection', (socket) => {
 
   // --------TESTING----------
   socket.on(SAVE_LOG_DATA, (data) => {
+    console.log('data type', data.type);
     // Process the data based on its type
     switch (data.type) {
       case SCARCITY_DATA:

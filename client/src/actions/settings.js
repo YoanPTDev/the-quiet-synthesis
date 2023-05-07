@@ -2,6 +2,7 @@ import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,
   SET_ADVENTURELOG_INPUT_EXPANDED,
+  SET_DISCUSSION_INPUT_EXPANDED,
   SET_NOTEBOOK_EXPANDED,
   SET_SCARCITY_ABUNDANCE_EXPANDED,
   SET_DRAWING_ENABLED,
@@ -47,6 +48,20 @@ export const collapseAdventureLogInput = () => {
   return {
     type: SET_ADVENTURELOG_INPUT_EXPANDED,
     adventureLogInputExpanded: false,
+  };
+};
+
+export const expandDiscussionInput = () => {
+  return {
+    type: SET_DISCUSSION_INPUT_EXPANDED,
+    discussionInputExpanded: true,
+  };
+};
+
+export const collapseDiscussionInput = () => {
+  return {
+    type: SET_DISCUSSION_INPUT_EXPANDED,
+    discussionInputExpanded: false,
   };
 };
 

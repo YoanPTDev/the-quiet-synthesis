@@ -26,12 +26,14 @@ import {
   SAVE_ACTION_DATA,
   START_TURN,
   UPDATE_ACTION,
+  UPDATE_DISCUSSION,
   UPDATE_LOGS,
   SUBMIT_ACTION,
   START_PROJECT,
   DRAWN_CARD_DATA,
   SELECTED_PROMPT,
   DISCUSS,
+  DESCRIPTION,
 } from '../../utils/constants.mjs';
 
 import io from '../server.js';
@@ -287,45 +289,93 @@ const playerTurnStateMachine = {
     }
   },
 
-  discuss(action) {
+  async discuss(action) {
     const currPlayerIdx = this.gameEngine.currentPlayerIndex;
     const len = this.gameEngine.players.length;
     const discussion = [];
     const regex = /\?$/;
 
     let isQuestion = false;
-    for (let i = currPlayerIdx; i < currPlayerIdx + len || isQuestion; i++) {
-      let reply = '';
+    let firstPlayerAskedQuestion = false;
+
+    for (
+      let i = currPlayerIdx, count = 0;
+      i < currPlayerIdx + len || isQuestion;
+      i++, count++
+    ) {
       const respondingPlayer = i % len;
 
-      this.gameEngine.players[respondingPlayer].socket.emit(
-        'discuss',
-        (response) => {
-          reply = response;
-        }
-      );
-
-      discussion.push({
-        player: this.gameEngine.players[respondingPlayer].socket.playerName,
-        reply: reply,
+      new Promise((resolve) => {
+        this.gameEngine.players[respondingPlayer].socket.emit(
+          DISCUSS,
+          (response) => {
+            resolve(response);
+          }
+        );
+      }).then((reply) => {
+        discussion.push({
+          player: this.gameEngine.players[respondingPlayer].socket.playerName,
+          reply: reply,
+        });
       });
       Object.assign(action.discussion, discussion);
-      io.emit('updateDiscussion', discussion);
+      io.emit(UPDATE_DISCUSSION, discussion);
 
-      if (respondingPlayer === currPlayerIdx) {
+      if (count === 0) {
+        // First player's turn
         if (regex.test(reply)) {
-          isQuestion = true;
+          firstPlayerAskedQuestion = true;
+        }
+      } else if (respondingPlayer === currPlayerIdx) {
+        if (firstPlayerAskedQuestion) {
+          break; // If the first player asked a question and it's their turn again, end the discussion
         } else {
-          break;
+          isQuestion = false; // Ensure the discussion ends after the last player has made a statement
         }
       }
     }
   },
 
+  // discuss(action) {
+  //   const currPlayerIdx = this.gameEngine.currentPlayerIndex;
+  //   const len = this.gameEngine.players.length;
+  //   const discussion = [];
+  //   const regex = /\?$/;
+
+  //   let isQuestion = false;
+  //   for (let i = currPlayerIdx; i < currPlayerIdx + len || isQuestion; i++) {
+  //     let reply = '';
+  //     const respondingPlayer = i % len;
+
+  //     this.gameEngine.players[respondingPlayer].socket.emit(
+  //       DISCUSS,
+  //       (response) => {
+  //         reply = response;
+  //       }
+  //     );
+
+  //     discussion.push({
+  //       player: this.gameEngine.players[respondingPlayer].socket.playerName,
+  //       reply: reply,
+  //     });
+  //     Object.assign(action.discussion, discussion);
+  //     io.emit(UPDATE_DISCUSSION, discussion);
+
+  //     if (respondingPlayer === currPlayerIdx) {
+  //       if (regex.test(reply)) {
+  //         isQuestion = true;
+  //       } else {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // },
+
   weekBuilder(data, action) {
     switch (data.type) {
-      case 'ActionDesc':
+      case DESCRIPTION:
         if (action != null) {
+          console.log('DESCRIPTION', action.description);
           action.description = data.value;
         } else {
           console.log('Action does not exit');

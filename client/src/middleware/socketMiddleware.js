@@ -4,7 +4,7 @@ import { fetchScarcityAbundance } from '../actions/scarcityAbundance';
 import { enableDrawing, expandAdventureLogInput } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 
-import { DISCUSS, UPDATE_LOGS, UPDATE_ACTION, UPDATE_NOTEBOOK, UPDATE_SCARCITY_ABUNDANCE, ENABLE_DRAWING } from '../../../utils/constants.mjs';
+import { DISCUSS, UPDATE_LOGS, UPDATE_ACTION, UPDATE_NOTEBOOK, UPDATE_SCARCITY_ABUNDANCE, ENABLE_DRAWING, UPDATE_DISCUSSION } from '../../../utils/constants.mjs';
 
 let socketInstance;
 
@@ -24,7 +24,10 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(DISCUSS, () => {
       storeReference.dispatch(expandAdventureLogInput());
-    })
+    });
+    socketInstance.on(UPDATE_DISCUSSION, (data) => {
+      console.log('update discussion', data);
+    });
     socketInstance.on(UPDATE_NOTEBOOK, (data) => {
       storeReference.dispatch(fetchNote(data));
     });

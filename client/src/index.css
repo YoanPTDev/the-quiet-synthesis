@@ -1,4 +1,8 @@
-/* styles.css */
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html,
 body,
 #root {
@@ -18,11 +22,7 @@ body,
   position: absolute;
 }
 
-.turn-action {
-  display: inline-flex;
-  width: 300px;
-}
-
+.turn-action,
 .action-buttons {
   display: inline-flex;
 }
@@ -31,74 +31,70 @@ body,
   margin: 20px;
 }
 
-/* styles.css */
-.adventure-log-container {
+.adventure-log-container,
+.notebook-container,
+.input-container,
+.scarcity-abundance-container {
   position: fixed;
-  width: 400px;
-  height: 500px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-}
-
-.notebook-container {
-  position: fixed;
-  width: 300px;
-  height: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.adventure-log-container {
+  width: 400px;
+  height: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.notebook-container,
+.input-container {
+  width: 300px;
+  height: 400px;
+}
+
 .scarcity-abundance-container {
-  position: fixed;
   width: 400px;
   height: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
 }
-  .scarcities-abundances-title {
-    width: 100%;
-    height: 10%;
-  }
 
-  .list-scarcities-abundances {
-    display: flex;
-    width: 100%;
-    height: 80%;
-  }
-    .scarcities-section, .abundances-section {
-      height: 100%;
-      width:50%;
-    }
-      .list-scarcities, .list-abundances {
-        width: 90%;
-        height: 80%;
-      }
-      .scarcities-abundances-input {
-        width: 100%;
-        height: 20%;
-      }
-  .scarcities-abundance-mass-transfer-button {
-    width: 100%;
-    height: 10%;
-  }
+.scarcities-abundances-title {
+  width: 100%;
+  height: 10%;
+}
+
+.list-scarcities-abundances {
+  display: flex;
+  width: 100%;
+  height: 80%;
+}
+
+.scarcities-section,
+.abundances-section {
+  height: 100%;
+  width: 50%;
+}
+
+.list-scarcities,
+.list-abundances {
+  width: 90%;
+  height: 80%;
+}
+
+.scarcities-abundances-input {
+  width: 100%;
+  height: 20%;
+}
+
+.scarcities-abundance-mass-transfer-button {
+  width: 100%;
+  height: 10%;
+}
 
 li {
   list-style-position: inside;
@@ -124,17 +120,11 @@ li {
   right: 10px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .map {
   position: absolute;
   z-index: 0;
 }
 
-/* CARD */
 .card-item {
   border-radius: 20px;
   border: solid rgb(51, 51, 51) 1px;
@@ -156,16 +146,18 @@ li {
   display: flex;
   justify-content: space-between;
 }
-    .title-spacing ­{
-      margin-right: 30px;
-    }
-    .suit-icon {
-      height: 80px;
-      width: 80px;
-      position: absolute;
-      top: -15px;
-      left: 0px;
-    }
+
+.title-spacing {
+  margin-right: 30px;
+}
+
+.suit-icon {
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  top: -15px;
+  left: 0px;
+}
 
 .card-prompts {
   display: flex;
@@ -188,10 +180,10 @@ li {
   width: 100%;
   font-family: 'Martel', serif;
 }
-  .card-prompt:hover {
-    /* box-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px -1px rgba(0, 0, 0, 0.5); */
-    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
-  }
+
+.card-prompt:hover {
+  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
+}
 
 .log {
   border: 2px solid black;

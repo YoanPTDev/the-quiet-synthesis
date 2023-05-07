@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { collapseAdventureLogInput } from '../actions/settings';
 import TextAreaField from "./TextAreaField";
-import { ADVENTURE_LOG_DESCRIPTION, SAVE_LOG_DATA } from "../../../utils/constants.mjs";
+import { DESCRIPTION, SAVE_LOG_DATA } from "../../../utils/constants.mjs";
 
 const AdventureLogInput = (props) => (
   <TextAreaField
     {...props}
-    placeholder="Add an AdventureLog entry"
+    placeholder="Add a description to your action..."
     onSave={(value) => {
-      const data = {
-        type: ADVENTURE_LOG_DESCRIPTION,
-        value: value,
-      };
-      props.onSave(data);
+      if (value !== '') {
+        const data = {
+          type: DESCRIPTION,
+          value: value,
+        };
+        props.onSave(data);
+      }
     }}
     collapse={props.collapse}
   />
@@ -32,6 +34,7 @@ const AdventureLogInputWrapper = (props) => {
       <div>
         <AdventureLogInput 
         onSave={(data) => {
+          console.log('sending description data', data);
           socket.emit(SAVE_LOG_DATA, data);
         }}
         collapse={() => dispatch(collapseAdventureLogInput())}
