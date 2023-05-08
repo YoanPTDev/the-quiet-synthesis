@@ -6,7 +6,8 @@ import {
   SET_NOTEBOOK_EXPANDED,
   SET_SCARCITY_ABUNDANCE_EXPANDED,
   SET_DRAWING_ENABLED,
-  SET_CARD_EXPANDED
+  SET_CARD_EXPANDED,
+  SET_SECOND_TURN_ACTION_EXPANDED
 } from './types';
 
 export const startGame = () => {
@@ -117,6 +118,20 @@ export const expandCard = () => {
 export const collapseCard = () => {
   return {
     type: SET_CARD_EXPANDED,
+    cardExpanded: false,
+  };
+};
+
+export const expandSecondTurnAction = () => {
+  return {
+    type: SET_SECOND_TURN_ACTION_EXPANDED,
+    cardExpanded: true,
+  };
+};
+
+export const collapseSecondTurnAction = () => {
+  return {
+    type: SET_SECOND_TURN_ACTION_EXPANDED,
     cardExpanded: false,
   };
 };

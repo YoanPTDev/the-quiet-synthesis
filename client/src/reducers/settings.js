@@ -7,6 +7,7 @@ import {
   SET_SCARCITY_ABUNDANCE_EXPANDED,
   SET_DRAWING_ENABLED,
   SET_CARD_EXPANDED,
+  SET_SECOND_TURN_ACTION_EXPANDED,
 } from '../actions/types';
 
 const DEFAULT_SETTINGS = {
@@ -18,6 +19,7 @@ const DEFAULT_SETTINGS = {
   cardExpanded: false,
   drawingEnabled: false,
   discussionInputExpanded: false,
+  secondTurnActionExpanded: false,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
@@ -62,6 +64,11 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
         ...state,
         cardExpanded: action.cardExpanded,
       };
+      case SET_SECOND_TURN_ACTION_EXPANDED:
+        return {
+          ...state,
+          secondTurnActionExpanded: action.secondTurnActionExpanded,
+        };
     default:
       return state;
   }
