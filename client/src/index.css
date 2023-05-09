@@ -1,3 +1,12 @@
+:root {
+   --black: #282820;
+   --gray: #666666;
+   --blue-gray: #8493A0;
+   --ivory: #EAE8D0;
+   --pastel-green: #dfead0;
+   --sandy-purple: #a08493;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -23,7 +32,8 @@ body,
 }
 
 .turn-action,
-.action-buttons {
+.action-buttons,
+.toggle-button-wrapper {
   display: inline-flex;
 }
 
