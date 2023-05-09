@@ -226,25 +226,6 @@ const playerTurnStateMachine = {
         }
       });
 
-      this.currentPlayer.socket.on(SUBMIT_ACTION, () => {
-        let action =
-          this.currentState === playerStates.ACTION1
-            ? this.newAction1
-            : this.newAction2;
-
-        if (action.type === START_PROJECT) {
-          this.gameEngine.map.projects.push(
-            new Project(action.turns, action.description)
-          );
-        }
-
-        this.newWeek.actions.push(action);
-
-        if (this.currentState === playerStates.ACTION1) {
-          this.transition(playerStates.ACTION2);
-        }
-      });
-
       this.listenersSetUp = true;
     }
   },
@@ -290,54 +271,76 @@ const playerTurnStateMachine = {
     }
   },
 
-  discuss() {
+  consolidateAction() {
+    let action =
+      this.currentState === playerStates.ACTION1
+        ? this.newAction1
+        : this.newAction2;
+
+    if (action.type === START_PROJECT) {
+      this.gameEngine.map.projects.push(
+        new Project(action.turns, action.description)
+      );
+    }
+
+    this.newWeek.actions.push(action);
+
+    if (this.currentState === playerStates.ACTION1) {
+      this.transition(playerStates.ACTION2);
+    }
+    else if (this.currentState === playerStates.ACTION2) {
+      this.endTurn();
+    }
+  },
+
+  discuss(action) {
     const currPlayerIdx = this.gameEngine.currentPlayerIndex;
     const len = this.gameEngine.players.length;
     const discussion = [];
     const regex = /\?$/;
 
-    let isQuestion = false;
     let firstPlayerAskedQuestion = false;
+    let count = 0;
 
-    const discussionPromise = new Promise((resolve) => {
-      for (
-        let i = currPlayerIdx, count = 0;
-        i < currPlayerIdx + len || isQuestion;
-        i++, count++
-      ) {
-        const respondingPlayer = i % len;
+    const handleDiscussionData = (data) => {
+      const respondingPlayer = (currPlayerIdx + count) % len;
+      const reply = {
+        player: this.gameEngine.players[respondingPlayer].socket.playerName,
+        statement: data,
+      };
 
-        this.gameEngine.players[respondingPlayer].socket.emit(DISCUSS);
+      discussion.push(reply);
+      Object.assign(action.discussion, discussion);
+      io.emit(UPDATE_DISCUSSION, discussion);
 
-        this.gameEngine.players[respondingPlayer].socket.once(
-          DISCUSSION_DATA,
-          (data) => {
-            discussion.push({
-              player:
-                this.gameEngine.players[respondingPlayer].socket.playerName,
-              statement: data,
-            });
-          }
-        );
-
-        io.emit(UPDATE_DISCUSSION, discussion);
-
-        if (count === 0) {
-          // First player's turn
-          if (regex.test(statement)) {
-            firstPlayerAskedQuestion = true;
-          }
-        } else if (respondingPlayer === currPlayerIdx) {
-          if (firstPlayerAskedQuestion) {
-            resolve(discussion); // If the first player asked a question and it's their turn again, end the discussion
-          } else {
-            isQuestion = false; // Ensure the discussion ends after the last player has made a statement
-          }
-        }
+      if (count === 0) {
+        // First player's turn
+        firstPlayerAskedQuestion = regex.test(reply.statement);
       }
-    });
-    return discussionPromise;
+
+      if (
+        count < len - 1 ||
+        (firstPlayerAskedQuestion && respondingPlayer !== currPlayerIdx)
+      ) {
+        // Move to next player's turn
+        count++;
+        const nextPlayer = (currPlayerIdx + count) % len;
+        this.gameEngine.players[nextPlayer].socket.emit(DISCUSS);
+        this.gameEngine.players[nextPlayer].socket.once(
+          DISCUSSION_DATA,
+          handleDiscussionData
+        );
+      }
+    };
+
+    // Start with the current player's turn
+    this.gameEngine.players[currPlayerIdx].socket.emit(DISCUSS);
+    this.gameEngine.players[currPlayerIdx].socket.once(
+      DISCUSSION_DATA,
+      handleDiscussionData
+    );
   },
+
 
   weekBuilder(data, action) {
     switch (data.type) {
@@ -371,9 +374,7 @@ const playerTurnStateMachine = {
             break;
           case 'discussion':
             Object.assign(action, DiscussAction.build('', 0));
-            this.discuss().then((discussion) => {
-              Object.assign(action.discussion, discussion);
-            });
+            this.discuss(action);
             break;
           case 'prolong project':
             Object.assign(action, AddWeeksAction.build('', 0));
