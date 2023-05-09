@@ -49,7 +49,6 @@ const SecondTurnAction = ({
 };
 
 const mapStateToProps = (state) => {
-  console.log("secondTurnActionExpanded from state:", state.settings.secondTurnActionExpanded);
   return { secondTurnActionExpanded: state.settings.secondTurnActionExpanded };
 };
 
