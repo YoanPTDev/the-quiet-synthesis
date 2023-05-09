@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
 import { MOUSE_DATA } from '../../../utils/constants.mjs';
+import { COLOR } from '../colors';
 
 const Map = (props) => {
   const socket = useContext(SocketContext);
@@ -24,7 +25,7 @@ const Map = (props) => {
     p5.createCanvas(window.innerWidth, window.innerHeight).parent(
       canvasParentRef
     );
-    p5.background(200);
+    p5.background(COLOR.IVORY);
   };
 
   useEffect(() => {
@@ -72,7 +73,7 @@ const Map = (props) => {
         setIsPressed(true);
   
         if (prevMouse.x !== null && prevMouse.y !== null) {
-          p5.stroke(100, 0, 200);
+          p5.stroke(COLOR.BLACK);
           p5.line(prevMouse.x, prevMouse.y, p5.mouseX, p5.mouseY);
         }
   
@@ -91,7 +92,7 @@ const Map = (props) => {
       prevReceivedMouse.x !== null &&
       prevReceivedMouse.y !== null
     ) {
-      p5.stroke(255, 0, 100);
+      p5.stroke(COLOR.BLACK_DRAW);
       p5.line(
         prevReceivedMouse.x,
         prevReceivedMouse.y,

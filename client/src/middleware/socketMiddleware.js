@@ -27,7 +27,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(expandDiscussionInput());
     });
     socketInstance.on(UPDATE_DISCUSSION, (data) => {
-      console.log('update', data);
+      console.log('UPDATE_DISCUSSION', data);
     });
     socketInstance.on(SECOND_TURN_ACTION, () => {
       console.log('SECOND_TURN_ACTION');

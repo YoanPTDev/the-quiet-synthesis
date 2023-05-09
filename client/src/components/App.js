@@ -28,15 +28,17 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
   return (
     <div>
       <div className='action-buttons'>
-        <h1>The Quiet Year</h1>
+        <h3>The Quiet Year</h3>
         <TurnActionWrapper />
         <div className='note-log-wrapper'>
-          <AdventureLogWrapper />
-          <NotebookWrapper />
-          <ScarcityAbundanceWrapper />
-          <AdventureLogInputWrapper/>
-          <DiscussionInputWrapper/>
-          <SecondTurnActionWrapper/>
+          <div className='toggle-button-wrapper'>
+            <AdventureLogWrapper />
+            <NotebookWrapper />
+            <ScarcityAbundanceWrapper />
+          </div>
+          <AdventureLogInputWrapper />
+          <DiscussionInputWrapper />
+          <SecondTurnActionWrapper />
         </div>
       </div>
       {gameStarted ? (
@@ -47,8 +49,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
             <Card />
             <OutOfTurnAction />
           </div>
-          <div className='bottom-right component-container'>
-          </div>
+          <div className='bottom-right component-container'></div>
         </div>
       ) : (
         <div>
