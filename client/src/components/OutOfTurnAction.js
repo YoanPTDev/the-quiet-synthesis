@@ -5,8 +5,6 @@ const OutOfTurnAction = (props) => {
   const { outOfTurnActions, prompt, cardExpanded } = props;
 
   const renderOutOfTurnActions = () => {
-    console.log('outOfTurnActions', outOfTurnActions);
-    console.log('prompt', prompt);
     if (outOfTurnActions) {
       return (
         <div>

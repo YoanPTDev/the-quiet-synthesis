@@ -10,6 +10,7 @@ import Map from './Map';
 import Card from './Card';
 import OutOfTurnAction from './OutOfTurnAction';
 import TurnActionWrapper from './TurnAction';
+import SecondTurnActionWrapper from './SecondTurnAction';
 import { SocketContext } from '../middleware/socketcontext';
 
 import { ADD_PLAYER } from '../../../utils/constants.mjs';
@@ -35,6 +36,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
           <ScarcityAbundanceWrapper />
           <AdventureLogInputWrapper/>
           <DiscussionInputWrapper/>
+          <SecondTurnActionWrapper/>
         </div>
       </div>
       {gameStarted ? (
