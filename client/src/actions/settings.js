@@ -125,13 +125,13 @@ export const collapseCard = () => {
 export const expandSecondTurnAction = () => {
   return {
     type: SET_SECOND_TURN_ACTION_EXPANDED,
-    cardExpanded: true,
+    secondTurnActionExpanded: true,
   };
 };
 
 export const collapseSecondTurnAction = () => {
   return {
     type: SET_SECOND_TURN_ACTION_EXPANDED,
-    cardExpanded: false,
+    secondTurnActionExpanded: false,
   };
 };

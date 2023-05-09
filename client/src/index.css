@@ -35,7 +35,8 @@ body,
 .notebook-container,
 .input-container,
 .scarcity-abundance-container,
-.input-container {
+.input-container,
+.second-action-container {
   position: fixed;
   top: 50%;
   left: 50%;

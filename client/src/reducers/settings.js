@@ -19,7 +19,7 @@ const DEFAULT_SETTINGS = {
   cardExpanded: false,
   drawingEnabled: false,
   discussionInputExpanded: false,
-  secondTurnActionExpanded: false,
+  secondTurnActionExpanded: true,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {

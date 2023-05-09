@@ -2,15 +2,17 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { actionDiscovery, actionDiscussion, actionProject } from '../actions/secondTurn';
+import { collapseSecondTurnAction } from '../actions/settings';
 
 const SecondTurnAction = ({
   actionDiscovery,
   actionDiscussion,
   actionProject,
   secondTurnActionExpanded,
-  collapseSecondTurnAction,
+  collapseSecondTurnAction
 }) => {
   const handleClick = (choice) => {
+    console.log('handle click', choice);
     if(choice === 'Start a project') {
       actionProject();
     }
@@ -21,13 +23,16 @@ const SecondTurnAction = ({
       actionDiscussion();
     }
 
-    dispatch(collapseSecondTurnAction());
+    console.log('trying to collapse', collapseSecondTurnAction);
+
+    collapseSecondTurnAction();
   };
 
+  console.log('secondTurnActionExpanded', secondTurnActionExpanded);
   if (!secondTurnActionExpanded) return null;
 
   return (
-    <div>
+    <div className='second-action-container'>
       <button
         onClick={() => handleClick('Start a project')}
         style={{ marginLeft: '10px' }}>
@@ -48,6 +53,7 @@ const SecondTurnAction = ({
 };
 
 const mapStateToProps = (state) => {
+  console.log("secondTurnActionExpanded from state:", state.settings.secondTurnActionExpanded);
   return { secondTurnActionExpanded: state.settings.secondTurnActionExpanded };
 };
 
@@ -57,6 +63,7 @@ const mapDispatchToProps = (dispatch, props) => {
     actionDiscovery: () => dispatch(actionDiscovery(socket)),
     actionDiscussion: () => dispatch(actionDiscussion(socket)),
     actionProject: () => dispatch(actionProject(socket)),
+    collapseSecondTurnAction: () => dispatch(collapseSecondTurnAction()),
   };
 };
 
