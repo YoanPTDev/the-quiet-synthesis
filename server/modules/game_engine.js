@@ -34,6 +34,7 @@ import {
   SELECTED_PROMPT,
   DISCUSS,
   DESCRIPTION_DATA,
+  DISCUSSION_DATA,
 } from '../../utils/constants.mjs';
 
 import io from '../server.js';
@@ -305,21 +306,18 @@ const playerTurnStateMachine = {
     ) {
       const respondingPlayer = i % len;
 
-      const reply = await new Promise((resolve) => {
-        console.log('Promise sent', respondingPlayer);
-        this.gameEngine.players[respondingPlayer].socket.emit(
-          DISCUSS,
-          (response) => {
-            resolve(response);
-          }
-        );
+      this.gameEngine.players[respondingPlayer].socket.emit(DISCUSS);
+
+      const replyPromise = new Promise((resolve) => {
+        this.gameEngine.players[respondingPlayer].socket.once(DISCUSSION_DATA, (data) => {
+          resolve({
+            player: this.gameEngine.players[respondingPlayer].socket.playerName,
+            statement: data,
+          });
+        });
       });
-      
-      discussion.push({
-        player: this.gameEngine.players[respondingPlayer].socket.playerName,
-        reply: reply,
-      });
-      
+
+      discussion.push(await replyPromise);
       Object.assign(action.discussion, discussion);
       io.emit(UPDATE_DISCUSSION, discussion);
 
@@ -337,41 +335,6 @@ const playerTurnStateMachine = {
       }
     }
   },
-
-  // discuss(action) {
-  //   const currPlayerIdx = this.gameEngine.currentPlayerIndex;
-  //   const len = this.gameEngine.players.length;
-  //   const discussion = [];
-  //   const regex = /\?$/;
-
-  //   let isQuestion = false;
-  //   for (let i = currPlayerIdx; i < currPlayerIdx + len || isQuestion; i++) {
-  //     let reply = '';
-  //     const respondingPlayer = i % len;
-
-  //     this.gameEngine.players[respondingPlayer].socket.emit(
-  //       DISCUSS,
-  //       (response) => {
-  //         reply = response;
-  //       }
-  //     );
-
-  //     discussion.push({
-  //       player: this.gameEngine.players[respondingPlayer].socket.playerName,
-  //       reply: reply,
-  //     });
-  //     Object.assign(action.discussion, discussion);
-  //     io.emit(UPDATE_DISCUSSION, discussion);
-
-  //     if (respondingPlayer === currPlayerIdx) {
-  //       if (regex.test(reply)) {
-  //         isQuestion = true;
-  //       } else {
-  //         break;
-  //       }
-  //     }
-  //   }
-  // },
 
   weekBuilder(data, action) {
     switch (data.type) {
