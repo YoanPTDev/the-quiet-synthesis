@@ -323,7 +323,7 @@ const playerTurnStateMachine = {
 
       if (count === 0) {
         // First player's turn
-        if (regex.test(reply)) {
+        if (regex.test(statement)) {
           firstPlayerAskedQuestion = true;
         }
       } else if (respondingPlayer === currPlayerIdx) {
