@@ -290,7 +290,7 @@ const playerTurnStateMachine = {
     }
   },
 
-  async discuss(action) {
+  discuss() {
     const currPlayerIdx = this.gameEngine.currentPlayerIndex;
     const len = this.gameEngine.players.length;
     const discussion = [];
@@ -299,41 +299,44 @@ const playerTurnStateMachine = {
     let isQuestion = false;
     let firstPlayerAskedQuestion = false;
 
-    for (
-      let i = currPlayerIdx, count = 0;
-      i < currPlayerIdx + len || isQuestion;
-      i++, count++
-    ) {
-      const respondingPlayer = i % len;
+    const discussionPromise = new Promise((resolve) => {
+      for (
+        let i = currPlayerIdx, count = 0;
+        i < currPlayerIdx + len || isQuestion;
+        i++, count++
+      ) {
+        const respondingPlayer = i % len;
 
-      this.gameEngine.players[respondingPlayer].socket.emit(DISCUSS);
+        this.gameEngine.players[respondingPlayer].socket.emit(DISCUSS);
 
-      const replyPromise = new Promise((resolve) => {
-        this.gameEngine.players[respondingPlayer].socket.once(DISCUSSION_DATA, (data) => {
-          resolve({
-            player: this.gameEngine.players[respondingPlayer].socket.playerName,
-            statement: data,
-          });
-        });
-      });
+        this.gameEngine.players[respondingPlayer].socket.once(
+          DISCUSSION_DATA,
+          (data) => {
+            discussion.push({
+              player:
+                this.gameEngine.players[respondingPlayer].socket.playerName,
+              statement: data,
+            });
+          }
+        );
 
-      discussion.push(await replyPromise);
-      Object.assign(action.discussion, discussion);
-      io.emit(UPDATE_DISCUSSION, discussion);
+        io.emit(UPDATE_DISCUSSION, discussion);
 
-      if (count === 0) {
-        // First player's turn
-        if (regex.test(reply)) {
-          firstPlayerAskedQuestion = true;
-        }
-      } else if (respondingPlayer === currPlayerIdx) {
-        if (firstPlayerAskedQuestion) {
-          break; // If the first player asked a question and it's their turn again, end the discussion
-        } else {
-          isQuestion = false; // Ensure the discussion ends after the last player has made a statement
+        if (count === 0) {
+          // First player's turn
+          if (regex.test(statement)) {
+            firstPlayerAskedQuestion = true;
+          }
+        } else if (respondingPlayer === currPlayerIdx) {
+          if (firstPlayerAskedQuestion) {
+            resolve(discussion); // If the first player asked a question and it's their turn again, end the discussion
+          } else {
+            isQuestion = false; // Ensure the discussion ends after the last player has made a statement
+          }
         }
       }
-    }
+    });
+    return discussionPromise;
   },
 
   weekBuilder(data, action) {
@@ -368,7 +371,9 @@ const playerTurnStateMachine = {
             break;
           case 'discussion':
             Object.assign(action, DiscussAction.build('', 0));
-            this.discuss(action);
+            this.discuss().then((discussion) => {
+              Object.assign(action.discussion, discussion);
+            });
             break;
           case 'prolong project':
             Object.assign(action, AddWeeksAction.build('', 0));
