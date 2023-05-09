@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 const TextAreaField = ({ placeholder, onSave, value, collapse }) => {
   const [inputValue, setInputValue] = useState(value || '');
 
-  console.log(collapse);
-
   const handleSave = () => {
     if (onSave) {
       onSave(inputValue);

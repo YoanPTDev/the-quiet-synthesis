@@ -2,6 +2,7 @@
    --black: #282820;
    --gray: #666666;
    --blue-gray: #8493A0;
+   --blue-gray-alpha: #8493A066;
    --ivory: #EAE8D0;
    --pastel-green: #dfead0;
    --sandy-purple: #a08493;
@@ -117,7 +118,14 @@ li {
 }
 
 .out-of-turn-action-container {
-  width: 200px;
+  position: fixed;
+  top: 19%;
+  right: 1%;
+  background-color: var(--blue-gray-alpha);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px var(--blue-gray);
+  width: 300px;
 }
 
 .top-left {
