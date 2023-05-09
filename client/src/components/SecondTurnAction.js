@@ -12,7 +12,6 @@ const SecondTurnAction = ({
   collapseSecondTurnAction
 }) => {
   const handleClick = (choice) => {
-    console.log('handle click', choice);
     if(choice === 'Start a project') {
       actionProject();
     }
@@ -23,12 +22,9 @@ const SecondTurnAction = ({
       actionDiscussion();
     }
 
-    console.log('trying to collapse', collapseSecondTurnAction);
-
     collapseSecondTurnAction();
   };
 
-  console.log('secondTurnActionExpanded', secondTurnActionExpanded);
   if (!secondTurnActionExpanded) return null;
 
   return (

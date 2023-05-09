@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { collapseAdventureLogInput } from '../actions/settings';
 import TextAreaField from "./TextAreaField";
-import { SAVE_LOG_DATA } from "../../../utils/constants.mjs";
+import { SAVE_ACTION_DATA } from "../../../utils/constants.mjs";
 
 const AdventureLogInput = (props) => (
   <TextAreaField
@@ -34,7 +34,7 @@ const AdventureLogInputWrapper = (props) => {
       <div className='input-container'>
         <AdventureLogInput 
         onSave={(data) => {
-          socket.emit(SAVE_LOG_DATA, data);
+          socket.emit(SAVE_ACTION_DATA, data);
         }}
         collapse={() => dispatch(collapseAdventureLogInput())}
         />
