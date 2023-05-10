@@ -217,12 +217,19 @@ const playerTurnStateMachine = {
             action: this.newAction1,
             prompt: this.currentPrompt,
           });
+          
+          if(this.newAction1.isCompleted()) {
+            this.isAction2();
+          }
         } else if (this.currentState === playerStates.ACTION2) {
           this.weekBuilder(data, this.newAction2);
           this.currentPlayer.socket.broadcast.emit(UPDATE_ACTION, {
             action: this.newAction2,
             prompt: this.currentPrompt,
           });
+          if(this.newAction2.isCompleted()) {
+            this.isFinished();
+          }
         }
       });
 

@@ -9,9 +9,15 @@ class GameAction {
 
     return newAction;
   }
-
-  execute() {
-    //Incertain, a revoir
+  
+  /**
+   * each class that implements GameAction will need to redefine this method.
+   * It defines a condition that will tell the engine if it needs to transition to the next turn state or not.
+   * The engine will call on this function every time the Front-End returns input from the user.
+   * @returns a boolean that specifies if the condition to transition is met.
+   */
+  isCompleted() {
+    throw new Error(`Unable to confirm if condition for transiting to next state has been met, 'isCompleted' method in ${this.constructor.name} is not defined`);
   }
 }
 
@@ -23,10 +29,6 @@ class ProjectAction extends GameAction {
 
     return newAction;
   }
-
-  execute() {
-    //WIP
-  }
 }
 
 class DiscoverAction extends GameAction {
@@ -37,22 +39,19 @@ class DiscoverAction extends GameAction {
 
     return newAction;
   }
-
-  execute() {
-    //WIP
-  }
 }
 
 class DiscussAction extends GameAction {
-  static build(desc, nbTokens) {
+  static build(desc, nbTokens, nbPlayers) {
     let newAction = super.build('Discussion', desc, nbTokens);
     newAction.discussion = [];
+    let expectedDiscussionLength = nbPlayers;
 
     return newAction;
   }
 
-  execute() {
-    //WIP
+  isCompleted() {
+    return newAction.discussion.length === 4;
   }
 }
 
@@ -62,10 +61,6 @@ class AddWeeksAction extends GameAction {
 
     return newAction;
   }
-
-  execute(project, ammount) {
-    project.timer += ammount;
-  }
 }
 
 class ModifyAction extends GameAction {
@@ -74,10 +69,6 @@ class ModifyAction extends GameAction {
 
     return newAction;
   }
-
-  execute(project, modification) {
-    project.description = modification;
-  }
 }
 
 class RemoveMapElementAction extends GameAction {
@@ -85,10 +76,6 @@ class RemoveMapElementAction extends GameAction {
     let newAction = super.build('Removal', desc, nbTokens);
 
     return newAction;
-  }
-
-  execute() {
-    //WIP
   }
 }
 
