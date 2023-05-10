@@ -9,7 +9,7 @@ import three from '../assets/three.png';
 import four from '../assets/four.png';
 import five from '../assets/five.png';
 import six from '../assets/six.png';
-import { SAVE_ACTION_DATA } from '../../../utils/constants.mjs';
+import { DATA } from '../../../utils/constants.mjs';
 
 const diceNum = {
   1: one,
@@ -74,7 +74,7 @@ const AdventureLogInputWrapper = (props) => {
               value: description,
               turns: diceValue,
             };
-            socket.emit(SAVE_ACTION_DATA, data);
+            socket.emit(DATA.SAVE_ACTION, data);
           }
         }}
         collapse={() => dispatch(collapseAdventureLogInput())}

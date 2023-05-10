@@ -4,20 +4,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 
 import {
-  SAVE_LOG_DATA,
-  ADD_PLAYER,
-  END_TURN,
-  START_GAME,
-  MOUSE_DATA,
-  SCARCITY_DATA,
-  TRANSFER,
-  UPDATE_SCARCITY_ABUNDANCE,
-  ABUNDANCE_DATA,
-  NOTE_DATA,
-  UPDATE_NOTEBOOK,
-  NAME_DATA,
-  GAMERTAG_DATA,
-  DESCRIPTION_DATA,
+  DATA, ACTIONS, UPDATE
 } from '../utils/constants.mjs';
 
 import { connectToDatabase } from './db/connection.js';
@@ -53,7 +40,7 @@ app.use((req, res, next) => {
 let playerCount = 0;
 
 io.on('connection', (socket) => {
-  socket.on(ADD_PLAYER, () => {
+  socket.on(ACTIONS.ADD_PLAYER, () => {
     playerCount++;
     const playerName = `Player ${playerCount}`;
     socket.playerName = playerName;
@@ -62,48 +49,48 @@ io.on('connection', (socket) => {
     console.log(`${playerName} connected`);
   });
 
-  socket.on(START_GAME, () => {
+  socket.on(ACTIONS.START_GAME, () => {
     gameEngine.start();
   });
 
-  socket.on(END_TURN, () => {
+  socket.on(ACTIONS.END_TURN, () => {
     gameEngine.endTurn();
   });
 
   // --------TESTING----------
-  socket.on(SAVE_LOG_DATA, (data) => {
+  socket.on(DATA.SAVE_LOG, (data) => {
     console.log('data type', data.type);
     // Process the data based on its type
     switch (data.type) {
-      case SCARCITY_DATA:
-        if (data.action === TRANSFER) {
+      case DATA.SCARCITY:
+        if (data.action === ACTIONS.TRANSFER) {
           const indexToRemove = gameEngine.scarc_abund.abundances.indexOf(
             data.value
           );
           gameEngine.scarc_abund.abundances.splice(indexToRemove, 1);
         }
         gameEngine.scarc_abund.scarcities.push(data.value);
-        io.emit(UPDATE_SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
+        io.emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
         break;
-      case ABUNDANCE_DATA:
-        if (data.action === TRANSFER) {
+      case DATA.ABUNDANCE:
+        if (data.action === ACTIONS.TRANSFER) {
           const indexToRemove = gameEngine.scarc_abund.scarcities.indexOf(
             data.value
           );
           gameEngine.scarc_abund.scarcities.splice(indexToRemove, 1);
         }
         gameEngine.scarc_abund.abundances.push(data.value);
-        io.emit(UPDATE_SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
+        io.emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
         break;
-      case NOTE_DATA:
+      case DATA.NOTE:
         // Save the Notebook entry to your mongoDB collection
         gameEngine.notebook.addNote(data.value);
-        io.emit(UPDATE_NOTEBOOK, gameEngine.notebook.notes);
+        io.emit(UPDATE.NOTEBOOK, gameEngine.notebook.notes);
         break;
-      case NAME_DATA:
+      case DATA.NAME:
         // Save the Name entry to your mongoDB collection
         break;
-      case GAMERTAG_DATA:
+      case DATA.GAMERTAG:
         // Save the Gamertag entry to your mongoDB collection
         break;
       default:
@@ -113,9 +100,9 @@ io.on('connection', (socket) => {
   });
   // --------TESTING----------
 
-  socket.on(MOUSE_DATA, (data) => {
+  socket.on(DATA.MOUSE, (data) => {
     console.log('Received:', data.x, data.y);
-    socket.broadcast.emit(MOUSE_DATA, data);
+    socket.broadcast.emit(DATA.MOUSE, data);
   });
 
   socket.on('disconnect', () => {

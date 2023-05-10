@@ -1,10 +1,9 @@
-import { END_TURN, START_GAME } from "../../../utils/constants.mjs";
+import { ACTIONS } from '../../../utils/constants.mjs';
 
 export const startGame = (socket) => () => {
-  socket.emit(START_GAME);
+  socket.emit(ACTIONS.START_GAME);
 };
 
 export const endTurn = (socket) => () => {
-  socket.emit(END_TURN);
+  socket.emit(ACTIONS.END_TURN);
 };
-

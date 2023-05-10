@@ -12,11 +12,9 @@ const OutOfTurnAction = (props) => {
         <div>
           <div>{outOfTurnActions.type}</div>
           <div>{prompt}</div>
-          <div>
-            {outOfTurnActions.description}
-          </div>
+          <div>{outOfTurnActions.description}</div>
         </div>
-      )
+      );
     }
   };
 

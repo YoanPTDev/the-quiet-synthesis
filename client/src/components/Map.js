@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect, useContext } from 'react';
 import { disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
-import { MOUSE_DATA } from '../../../utils/constants.mjs';
+import { DATA } from '../../../utils/constants.mjs';
 import { COLOR } from '../colors';
 
 const Map = (props) => {
@@ -30,7 +30,7 @@ const Map = (props) => {
 
   useEffect(() => {
     if (socket) {
-      socket.on(MOUSE_DATA, function (data) {
+      socket.on(DATA.MOUSE, function (data) {
         if (!data.isPressed || data.isReleased) {
           setPrevReceivedMouse({ x: null, y: null });
           setReceivedMouse({ x: null, y: null });
@@ -42,7 +42,7 @@ const Map = (props) => {
       });
 
       return () => {
-        socket.off(MOUSE_DATA);
+        socket.off(DATA.MOUSE);
       };
     }
   }, [socket, receivedMouse]);
@@ -55,7 +55,7 @@ const Map = (props) => {
       isReleased: isReleased,
     };
 
-    socket.emit(MOUSE_DATA, data);
+    socket.emit(DATA.MOUSE, data);
   };
 
   const isMouseInsideCanvas = (p5) => {
@@ -71,12 +71,12 @@ const Map = (props) => {
     if (drawingEnabled) {
       if (p5.mouseIsPressed && isMouseInsideCanvas(p5)) {
         setIsPressed(true);
-  
+
         if (prevMouse.x !== null && prevMouse.y !== null) {
           p5.stroke(COLOR.BLACK);
           p5.line(prevMouse.x, prevMouse.y, p5.mouseX, p5.mouseY);
         }
-  
+
         sendMouse(p5.mouseX, p5.mouseY, isPressed);
         setPrevMouse({ x: p5.mouseX, y: p5.mouseY });
       } else {

@@ -1,14 +1,13 @@
-import { SECOND_ACTION_DISCOVERY, SECOND_ACTION_PROJECT, SECOND_ACTION_DISCUSSION } from "../../../utils/constants.mjs";
+import { SECOND_ACTION } from '../../../utils/constants.mjs';
 
 export const actionDiscovery = (socket) => () => {
-  socket.emit(SECOND_ACTION_DISCOVERY);
+  socket.emit(SECOND_ACTION.DISCOVERY);
 };
 
 export const actionProject = (socket) => () => {
-  socket.emit(SECOND_ACTION_PROJECT);
+  socket.emit(SECOND_ACTION.PROJECT);
 };
 
 export const actionDiscussion = (socket) => () => {
-  socket.emit(SECOND_ACTION_DISCUSSION);
+  socket.emit(SECOND_ACTION.DISCUSSION);
 };
-

@@ -13,7 +13,7 @@ import TurnActionWrapper from './TurnAction';
 import SecondTurnActionWrapper from './SecondTurnAction';
 import { SocketContext } from '../middleware/socketcontext';
 
-import { ADD_PLAYER } from '../../../utils/constants.mjs';
+import { ACTIONS } from '../../../utils/constants.mjs';
 
 const App = ({ gameStarted, startGame, cancelGame }) => {
   const socket = useContext(SocketContext);
@@ -21,7 +21,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
   useEffect(() => {
     if (socket) {
       // Emit an event when the component mounts
-      socket.emit(ADD_PLAYER);
+      socket.emit(ACTIONS.ADD_PLAYER);
     }
   }, [socket]);
 

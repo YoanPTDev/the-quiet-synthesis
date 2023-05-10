@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField';
 import { SocketContext } from '../middleware/socketcontext';
-import { ABUNDANCE_DATA, SAVE_LOG_DATA, SCARCITY_DATA, TRANSFER } from '../../../utils/constants.mjs';
+import { DATA, ACTIONS } from '../../../utils/constants.mjs';
 
 const ScarcityInput = (props) => (
   <InputField
@@ -10,7 +10,7 @@ const ScarcityInput = (props) => (
     placeholder='Add a scarcity'
     onSave={(value) => {
       const data = {
-        type: SCARCITY_DATA,
+        type: DATA.SCARCITY,
         value: value,
       };
       props.onSave(data);
@@ -24,7 +24,7 @@ const AbundanceInput = (props) => (
     placeholder='Add an abundance'
     onSave={(value) => {
       const data = {
-        type: ABUNDANCE_DATA,
+        type: DATA.ABUNDANCE,
         value: value,
       };
       props.onSave(data);
@@ -43,15 +43,19 @@ const ListItem = ({ item, onTransfer, onCheckedChange }) => {
   return (
     <div key={item}>
       <input
-        type="checkbox"
+        type='checkbox'
         name={item}
         checked={isChecked}
         onChange={handleCheckboxChange}
       />
-      <label htmlFor={item} style={{ marginLeft: '5px' }}>
+      <label
+        htmlFor={item}
+        style={{ marginLeft: '5px' }}>
         {item}
       </label>
-      <button onClick={() => onTransfer(item)} style={{ marginLeft: '5px' }}>
+      <button
+        onClick={() => onTransfer(item)}
+        style={{ marginLeft: '5px' }}>
         Transfer
       </button>
     </div>
@@ -79,11 +83,19 @@ const ScarcityAbundanceLog = (props) => {
     if (source === 'scarcity') {
       setCurrentScarcities(currentScarcities.filter((s) => s !== item));
       setCurrentAbundances([...currentAbundances, item]);
-      socket.emit(SAVE_LOG_DATA, { type: ABUNDANCE_DATA, value: item, action: TRANSFER });
+      socket.emit(DATA.SAVE_LOG, {
+        type: DATA.ABUNDANCE,
+        value: item,
+        action: ACTIONS.TRANSFER,
+      });
     } else {
       setCurrentAbundances(currentAbundances.filter((a) => a !== item));
       setCurrentScarcities([...currentScarcities, item]);
-      socket.emit(SAVE_LOG_DATA, { type: SCARCITY_DATA, value: item, action: TRANSFER });
+      socket.emit(DATA.SAVE_LOG, {
+        type: DATA.SCARCITY,
+        value: item,
+        action: ACTIONS.TRANSFER,
+      });
     }
   };
   // =======================================================================================
@@ -112,16 +124,28 @@ const ScarcityAbundanceLog = (props) => {
   // Transfert de plusieurs items cochés entre les deux listes
   const transferCheckedItems = () => {
     checkedScarcities.forEach((item) => {
-      setCurrentScarcities(prevScarcities => prevScarcities.filter((s) => s !== item));
-      setCurrentAbundances(prevAbundances => [...prevAbundances, item]);
-      socket.emit(SAVE_LOG_DATA, { type: ABUNDANCE_DATA, value: item, action: TRANSFER });
+      setCurrentScarcities((prevScarcities) =>
+        prevScarcities.filter((s) => s !== item)
+      );
+      setCurrentAbundances((prevAbundances) => [...prevAbundances, item]);
+      socket.emit(DATA.SAVE_LOG, {
+        type: DATA.ABUNDANCE,
+        value: item,
+        action: ACTIONS.TRANSFER,
+      });
     });
     setCheckedScarcities([]);
-  
+
     checkedAbundances.forEach((item) => {
-      setCurrentAbundances(prevAbundances => prevAbundances.filter((a) => a !== item));
-      setCurrentScarcities(prevScarcities => [...prevScarcities, item]);
-      socket.emit(SAVE_LOG_DATA, { type: SCARCITY_DATA, value: item, action: TRANSFER });
+      setCurrentAbundances((prevAbundances) =>
+        prevAbundances.filter((a) => a !== item)
+      );
+      setCurrentScarcities((prevScarcities) => [...prevScarcities, item]);
+      socket.emit(DATA.SAVE_LOG, {
+        type: DATA.SCARCITY,
+        value: item,
+        action: ACTIONS.TRANSFER,
+      });
     });
     setCheckedAbundances([]);
   };
@@ -133,8 +157,10 @@ const ScarcityAbundanceLog = (props) => {
         <ListItem
           key={`${item}-${list.indexOf(item)}`}
           item={item}
-          onTransfer={() => transferItem(item, source)}     // Sert à transferer les items individuellement
-          onCheckedChange={(isChecked) => handleCheckedChange(item, isChecked, source)}   // Mettre en banque pour un éventuel transfert de masse
+          onTransfer={() => transferItem(item, source)} // Sert à transferer les items individuellement
+          onCheckedChange={(isChecked) =>
+            handleCheckedChange(item, isChecked, source)
+          } // Mettre en banque pour un éventuel transfert de masse
         />
       ));
     }
@@ -142,11 +168,19 @@ const ScarcityAbundanceLog = (props) => {
   };
 
   const renderScarcityLogData = () => {
-    return renderScarcityAbundanceData(currentScarcities, 'scarcity', 'scarcity');
+    return renderScarcityAbundanceData(
+      currentScarcities,
+      'scarcity',
+      'scarcity'
+    );
   };
 
   const renderAbundanceLogData = () => {
-    return renderScarcityAbundanceData(currentAbundances, 'abundance', 'abundance');
+    return renderScarcityAbundanceData(
+      currentAbundances,
+      'abundance',
+      'abundance'
+    );
   };
 
   return (
@@ -154,33 +188,41 @@ const ScarcityAbundanceLog = (props) => {
       <h2 className='scarcity-abundance-title'>Scarcities and Abundances</h2>
       <div className='list-scarcities-abundances'>
         <div className='scarcities-section'>
-          <fieldset style={{margin: '5px', padding: '5px'}} className='list-scarcities'>
+          <fieldset
+            style={{ margin: '5px', padding: '5px' }}
+            className='list-scarcities'>
             <legend>Scarcities</legend>
             {renderScarcityLogData()}
           </fieldset>
           <div className='scarcities-abundance-input'>
             <ScarcityInput
               onSave={(data) => {
-                socket.emit(SAVE_LOG_DATA, data);
+                socket.emit(DATA.SAVE_LOG, data);
               }}
             />
           </div>
         </div>
         <div className='abundances-section'>
-          <fieldset style={{margin: '5px', padding: '5px'}} className='list-abundances'>
+          <fieldset
+            style={{ margin: '5px', padding: '5px' }}
+            className='list-abundances'>
             <legend>Abundances</legend>
             {renderAbundanceLogData()}
           </fieldset>
           <div className='scarcities-abundance-input'>
             <AbundanceInput
               onSave={(data) => {
-                socket.emit(SAVE_LOG_DATA, data);
+                socket.emit(DATA.SAVE_LOG, data);
               }}
             />
           </div>
         </div>
       </div>
-      <button onClick={() => transferCheckedItems()} className='scarcities-abundance-mass-transfer-button'>Mass Transfer</button>
+      <button
+        onClick={() => transferCheckedItems()}
+        className='scarcities-abundance-mass-transfer-button'>
+        Mass Transfer
+      </button>
     </div>
   );
 };
@@ -188,7 +230,7 @@ const ScarcityAbundanceLog = (props) => {
 const mapStateToProps = (state) => {
   return {
     scarcities: state.scarcity_abundance.scarcities,
-    abundances: state.scarcity_abundance.abundances
+    abundances: state.scarcity_abundance.abundances,
   };
 };
 

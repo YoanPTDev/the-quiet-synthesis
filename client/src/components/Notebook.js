@@ -1,9 +1,9 @@
 // components/Notebook.js
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
-import InputField from './InputField'
+import InputField from './InputField';
 import { SocketContext } from '../middleware/socketcontext';
-import { NOTE_DATA, SAVE_LOG_DATA } from '../../../utils/constants.mjs';
+import { DATA } from '../../../utils/constants.mjs';
 
 const NotebookInput = (props) => (
   <InputField
@@ -12,7 +12,7 @@ const NotebookInput = (props) => (
     onSave={(value) => {
       if (value !== '') {
         const data = {
-          type: NOTE_DATA,
+          type: DATA.NOTE,
           value: value,
         };
         props.onSave(data);
@@ -35,13 +35,11 @@ const Notebook = (props) => {
     <div className='notebook-container'>
       <h2>Notebook</h2>
       <hr />
-      <ul className='list-note'>
-        {renderNotebookData()}
-      </ul>
+      <ul className='list-note'>{renderNotebookData()}</ul>
       <hr />
       <NotebookInput
         onSave={(data) => {
-          socket.emit(SAVE_LOG_DATA, data);
+          socket.emit(DATA.SAVE_LOG, data);
         }}
       />
       <hr />
