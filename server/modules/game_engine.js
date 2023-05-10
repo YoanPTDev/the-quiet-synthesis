@@ -34,6 +34,7 @@ import {
   DISCUSS,
   DESCRIPTION_DATA,
   DISCUSSION_DATA,
+  SECOND_TURN_ACTION
 } from "../../utils/constants.mjs";
 
 import io from "../server.js";
@@ -180,6 +181,7 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.ACTION2;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
+          this.currentPlayer.socket.emit('SECOND_TURN_ACTION');
         } else {
           throw new Error(
             "Invalid state transition: " + this.currentState + " to " + newState
@@ -385,6 +387,7 @@ const playerTurnStateMachine = {
   },
 
   weekBuilder(data, action) {
+    console.log('weekBuilder');
     switch (data.type) {
       case DESCRIPTION_DATA:
         if (action != null) {
