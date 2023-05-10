@@ -6,7 +6,7 @@ import { SocketProvider } from './middleware/socketcontext';
 import { socketMiddleware } from './middleware/socketMiddleware';
 import rootReducer from './reducers';
 import App from './components/App';
-import './paper.css';
+// import './paper.css';
 import './index.css';
 
 const store = configureStore({

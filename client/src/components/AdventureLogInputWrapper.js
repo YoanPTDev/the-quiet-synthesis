@@ -1,46 +1,87 @@
-import React, {useContext} from 'react';
+import React, { useContext, useState } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { collapseAdventureLogInput } from '../actions/settings';
-import TextAreaField from "./TextAreaField";
-import { SAVE_ACTION_DATA } from "../../../utils/constants.mjs";
+import TextAreaField from './TextAreaField';
+import one from '../assets/one.png';
+import two from '../assets/two.png';
+import three from '../assets/three.png';
+import four from '../assets/four.png';
+import five from '../assets/five.png';
+import six from '../assets/six.png';
+import { SAVE_ACTION_DATA } from '../../../utils/constants.mjs';
 
-const AdventureLogInput = (props) => (
+const diceNum = {
+  1: one,
+  2: two,
+  3: three,
+  4: four,
+  5: five,
+  6: six,
+};
+
+const DiceGadget = ({ onRoll, diceValue }) => {
+  const handleRoll = () => {
+    const newValue = (diceValue % 6) + 1;
+    onRoll(newValue);
+  };
+
+  return (
+    <img
+      src={diceNum[diceValue]}
+      alt={`Dice face ${diceValue}`}
+      onClick={handleRoll}
+    />
+  );
+};
+
+const AdventureLogInput = ({ onSave, collapse }) => (
   <TextAreaField
-    {...props}
-    placeholder="Add a description to your action..."
+    placeholder='Add a description to your action...'
     onSave={(value) => {
       if (value !== '') {
-        const data = {
-          type: 'DESCRIPTION_DATA',
-          value: value,
-        };
-        props.onSave(data);
+        onSave(value);
       }
     }}
-    collapse={props.collapse}
+    collapse={collapse}
   />
 );
 
 const AdventureLogInputWrapper = (props) => {
-  const { dispatch, adventureLogInputExpanded } =
-    props;
+  const { dispatch, adventureLogInputExpanded } = props;
+  const socket = useContext(SocketContext);
 
-    if(!adventureLogInputExpanded) return null;
+  const [diceValue, setDiceValue] = useState(1);
 
-    const socket = useContext(SocketContext);
+  const handleDiceRoll = (value) => {
+    console.log(`Dice rolled: ${value}`);
+    setDiceValue(value);
+  };
 
-    return (
-      <div className='input-container'>
-        <AdventureLogInput 
-        onSave={(data) => {
-          socket.emit(SAVE_ACTION_DATA, data);
+  if (!adventureLogInputExpanded) return null;
+
+  return (
+    <div className='input-container'>
+      <DiceGadget
+        onRoll={handleDiceRoll}
+        diceValue={diceValue}
+      />
+      <AdventureLogInput
+        onSave={(description) => {
+          if (description !== '') {
+            const data = {
+              type: 'DESCRIPTION_DATA',
+              value: description,
+              turns: diceValue,
+            };
+            socket.emit(SAVE_ACTION_DATA, data);
+          }
         }}
         collapse={() => dispatch(collapseAdventureLogInput())}
-        />
-      </div>
-    )
-}
+      />
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
