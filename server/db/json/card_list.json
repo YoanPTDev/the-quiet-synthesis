@@ -728,11 +728,11 @@
     "value": "J",
     "prompts": [
         {
-            "description": "An infected outsider arrives, seeking amnesty. They have\nsome much-needed resources with them. Choose one:\nWelcome them into the community. Remove a Scarcity,\nbut also introduce an infection into the community.",
-            "mechanic": "modify ressource"
+            "description": "An infected outsider arrives, seeking amnesty. They have\nsome much-needed resources with them. \nWelcome them into the community. Remove a Scarcity,\nand introduce an infection into the community.",
+            "mechanic": "lore"
         },
         {
-            "description": "An infected outsider arrives, seeking amnesty. They have\nBar them from entry. What Scarcity could they have\naddressed? How does its need become more dire this week?",
+            "description": "An infected outsider seeking amnesty is barred from entry.\n What Scarcity could they have\naddressed? How does its need become more dire this week?",
             "mechanic": "lore"
         }
     ]

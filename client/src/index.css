@@ -180,8 +180,8 @@ li {
 }
 
 .suit-icon {
-  height: 80px;
-  width: 80px;
+  height: 7vh;
+  width: 7vh;
   position: absolute;
   top: -15px;
   left: 0px;
@@ -220,7 +220,7 @@ li {
   font-family: 'Martel', serif;
   box-shadow: none;
   font-family: 'Martel', serif;
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 
 .card-prompt:hover {
