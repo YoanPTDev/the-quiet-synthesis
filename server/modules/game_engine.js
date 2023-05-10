@@ -28,13 +28,13 @@ import {
   UPDATE_ACTION,
   UPDATE_DISCUSSION,
   UPDATE_LOGS,
-  SUBMIT_ACTION,
   START_PROJECT,
   DRAWN_CARD_DATA,
   SELECTED_PROMPT,
   DISCUSS,
   DESCRIPTION_DATA,
   DISCUSSION_DATA,
+  SECOND_TURN_ACTION
 } from "../../utils/constants.mjs";
 
 import io from "../server.js";
@@ -181,6 +181,7 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.ACTION2;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
+          this.currentPlayer.socket.emit(SECOND_TURN_ACTION);
         } else {
           throw new Error(
             "Invalid state transition: " + this.currentState + " to " + newState

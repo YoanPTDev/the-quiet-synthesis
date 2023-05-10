@@ -16,6 +16,10 @@ export const setSocketInstance = (socket) => {
 const setupSocketListeners = () => {
   console.log('socketInstance', socketInstance);
   if (socketInstance) {
+    socketInstance.on(SECOND_TURN_ACTION, () => {
+      console.log('SECOND_TURN_ACTION');
+      storeReference.dispatch(expandSecondTurnAction());
+    });
     socketInstance.on(UPDATE_LOGS, (data) => {
       console.log('UPDATE_LOGS', data);
       storeReference.dispatch(fetchLog(data));
@@ -29,10 +33,6 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE_DISCUSSION, (data) => {
       console.log('UPDATE_DISCUSSION', data);
-    });
-    socketInstance.on(SECOND_TURN_ACTION, () => {
-      console.log('SECOND_TURN_ACTION');
-      storeReference.dispatch(expandSecondTurnAction());
     });
     socketInstance.on(UPDATE_NOTEBOOK, (data) => {
       storeReference.dispatch(fetchNote(data));
