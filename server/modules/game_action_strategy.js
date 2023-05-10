@@ -1,13 +1,9 @@
 class GameAction {
   // type, description, nbrTokens
-  static build(type, desc, nbTokens) {
-    let newAction = {
-      type: type,
-      tokens: nbTokens,
-      description: desc,
-    };
-
-    return newAction;
+  constructor(type, desc, nbTokens) {
+    this.type = type;
+    this.tokens = nbTokens;
+    this.description = desc;
   }
   
   /**
@@ -23,99 +19,77 @@ class GameAction {
 
 class ProjectAction extends GameAction {
   //nbrTour, imageID, coords
-  static build(desc, nbTokens, nbTour) {
-    let newAction = super.build('StartProject', desc, nbTokens);
-    newAction.turns = nbTour;
-
-    return newAction;
+  constructor(desc, nbTokens, nbTour) {
+    super('StartProject', desc, nbTokens);
+    this.turns = nbTour;
   }
 }
 
 class DiscoverAction extends GameAction {
   //nbrTour = 0, imageID, coords
-  static build(desc, nbTokens) {
-    let newAction = super.build('Discovery', desc, nbTokens);
-    newAction.turns = 0;
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('Discovery', desc, nbTokens);
+    this.turns = 0;
   }
 }
 
 class DiscussAction extends GameAction {
-  static build(desc, nbTokens, nbPlayers) {
-    let newAction = super.build('Discussion', desc, nbTokens);
-    newAction.discussion = [];
-    let expectedDiscussionLength = nbPlayers;
-
-    return newAction;
+  constructor(desc, nbTokens, nbPlayers) {
+    super('Discussion', desc, nbTokens);
+    this.discussion = [];
+    this.expectedDiscussionLength = nbPlayers;
   }
 
   isCompleted() {
-    return newAction.discussion.length === 4;
+    return this.discussion.length === expectedDiscussionLength;
   }
 }
 
 class AddWeeksAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('AddWeeks', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('AddWeeks', desc, nbTokens);
   }
 }
 
 class ModifyAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('ModifyProject', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('ModifyProject', desc, nbTokens);
   }
 }
 
 class RemoveMapElementAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('Removal', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('Removal', desc, nbTokens);
   }
 }
 
 class AddLoreAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('Lore', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('Lore', desc, nbTokens);
   }
 }
 
 class CompleteProjectAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('Complete Project', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('Complete Project', desc, nbTokens);
   }
 }
 
 class PauseProjectsAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('PauseProjects', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('PauseProjects', desc, nbTokens);
   }
 }
 
 class ModifyRessourcesAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('ModifyRessources', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('ModifyRessources', desc, nbTokens);
   }
 }
 
 class EndGameAction extends GameAction {
-  static build(desc, nbTokens) {
-    let newAction = super.build('GameOver', desc, nbTokens);
-
-    return newAction;
+  constructor(desc, nbTokens) {
+    super('GameOver', desc, nbTokens);
   }
 }
 
