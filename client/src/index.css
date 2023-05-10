@@ -160,7 +160,6 @@ li {
   padding: 10px;
   width: 250px;
   height: 400px;
-  font-family: 'Martel', serif;
 }
 
 .card-title {
@@ -173,6 +172,7 @@ li {
   font-size: 1.5em;
   display: flex;
   justify-content: space-between;
+  font-family: 'Martel', serif;
 }
 
 .title-spacing {
@@ -185,6 +185,17 @@ li {
   position: absolute;
   top: -15px;
   left: 0px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-color: none;
+  border-color: none;
+  border-style: none;
+  border-width: 0;
+  display:inline;
+  height: auto;
+  max-width: 100%;
 }
 
 .card-prompts {
@@ -207,6 +218,9 @@ li {
   background-color: transparent;
   width: 100%;
   font-family: 'Martel', serif;
+  box-shadow: none;
+  font-family: 'Martel', serif;
+  font-size: 0.8em;
 }
 
 .card-prompt:hover {

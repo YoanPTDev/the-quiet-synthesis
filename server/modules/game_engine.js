@@ -272,7 +272,7 @@ const playerTurnStateMachine = {
   drawCard() {
     let card = this.gameEngine.deck.drawCard();
     if (card != null) {
-      this.currentPlayer.socket.emit(DRAWN_CARD_DATA, JSON.stringify(card));
+      this.currentPlayer.socket.emit(DRAWN_CARD_DATA, card);
     } else {
       this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
     }
