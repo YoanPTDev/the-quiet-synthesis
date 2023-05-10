@@ -16,7 +16,7 @@ export const setSocketInstance = (socket) => {
 const setupSocketListeners = () => {
   console.log('socketInstance', socketInstance);
   if (socketInstance) {
-    socketInstance.on(SECOND_TURN_ACTION, () => {
+    socketInstance.on('SECOND_TURN_ACTION', () => {
       console.log('SECOND_TURN_ACTION');
       storeReference.dispatch(expandSecondTurnAction());
     });
