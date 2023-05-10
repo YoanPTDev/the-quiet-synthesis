@@ -41,7 +41,7 @@ class DiscussAction extends GameAction {
   }
 
   isCompleted() {
-    return this.discussion.length === expectedDiscussionLength;
+    return this.discussion.length === this.expectedDiscussionLength;
   }
 }
 
