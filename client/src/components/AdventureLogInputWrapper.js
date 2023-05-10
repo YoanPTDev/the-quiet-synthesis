@@ -20,12 +20,9 @@ const diceNum = {
   6: six,
 };
 
-const DiceGadget = ({ onRoll }) => {
-  const [diceValue, setDiceValue] = useState(1);
-
+const DiceGadget = ({ onRoll, diceValue }) => {
   const handleRoll = () => {
     const newValue = (diceValue % 6) + 1;
-    setDiceValue(newValue);
     onRoll(newValue);
   };
 
@@ -38,41 +35,47 @@ const DiceGadget = ({ onRoll }) => {
   );
 };
 
-const AdventureLogInput = (props) => (
+const AdventureLogInput = ({ onSave, collapse }) => (
   <TextAreaField
-    {...props}
     placeholder='Add a description to your action...'
     onSave={(value) => {
       if (value !== '') {
-        const data = {
-          type: 'DESCRIPTION_DATA',
-          value: value,
-          turns: diceValue,
-        };
-        props.onSave(data);
+        onSave(value);
       }
     }}
-    collapse={props.collapse}
+    collapse={collapse}
   />
 );
 
 const AdventureLogInputWrapper = (props) => {
   const { dispatch, adventureLogInputExpanded } = props;
-
   const socket = useContext(SocketContext);
+
+  const [diceValue, setDiceValue] = useState(1);
 
   const handleDiceRoll = (value) => {
     console.log(`Dice rolled: ${value}`);
+    setDiceValue(value);
   };
 
   if (!adventureLogInputExpanded) return null;
 
   return (
     <div className='input-container'>
-      <DiceGadget onRoll={handleDiceRoll} />
+      <DiceGadget
+        onRoll={handleDiceRoll}
+        diceValue={diceValue}
+      />
       <AdventureLogInput
-        onSave={(data) => {
-          socket.emit(SAVE_ACTION_DATA, data);
+        onSave={(description) => {
+          if (description !== '') {
+            const data = {
+              type: 'DESCRIPTION_DATA',
+              value: description,
+              turns: diceValue,
+            };
+            socket.emit(SAVE_ACTION_DATA, data);
+          }
         }}
         collapse={() => dispatch(collapseAdventureLogInput())}
       />
