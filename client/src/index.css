@@ -25,6 +25,10 @@ body,
   font-family: "Patrick Hand SC", sans-serif;
 }
 
+h3 {
+  font-size: 2rem;
+}
+
 button, input {
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
