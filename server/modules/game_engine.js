@@ -28,7 +28,6 @@ import {
   UPDATE_ACTION,
   UPDATE_DISCUSSION,
   UPDATE_LOGS,
-  SUBMIT_ACTION,
   START_PROJECT,
   DRAWN_CARD_DATA,
   SELECTED_PROMPT,
@@ -216,11 +215,11 @@ const playerTurnStateMachine = {
     this.transition(playerStates.DRAW);
 
     // Set up the event listeners only once, when the turn starts
-    if (!this.listenersSetUp) {
-      this.currentPlayer.socket.on(SAVE_ACTION_DATA, (data) => {
-        this.handleSaveData(data);
-      });
+    this.currentPlayer.socket.once(SAVE_ACTION_DATA, (data) => {
+      this.handleSaveData(data);
+    });
 
+    if (!this.listenersSetUp) {
       this.discussionListener.on("discussionEnd", () => {
         if (this.currentState === playerStates.ACTION1) {
           if (Object.keys(this.newAction1).length !== 0) {
@@ -378,8 +377,8 @@ const playerTurnStateMachine = {
     };
 
     // Start with the current player's turn
-    this.gameEngine.players[currPlayerIdx].socket.emit(DISCUSS);
-    this.gameEngine.players[currPlayerIdx].socket.once(
+    this.currentPlayer.socket.emit(DISCUSS);
+    this.currentPlayer.socket.once(
       DISCUSSION_DATA,
       handleDiscussionData
     );

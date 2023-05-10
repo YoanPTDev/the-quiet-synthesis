@@ -16,7 +16,6 @@ export const START_TURN = 'START_TURN';
 export const START_PROJECT = 'START_PROJECT';
 export const END_TURN = 'END_TURN';
 export const END_DRAWING = 'END_DRAWING';
-export const SUBMIT_ACTION = 'SUBMIT_ACTION';
 export const TRANSFER = 'TRANSFER';
 export const DISCUSS = 'DISCUSS';
 
