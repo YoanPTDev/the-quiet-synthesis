@@ -7,7 +7,7 @@ import {
   expandDiscussionInput,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
-import { fetchDirection } from '../actions/actionDirector';
+import { fetchDirection } from '../actions/direction';
 
 import { UPDATE, ACTIONS, SECOND_TURN } from '../../../utils/constants.mjs';
 
@@ -29,10 +29,11 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
+      console.log('fetchOutOfTurnAction', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
-      storeReference.dispatch(
-        fetchDirection({ directions: 'someone is playing' })
-      );
+      // storeReference.dispatch(
+      //   fetchDirection({ directions: 'someone is playing' })
+      // );
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       console.log('DISCUSS');
@@ -49,10 +50,10 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchScarcityAbundance(data));
     });
     socketInstance.on(UPDATE.ENABLE_DRAWING, () => {
+      storeReference.dispatch(enableDrawing());
       storeReference.dispatch(
         fetchDirection({ directions: 'Draw something on the map' })
       );
-      storeReference.dispatch(enableDrawing());
     });
   }
 };

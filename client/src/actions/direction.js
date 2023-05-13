@@ -13,6 +13,6 @@ export const fetchDirectionError = (error) => {
 };
 
 export const fetchDirection = (data) => (dispatch) => {
-  console.log('fetchDirection', data);
+  console.log('fetchDirection', data.directions);
   dispatch(fetchDirectionSuccess(data));
 };

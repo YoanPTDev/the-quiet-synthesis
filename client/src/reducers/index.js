@@ -15,7 +15,7 @@ const rootReducer = {
   log: adventureLogReducer,
   scarcity_abundance: scarcityAbundanceReducer,
   outOfTurnAction: outOfTurnActionReducer,
-  directions: directionsReducer,
+  direction: directionsReducer,
 };
 
 export default rootReducer;
