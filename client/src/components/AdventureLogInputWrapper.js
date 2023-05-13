@@ -48,10 +48,12 @@ const AdventureLogInput = ({ onSave, collapse }) => (
 );
 
 const AdventureLogInputWrapper = (props) => {
-  const { dispatch, adventureLogInputExpanded } = props;
+  const { dispatch, adventureLogInputExpanded, outOfTurnActions } = props;
   const socket = useContext(SocketContext);
 
   const [diceValue, setDiceValue] = useState(1);
+
+  const showDicceGadget = outOfTurnActions.type === 'StartProject';
 
   const handleDiceRoll = (value) => {
     console.log(`Dice rolled: ${value}`);
@@ -62,10 +64,12 @@ const AdventureLogInputWrapper = (props) => {
 
   return (
     <div className='input-container'>
-      <DiceGadget
-        onRoll={handleDiceRoll}
-        diceValue={diceValue}
-      />
+      {showDicceGadget && setDiceValue(0) && (
+        <DiceGadget
+          onRoll={handleDiceRoll}
+          diceValue={diceValue}
+        />
+      )}
       <AdventureLogInput
         onSave={(description) => {
           if (description !== '') {
@@ -86,6 +90,7 @@ const AdventureLogInputWrapper = (props) => {
 const mapStateToProps = (state) => {
   return {
     adventureLogInputExpanded: state.settings.adventureLogInputExpanded,
+    outOfTurnActions: state.outOfTurnAction.outOfTurnActions,
   };
 };
 
