@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { collapseAdventureLogInput } from '../actions/settings';
@@ -53,13 +53,13 @@ const AdventureLogInputWrapper = (props) => {
 
   const [diceValue, setDiceValue] = useState(1);
 
-  const showDicceGadget = outOfTurnActions.type === 'StartProject';
+  const showDiceGadget = outOfTurnActions.type === 'StartProject';
 
   useEffect(() => {
-    if (showDicceGadget) {
+    if (showDiceGadget) {
       setDiceValue(0);
     }
-  }, [showDicceGadget]);
+  }, [showDiceGadget]);
 
   const handleDiceRoll = (value) => {
     console.log(`Dice rolled: ${value}`);
@@ -70,7 +70,7 @@ const AdventureLogInputWrapper = (props) => {
 
   return (
     <div className='input-container'>
-      {showDicceGadget && (
+      {showDiceGadget && (
         <DiceGadget
           onRoll={handleDiceRoll}
           diceValue={diceValue}

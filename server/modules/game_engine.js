@@ -85,16 +85,42 @@ class GameEngine {
   }
 
   gamePrep() {
-    this.players.forEach((player) => {
-      player.socket.emit(UPDATE.ENABLE_DRAWING);
-      player.socket.on(ACTIONS.END_DRAWING);
-    });
+    let players = this.players;
 
-    this.players.forEach((player) => {
-      //WIP
-      /*Voir si on utilise le meme systeme que les scarcities avec un different socket event
-      ou un autre component avec socket acknowledgement*/
-    });
+    const emitDrawing = (index) => {
+      if (index >= players.length) {
+        // All players have drawn, now add resources
+        emitResource(0);
+        return;
+      }
+
+      let player = players[index];
+      player.socket.emit(UPDATE.ENABLE_DRAWING);
+
+      player.socket.once(ACTIONS.END_DRAWING, () => {
+        emitDrawing(index + 1);
+      });
+    };
+    //************* Needs rework ************************
+    const emitResource = (index) => {
+      if (index >= players.length) {
+        // All players have added resources, start the game
+        this.start();
+        return;
+      }
+
+      let player = players[index];
+      // Replace RESOURCE_ACTION and RESOURCE_ADDED with the appropriate actions
+      player.socket.emit(RESOURCE_ACTION);
+
+      player.socket.once(RESOURCE_ADDED, () => {
+        emitResource(index + 1);
+      });
+    };
+    //***************************************************
+
+    // Start the drawing process
+    emitDrawing(0);
   }
 }
 
@@ -343,7 +369,8 @@ const playerTurnStateMachine = {
     }
   },
 
-  discuss(action) { //Help from ChatGPT
+  discuss(action) {
+    //Help from ChatGPT
     const currPlayerIdx = this.gameEngine.currentPlayerIndex;
     const len = this.gameEngine.players.length;
     const discussion = [];
@@ -393,7 +420,8 @@ const playerTurnStateMachine = {
     this.currentPlayer.socket.once(DATA.DISCUSSION, handleDiscussionData);
   },
 
-  processProjects(index) { //Help from ChatGPT
+  processProjects(index) {
+    //Help from ChatGPT
     if (index >= this.gameEngine.map.projects.length) return; // No more projects left
 
     let project = this.gameEngine.map.projects[index];
