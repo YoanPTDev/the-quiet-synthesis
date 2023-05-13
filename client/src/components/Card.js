@@ -27,8 +27,14 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
+    console.log('Card -> components/Card');
+    if (card.id !== '') {
+      expandCard();
+    }
+
     if (socket) {
       socket.on(DATA.DRAWN_CARD, (data) => {
+        console.log('DATA.DRAWN_CARD', data);
         fetchCard(data);
       });
 
@@ -36,13 +42,7 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
         socket.off(DATA.DRAWN_CARD);
       };
     }
-  }, [socket, fetchCard]);
-
-  useEffect(() => {
-    if (card.id !== '') {
-      expandCard();
-    }
-  }, [card, expandCard]);
+  }, [socket, fetchCard, card]);
 
   const { id, value, suit, season, prompts } = card;
 

@@ -27,11 +27,11 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
-      console.log('update', data);
+      console.log('UPDATE.ACTION -> socketMiddlware');
       storeReference.dispatch(fetchOutOfTurnAction(data));
-      // storeReference.dispatch(
-      //   fetchDirection({ directions: 'someone is playing' })
-      // );
+      storeReference.dispatch(
+        fetchDirection({ directions: 'someone is playing' })
+      );
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());

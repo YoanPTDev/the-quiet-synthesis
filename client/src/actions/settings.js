@@ -109,6 +109,7 @@ export const disableDrawing = () => {
 };
 
 export const expandCard = () => {
+  console.log('expandCard -> action/settings');
   return {
     type: SET_CARD_EXPANDED,
     cardExpanded: true,
@@ -116,6 +117,7 @@ export const expandCard = () => {
 };
 
 export const collapseCard = () => {
+  console.log('collapseCard -> action/settings');
   return {
     type: SET_CARD_EXPANDED,
     cardExpanded: false,
