@@ -109,7 +109,7 @@ const playerTurnStateMachine = {
   listenersSetUp: false,
   discussionListener: new EndDiscussionEmitter(),
 
-  saveActionHandler: (data) => {
+  saveActionHandler: function(data) {
     this.handleSaveData(data);
   }, 
 
@@ -127,7 +127,7 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.DRAW;
 
           //Création d'un listener qui sera retiré a la fin du tour afin d'éviter sa duplication.
-          var saveActionListener = this.currentPlayer.socket.on(DATA.SAVE_ACTION, this.saveActionHandler);
+          var saveActionListener = this.currentPlayer.socket.on(DATA.SAVE_ACTION, this.saveActionHandler.bind(this));
 
           if (this.gameEngine.reduceTimers) {
             this.gameEngine.map.projects.forEach((project) => {
@@ -166,6 +166,8 @@ const playerTurnStateMachine = {
         if (this.currentState === playerStates.DRAW) {
           this.currentState = playerStates.ACTION1;
 
+          console.log('ACTION1', this.gameEngine);
+
           console.log(`${this.currentPlayer.socket.playerName} ACTION 1`);
         } else {
           throw new Error(
@@ -176,6 +178,8 @@ const playerTurnStateMachine = {
       case playerStates.ACTION2:
         if (this.currentState === playerStates.ACTION1) {
           this.currentState = playerStates.ACTION2;
+
+          console.log('ACTION2', this.gameEngine);
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
 
@@ -189,6 +193,8 @@ const playerTurnStateMachine = {
       case playerStates.FINISHED:
         if (this.currentState === playerStates.ACTION2) {
           this.currentState = playerStates.FINISHED;
+
+          console.log('FINISHED', this.gameEngine);
 
           this.gameEngine.log.addEntry(this.newWeek);
           this.currentPlayer.socket.broadcast.emit(
@@ -384,8 +390,8 @@ const playerTurnStateMachine = {
     switch (data.type) {
       case DATA.DESCRIPTION:
         if (action != null) {
-          console.log('DESCRIPTION', action.description);
           this[action].description = data.value;
+          console.log('DESCRIPTION', this[action].description);
           if (this[action].type == 'StartProject') {
             this[action].turns = data.turns;
           }
@@ -459,7 +465,7 @@ const playerTurnStateMachine = {
           case 'end game':
             this[action] = new EndGameAction('', 0);
             break;
-          case 'end turn': //A tester, incertain
+          case 'end turn': // A tester, incertain
             this.transition(playerStates.ACTION2);
             this.gameEngine.endTurn();
             break;
