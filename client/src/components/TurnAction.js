@@ -4,6 +4,7 @@ import { SocketContext } from '../middleware/socketcontext';
 import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn } from '../actions/partie';
 import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
+import { fetchDirection } from '../actions/direction';
 
 const TurnAction = ({
   addPlayer,
@@ -12,10 +13,12 @@ const TurnAction = ({
   drawingEnabled,
   disableDrawing,
   expandAdventureLogInput,
+  fetchDirection
 }) => {
   const handleDrawingEnd = () => {
     disableDrawing();
     expandAdventureLogInput();
+    fetchDirection({ directions: 'Add a description' });
   };
 
   return (
@@ -57,7 +60,8 @@ const mapDispatchToProps = (dispatch, props) => {
     startGame: () => dispatch(startGame(socket)),
     endTurn: () => dispatch(endTurn(socket)),
     disableDrawing: () => dispatch(disableDrawing()),
-    expandAdventureLogInput: () => dispatch(expandAdventureLogInput())
+    expandAdventureLogInput: () => dispatch(expandAdventureLogInput()),
+    fetchDirection: (data) => dispatch(fetchDirection(data)),
   };
 };
 

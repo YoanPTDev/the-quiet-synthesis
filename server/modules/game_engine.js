@@ -325,8 +325,9 @@ const playerTurnStateMachine = {
   handleSaveData(data) {
     if (this.isAction1()) {
       this.weekBuilder(data, 'newAction1');
+      console.log('current player', this.currentPlayer.socket.id);
       this.currentPlayer.socket.emit(UPDATE.ACTION, {
-        //Changer pour broadcast apres tests
+        // Changer pour broadcast apres tests
         action: this.newAction1,
         prompt: this.currentPrompt,
       });

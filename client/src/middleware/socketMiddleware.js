@@ -19,24 +19,21 @@ export const setSocketInstance = (socket) => {
 };
 
 const setupSocketListeners = () => {
-  console.log('socketInstance', socketInstance);
   if (socketInstance) {
     socketInstance.on(SECOND_TURN.ACTION, () => {
       storeReference.dispatch(expandSecondTurnAction());
     });
     socketInstance.on(UPDATE.LOGS, (data) => {
-      console.log('UPDATE_LOGS', data);
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
-      console.log('fetchOutOfTurnAction', data);
+      console.log('update', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
       // storeReference.dispatch(
       //   fetchDirection({ directions: 'someone is playing' })
       // );
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
-      console.log('DISCUSS');
       storeReference.dispatch(expandDiscussionInput());
       storeReference.dispatch(fetchDirection({ directions: 'Discuss' }));
     });
