@@ -21,7 +21,6 @@ const setupSocketListeners = () => {
   console.log('socketInstance', socketInstance);
   if (socketInstance) {
     socketInstance.on(SECOND_TURN.ACTION, () => {
-      console.log('SECOND_TURN_ACTION');
       storeReference.dispatch(expandSecondTurnAction());
     });
     socketInstance.on(UPDATE.LOGS, (data) => {
