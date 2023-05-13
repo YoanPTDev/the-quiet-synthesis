@@ -107,6 +107,7 @@ const playerTurnStateMachine = {
   newAction2: null,
   currentPrompt: null,
   listenersSetUp: false,
+  saveActionListener: null,
   discussionListener: new EndDiscussionEmitter(),
 
   saveActionHandler: function(data) {
@@ -127,8 +128,9 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.DRAW;
 
           //Création d'un listener qui sera retiré a la fin du tour afin d'éviter sa duplication.
-          var saveActionListener = this.currentPlayer.socket.on(DATA.SAVE_ACTION, this.saveActionHandler.bind(this));
-
+          this.saveActionListener = this.saveActionHandler.bind(this);
+          this.currentPlayer.socket.on(DATA.SAVE_ACTION, this.saveActionListener);
+          
           if (this.gameEngine.reduceTimers) {
             this.gameEngine.map.projects.forEach((project) => {
               project.turns -= 1;
@@ -166,8 +168,6 @@ const playerTurnStateMachine = {
         if (this.currentState === playerStates.DRAW) {
           this.currentState = playerStates.ACTION1;
 
-          console.log('ACTION1', this.gameEngine);
-
           console.log(`${this.currentPlayer.socket.playerName} ACTION 1`);
         } else {
           throw new Error(
@@ -178,8 +178,6 @@ const playerTurnStateMachine = {
       case playerStates.ACTION2:
         if (this.currentState === playerStates.ACTION1) {
           this.currentState = playerStates.ACTION2;
-
-          console.log('ACTION2', this.gameEngine);
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
 
@@ -194,8 +192,6 @@ const playerTurnStateMachine = {
         if (this.currentState === playerStates.ACTION2) {
           this.currentState = playerStates.FINISHED;
 
-          console.log('FINISHED', this.gameEngine);
-
           this.gameEngine.log.addEntry(this.newWeek);
           this.currentPlayer.socket.broadcast.emit(
             UPDATE.LOGS,
@@ -203,7 +199,7 @@ const playerTurnStateMachine = {
           );
           
           //Retrait du listener instancié au début du tour
-          this.currentPlayer.socket.off(DATA.SAVE_ACTION, saveActionListener);
+          this.currentPlayer.socket.off(DATA.SAVE_ACTION, this.saveActionListener);
 
           this.currentPlayer.socket.emit(ACTIONS.END_TURN);
           console.log(`${this.currentPlayer.socket.playerName} end turn`);
@@ -331,7 +327,7 @@ const playerTurnStateMachine = {
     if (this.currentState === playerStates.ACTION1) {
       this.transition(playerStates.ACTION2);
     } else if (this.currentState === playerStates.ACTION2) {
-      this.endTurn();
+      this.gameEngine.endTurn();
     }
   },
 
