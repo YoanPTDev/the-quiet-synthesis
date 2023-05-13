@@ -160,6 +160,11 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.ACTION1;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 1`);
+
+          // Set up the event listeners only once, when the action starts
+          this.currentPlayer.socket.once(DATA.SAVE_ACTION, (data) => {
+            this.handleSaveData(data);
+          });
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -171,6 +176,12 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.ACTION2;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
+
+          // Set up the event listeners only once, when the action starts
+          this.currentPlayer.socket.once(DATA.SAVE_ACTION, (data) => {
+            this.handleSaveData(data);
+          });
+
           this.currentPlayer.socket.emit(SECOND_TURN.ACTION);
         } else {
           throw new Error(
@@ -205,11 +216,6 @@ const playerTurnStateMachine = {
     this.setGameEngine(gameEngine);
     this.currentPlayer = player;
     this.transition(playerStates.DRAW);
-
-    // Set up the event listeners only once, when the turn starts
-    this.currentPlayer.socket.once(DATA.SAVE_ACTION, (data) => {
-      this.handleSaveData(data);
-    });
 
     if (!this.listenersSetUp) {
       this.discussionListener.on('discussionEnd', () => {
@@ -308,9 +314,9 @@ const playerTurnStateMachine = {
         ? this.newAction1
         : this.newAction2;
 
-    if (action.type === ACTIONS.START_PROJECT) {
+    if (action.type === 'StartProject') {
       this.gameEngine.map.projects.push(
-        new Project(action.turns, action.description)
+        new Project(action.turns, action.description, this.currentPlayer)
       );
     }
 
@@ -380,16 +386,28 @@ const playerTurnStateMachine = {
         if (action != null) {
           console.log('DESCRIPTION', action.description);
           this[action].description = data.value;
+          if (this[action].type == 'StartProject') {
+            this[action].turns = data.turns;
+          }
         } else {
           console.log('Action does not exit');
         }
         break;
-      case 'NbTurns':
-        if (action != null) {
-          this[action].turns = data.value;
-        } else {
-          console.log('Action does not exit');
-        }
+      case SECOND_ACTION.PROJECT:
+        this[action] = new ProjectAction('', 0, 0);
+        this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+        break;
+      case SECOND_ACTION.DISCOVERY:
+        this[action] = new DiscoverAction('', 0);
+        this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+        break;
+      case SECOND_ACTION.DISCUSSION:
+        this[action] = new DiscussAction(
+          '',
+          0,
+          this.gameEngine.players.length
+        );
+        this.discuss(action);
         break;
       case ACTIONS.SELECTED_PROMPT:
         this.currentPrompt =

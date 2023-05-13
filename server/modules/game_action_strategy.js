@@ -23,6 +23,10 @@ class ProjectAction extends GameAction {
     super('StartProject', desc, nbTokens);
     this.turns = nbTour;
   }
+
+  isCompleted() {
+    return this.description !== '' && this.turns > 0;
+  }
 }
 
 class DiscoverAction extends GameAction {
@@ -30,6 +34,10 @@ class DiscoverAction extends GameAction {
   constructor(desc, nbTokens) {
     super('Discovery', desc, nbTokens);
     this.turns = 0;
+  }
+
+  isCompleted() {
+    return this.description !== '';
   }
 }
 
@@ -49,11 +57,19 @@ class AddWeeksAction extends GameAction {
   constructor(desc, nbTokens) {
     super('AddWeeks', desc, nbTokens);
   }
+  
+  isCompleted() {
+    return this.description !== '';
+  }
 }
 
 class ModifyAction extends GameAction {
   constructor(desc, nbTokens) {
     super('ModifyProject', desc, nbTokens);
+  }
+
+  isCompleted() {
+    return this.description !== '';
   }
 }
 
@@ -61,11 +77,19 @@ class RemoveMapElementAction extends GameAction {
   constructor(desc, nbTokens) {
     super('Removal', desc, nbTokens);
   }
+
+  isCompleted() {
+    return this.description !== '';
+  }
 }
 
 class AddLoreAction extends GameAction {
   constructor(desc, nbTokens) {
     super('Lore', desc, nbTokens);
+  }
+
+  isCompleted() {
+    return this.description !== '';
   }
 }
 
@@ -73,11 +97,19 @@ class CompleteProjectAction extends GameAction {
   constructor(desc, nbTokens) {
     super('Complete Project', desc, nbTokens);
   }
+
+  isCompleted() {
+    return this.description !== '';
+  }
 }
 
 class PauseProjectsAction extends GameAction {
   constructor(desc, nbTokens) {
     super('PauseProjects', desc, nbTokens);
+  }
+
+  isCompleted() {
+    return this.description !== '';
   }
 }
 
@@ -85,11 +117,19 @@ class ModifyRessourcesAction extends GameAction {
   constructor(desc, nbTokens) {
     super('ModifyRessources', desc, nbTokens);
   }
+
+  isCompleted() {
+    return this.description !== '';
+  }
 }
 
 class EndGameAction extends GameAction {
   constructor(desc, nbTokens) {
     super('GameOver', desc, nbTokens);
+  }
+
+  isCompleted() {
+    return this.description !== '';
   }
 }
 
