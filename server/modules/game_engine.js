@@ -109,6 +109,10 @@ const playerTurnStateMachine = {
   listenersSetUp: false,
   discussionListener: new EndDiscussionEmitter(),
 
+  saveActionHandler: (data) => {
+    this.handleSaveData(data);
+  }, 
+
   setGameEngine(gameEngine) {
     this.gameEngine = gameEngine;
   },
@@ -121,6 +125,9 @@ const playerTurnStateMachine = {
       case playerStates.DRAW:
         if (this.currentState === playerStates.WAITING) {
           this.currentState = playerStates.DRAW;
+
+          //Création d'un listener qui sera retiré a la fin du tour afin d'éviter sa duplication.
+          var saveActionListener = this.currentPlayer.socket.on(DATA.SAVE_ACTION, this.saveActionHandler);
 
           if (this.gameEngine.reduceTimers) {
             this.gameEngine.map.projects.forEach((project) => {
@@ -160,11 +167,6 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.ACTION1;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 1`);
-
-          // Set up the event listeners only once, when the action starts
-          this.currentPlayer.socket.once(DATA.SAVE_ACTION, (data) => {
-            this.handleSaveData(data);
-          });
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -176,11 +178,6 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.ACTION2;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
-
-          // Set up the event listeners only once, when the action starts
-          this.currentPlayer.socket.once(DATA.SAVE_ACTION, (data) => {
-            this.handleSaveData(data);
-          });
 
           this.currentPlayer.socket.emit(SECOND_TURN.ACTION);
         } else {
@@ -198,6 +195,9 @@ const playerTurnStateMachine = {
             UPDATE.LOGS,
             this.gameEngine.log.weeks
           );
+          
+          //Retrait du listener instancié au début du tour
+          this.currentPlayer.socket.off(DATA.SAVE_ACTION, saveActionListener);
 
           this.currentPlayer.socket.emit(ACTIONS.END_TURN);
           console.log(`${this.currentPlayer.socket.playerName} end turn`);
@@ -300,8 +300,8 @@ const playerTurnStateMachine = {
         prompt: this.currentPrompt,
       });
 
-      if (Object.keys(this.newAction1).length !== 0) {
-        if (this.newAction1.isCompleted()) {
+      if (Object.keys(this.newAction2).length !== 0) {
+        if (this.newAction2.isCompleted()) {
           this.consolidateAction();
         }
       }
