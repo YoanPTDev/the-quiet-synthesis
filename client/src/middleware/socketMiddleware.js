@@ -27,7 +27,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
-      console.log('UPDATE.ACTION -> socketMiddlware');
+      console.log('UPDATE.ACTION -> socketMiddlware', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
       storeReference.dispatch(
         fetchDirection({ directions: 'someone is playing' })

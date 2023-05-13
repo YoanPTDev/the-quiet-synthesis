@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const OutOfTurnAction = (props) => {
-  const { outOfTurnActions, prompt, cardExpanded } = props;
+  const { outOfTurnActions, prompt } = props;
 
   const renderOutOfTurnActions = () => {
     if (outOfTurnActions) {
@@ -16,7 +16,7 @@ const OutOfTurnAction = (props) => {
     }
   };
 
-  if (outOfTurnActions.length === 0 || cardExpanded) {
+  if (outOfTurnActions.length === 0) {
     return null;
   }
 

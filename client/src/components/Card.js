@@ -27,7 +27,6 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    console.log('Card -> components/Card');
     if (card.id !== '') {
       expandCard();
     }
@@ -60,7 +59,7 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
     }
   };
 
-  if (!cardExpanded) {
+  if (!cardExpanded || card.id === undefined) {
     return null;
   }
 
