@@ -6,6 +6,7 @@ import AdventureLogInputWrapper from './AdventureLogInputWrapper';
 import DiscussionInputWrapper from './DiscussionInputWrapper';
 import NotebookWrapper from './NotebookWrapper';
 import ScarcityAbundanceWrapper from './ScarcityAbundanceWrapper';
+import ActionDirector from './ActionDirector';
 import Map from './Map';
 import Card from './Card';
 import OutOfTurnAction from './OutOfTurnAction';
@@ -29,6 +30,7 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
     <div>
       <div className='action-buttons'>
         <h3>The Quiet Year</h3>
+        <ActionDirector/>
         <TurnActionWrapper />
         <div className='note-log-wrapper'>
           <div className='toggle-button-wrapper'>
