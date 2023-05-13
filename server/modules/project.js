@@ -1,8 +1,8 @@
 import MapElement from './map_element.js';
 
 class Project {
-  constructor(timer, desc, player) {
-    this.timer = timer;
+  constructor(turns, desc, player) {
+    this.turns = turns;
     this.desc = desc;
     this.player = player;
     //this.mapElem = mapElem; //Objet MapElement

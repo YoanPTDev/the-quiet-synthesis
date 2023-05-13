@@ -22,7 +22,7 @@ class Map {
   constructor(config) {
     this.config = config; //Objet MapConfig
     //this.mapElements = new Array();
-    this.projects = new Array();
+    this.projects = [];
   }
 
   draw() {

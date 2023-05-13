@@ -36,6 +36,7 @@ const playerStates = {
   WAITING: 'WAITING',
   DRAW: 'DRAW',
   ACTION1: 'ACTION1',
+  PROJECTS: 'PROJECTS',
   ACTION2: 'ACTION2',
   FINISHED: 'FINISHED',
 };
@@ -110,9 +111,9 @@ const playerTurnStateMachine = {
   saveActionListener: null,
   discussionListener: new EndDiscussionEmitter(),
 
-  saveActionHandler: function(data) {
+  saveActionHandler: function (data) {
     this.handleSaveData(data);
-  }, 
+  },
 
   setGameEngine(gameEngine) {
     this.gameEngine = gameEngine;
@@ -124,22 +125,15 @@ const playerTurnStateMachine = {
         this.currentState = playerStates.WAITING;
         break;
       case playerStates.DRAW:
-        if (this.currentState === playerStates.WAITING) {
+        if (this.isWaiting()) {
           this.currentState = playerStates.DRAW;
 
           //Création d'un listener qui sera retiré a la fin du tour afin d'éviter sa duplication.
           this.saveActionListener = this.saveActionHandler.bind(this);
-          this.currentPlayer.socket.on(DATA.SAVE_ACTION, this.saveActionListener);
-          
-          if (this.gameEngine.reduceTimers) {
-            this.gameEngine.map.projects.forEach((project) => {
-              project.turns -= 1;
-
-              if (project.turns == 0) {
-                //Gerer la fin d'un projet
-              }
-            });
-          }
+          this.currentPlayer.socket.on(
+            DATA.SAVE_ACTION,
+            this.saveActionListener
+          );
 
           this.newWeek = Week.build(
             this.gameEngine.log.weeks.logs.length + 1,
@@ -165,7 +159,7 @@ const playerTurnStateMachine = {
         }
         break;
       case playerStates.ACTION1:
-        if (this.currentState === playerStates.DRAW) {
+        if (this.isDrawing()) {
           this.currentState = playerStates.ACTION1;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 1`);
@@ -175,8 +169,22 @@ const playerTurnStateMachine = {
           );
         }
         break;
+      case playerStates.PROJECTS:
+        if (this.isAction1()) {
+          this.currentState = playerStates.PROJECTS;
+
+          console.log(`PROJECTS`);
+
+          this.processProjects(0);
+          this.transition(playerStates.ACTION2);
+        } else {
+          throw new Error(
+            'Invalid state transition: ' + this.currentState + ' to ' + newState
+          );
+        }
+        break;
       case playerStates.ACTION2:
-        if (this.currentState === playerStates.ACTION1) {
+        if (this.isProjects()) {
           this.currentState = playerStates.ACTION2;
 
           console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
@@ -189,7 +197,7 @@ const playerTurnStateMachine = {
         }
         break;
       case playerStates.FINISHED:
-        if (this.currentState === playerStates.ACTION2) {
+        if (this.isAction2()) {
           this.currentState = playerStates.FINISHED;
 
           this.gameEngine.log.addEntry(this.newWeek);
@@ -197,9 +205,12 @@ const playerTurnStateMachine = {
             UPDATE.LOGS,
             this.gameEngine.log.weeks
           );
-          
+
           //Retrait du listener instancié au début du tour
-          this.currentPlayer.socket.off(DATA.SAVE_ACTION, this.saveActionListener);
+          this.currentPlayer.socket.off(
+            DATA.SAVE_ACTION,
+            this.saveActionListener
+          );
 
           this.currentPlayer.socket.emit(ACTIONS.END_TURN);
           console.log(`${this.currentPlayer.socket.playerName} end turn`);
@@ -221,13 +232,13 @@ const playerTurnStateMachine = {
 
     if (!this.listenersSetUp) {
       this.discussionListener.on('discussionEnd', () => {
-        if (this.currentState === playerStates.ACTION1) {
+        if (this.isAction1()) {
           if (Object.keys(this.newAction1).length !== 0) {
             if (this.newAction1.isCompleted()) {
               this.consolidateAction();
             }
           }
-        } else if (this.currentState === playerStates.ACTION2) {
+        } else if (this.isAction2()) {
           if (Object.keys(this.newAction2).length !== 0) {
             if (this.newAction1.isCompleted()) {
               this.consolidateAction();
@@ -243,7 +254,7 @@ const playerTurnStateMachine = {
   endTurn(gameEngine) {
     this.setGameEngine(gameEngine);
     //--------- Testing purposes, remove after ---------------
-    if (this.isAction1) {
+    if (this.isAction1() || this.isProjects()) {
       this.currentState = playerStates.ACTION2;
     }
     //--------------------------------------------------------
@@ -264,6 +275,10 @@ const playerTurnStateMachine = {
     return this.currentState === playerStates.ACTION1;
   },
 
+  isProjects() {
+    return this.currentState === playerStates.PROJECTS;
+  },
+
   isAction2() {
     return this.currentState === playerStates.ACTION2;
   },
@@ -282,7 +297,7 @@ const playerTurnStateMachine = {
   },
 
   handleSaveData(data) {
-    if (this.currentState === playerStates.ACTION1) {
+    if (this.isAction1()) {
       this.weekBuilder(data, 'newAction1');
       this.currentPlayer.socket.emit(UPDATE.ACTION, {
         //Changer pour broadcast apres tests
@@ -295,7 +310,7 @@ const playerTurnStateMachine = {
           this.consolidateAction();
         }
       }
-    } else if (this.currentState === playerStates.ACTION2) {
+    } else if (this.isAction2()) {
       this.weekBuilder(data, 'newAction2');
       this.currentPlayer.socket.broadcast.emit(UPDATE.ACTION, {
         action: this.newAction2,
@@ -311,10 +326,7 @@ const playerTurnStateMachine = {
   },
 
   consolidateAction() {
-    let action =
-      this.currentState === playerStates.ACTION1
-        ? this.newAction1
-        : this.newAction2;
+    let action = this.isAction1() ? this.newAction1 : this.newAction2;
 
     if (action.type === 'StartProject') {
       this.gameEngine.map.projects.push(
@@ -324,14 +336,14 @@ const playerTurnStateMachine = {
 
     this.newWeek.actions.push(action);
 
-    if (this.currentState === playerStates.ACTION1) {
-      this.transition(playerStates.ACTION2);
-    } else if (this.currentState === playerStates.ACTION2) {
+    if (this.isAction1()) {
+      this.transition(playerStates.PROJECTS);
+    } else if (this.isAction2()) {
       this.gameEngine.endTurn();
     }
   },
 
-  discuss(action) {
+  discuss(action) { //Help from ChatGPT
     const currPlayerIdx = this.gameEngine.currentPlayerIndex;
     const len = this.gameEngine.players.length;
     const discussion = [];
@@ -381,6 +393,35 @@ const playerTurnStateMachine = {
     this.currentPlayer.socket.once(DATA.DISCUSSION, handleDiscussionData);
   },
 
+  processProjects(index) { //Help from ChatGPT
+    if (index >= this.gameEngine.map.projects.length) return; // No more projects left
+
+    let project = this.gameEngine.map.projects[index];
+    project.turns -= 1;
+
+    if (project.turns == 0) {
+      console.log('Project: ', project.desc, ' is finished');
+      project.player.socket.emit('PLACEHOLDER1');
+
+      project.player.socket.once('PLACEHOLDER2', (data) => {
+        let complProject = {
+          orgDesc: project.desc,
+          endDesc: data,
+          orgPlayer: project.player.socket.playerName,
+          endPlayer: project.player.socket.playerName,
+        };
+
+        this.newWeek.completedProjects.push(complProject);
+
+        // Process the next project
+        this.processProjects(index + 1);
+      });
+    } else {
+      // If the project is not finished, just process the next one
+      this.processProjects(index + 1);
+    }
+  },
+
   weekBuilder(data, action) {
     console.log('weekBuilder');
     switch (data.type) {
@@ -404,11 +445,7 @@ const playerTurnStateMachine = {
         this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
         break;
       case SECOND_ACTION.DISCUSSION:
-        this[action] = new DiscussAction(
-          '',
-          0,
-          this.gameEngine.players.length
-        );
+        this[action] = new DiscussAction('', 0, this.gameEngine.players.length);
         this.discuss(action);
         break;
       case ACTIONS.SELECTED_PROMPT:

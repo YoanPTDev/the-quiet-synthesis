@@ -6,6 +6,7 @@ class Week {
       cardIdDrawn: cardID,
       promptChosen: prompt,
       actions: [],
+      completedProjects: [], //{orgDesc: 'adawdwadwa', endDesc: 'dwadwadwadwa', orgPlayer: 'dwadwa', endPlayer: 'dwadwawa'}
     };
 
     return newWeek;
