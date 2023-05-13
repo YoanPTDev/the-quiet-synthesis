@@ -5,6 +5,7 @@ import adventureLogReducer from './adventureLog';
 import socketReducer from './socket';
 import scarcityAbundanceReducer from './scarcityAbundance';
 import outOfTurnActionReducer from './outOfTurnAction';
+import directionsReducer from './directions';
 
 const rootReducer = {
   settings: settingsReducer,
@@ -14,6 +15,7 @@ const rootReducer = {
   log: adventureLogReducer,
   scarcity_abundance: scarcityAbundanceReducer,
   outOfTurnAction: outOfTurnActionReducer,
+  directions: directionsReducer,
 };
 
 export default rootReducer;

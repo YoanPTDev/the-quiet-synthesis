@@ -55,6 +55,12 @@ const AdventureLogInputWrapper = (props) => {
 
   const showDicceGadget = outOfTurnActions.type === 'StartProject';
 
+  useEffect(() => {
+    if (showDicceGadget) {
+      setDiceValue(0);
+    }
+  }, [showDicceGadget]);
+
   const handleDiceRoll = (value) => {
     console.log(`Dice rolled: ${value}`);
     setDiceValue(value);
@@ -64,7 +70,7 @@ const AdventureLogInputWrapper = (props) => {
 
   return (
     <div className='input-container'>
-      {showDicceGadget && setDiceValue(0) && (
+      {showDicceGadget && (
         <DiceGadget
           onRoll={handleDiceRoll}
           diceValue={diceValue}
