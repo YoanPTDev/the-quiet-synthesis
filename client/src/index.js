@@ -14,9 +14,9 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: true }).concat(socketMiddleware),
 });
 
-// store.subscribe(() => {
-//   console.log('store.getState()', store.getState());
-// });
+store.subscribe(() => {
+  console.log('store.getState()', store.getState());
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

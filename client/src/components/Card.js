@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchCard } from '../actions/card';
 import { collapseCard, expandCard } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
 import Hearts from '../assets/Hearts.png';
@@ -23,25 +22,14 @@ const cardSuit = {
   Spades: Spades,
 };
 
-const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
+const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
     if (card.id !== '') {
       expandCard();
     }
-
-    if (socket) {
-      socket.on(DATA.DRAWN_CARD, (data) => {
-        console.log('DATA.DRAWN_CARD', data);
-        fetchCard(data);
-      });
-
-      return () => {
-        socket.off(DATA.DRAWN_CARD);
-      };
-    }
-  }, [socket, fetchCard, card]);
+  }, [card]);
 
   const { id, value, suit, season, prompts } = card;
 
@@ -59,7 +47,7 @@ const Card = ({ card, fetchCard, cardExpanded, expandCard, collapseCard }) => {
     }
   };
 
-  if (!cardExpanded || card.id === undefined) {
+  if (!cardExpanded) {
     return null;
   }
 
@@ -117,7 +105,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCard: (data) => dispatch(fetchCard(data)),
     expandCard: () => dispatch(expandCard()),
     collapseCard: () => dispatch(collapseCard()),
   };

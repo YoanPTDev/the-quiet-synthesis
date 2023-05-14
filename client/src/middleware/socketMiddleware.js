@@ -8,8 +8,14 @@ import {
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
+import { fetchCard } from '../actions/card';
 
-import { UPDATE, ACTIONS, SECOND_TURN } from '../../../utils/constants.mjs';
+import {
+  UPDATE,
+  ACTIONS,
+  SECOND_TURN,
+  DATA,
+} from '../../../utils/constants.mjs';
 
 let socketInstance;
 
@@ -20,6 +26,9 @@ export const setSocketInstance = (socket) => {
 
 const setupSocketListeners = () => {
   if (socketInstance) {
+    socketInstance.on(DATA.DRAWN_CARD, (data) => {
+      storeReference.dispatch(fetchCard(data));
+    });
     socketInstance.on(SECOND_TURN.ACTION, () => {
       storeReference.dispatch(expandSecondTurnAction());
     });
@@ -27,7 +36,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
-      console.log('UPDATE.ACTION -> socketMiddlware', data);
+      // console.log('UPDATE.ACTION -> socketMiddlware', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
       // storeReference.dispatch(
       //   fetchDirection({ directions: 'someone is playing' })

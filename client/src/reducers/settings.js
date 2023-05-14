@@ -34,16 +34,16 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
         ...state,
         adventureLogExpanded: action.adventureLogExpanded,
       };
-      case SET_ADVENTURELOG_INPUT_EXPANDED:
-        return {
-          ...state,
-          adventureLogInputExpanded: action.adventureLogInputExpanded,
-        };
-      case SET_DISCUSSION_INPUT_EXPANDED:
-        return {
-          ...state,
-          discussionInputExpanded: action.discussionInputExpanded,
-        };
+    case SET_ADVENTURELOG_INPUT_EXPANDED:
+      return {
+        ...state,
+        adventureLogInputExpanded: action.adventureLogInputExpanded,
+      };
+    case SET_DISCUSSION_INPUT_EXPANDED:
+      return {
+        ...state,
+        discussionInputExpanded: action.discussionInputExpanded,
+      };
     case SET_NOTEBOOK_EXPANDED:
       return {
         ...state,
@@ -64,11 +64,11 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
         ...state,
         cardExpanded: action.cardExpanded,
       };
-      case SET_SECOND_TURN_ACTION_EXPANDED:
-        return {
-          ...state,
-          secondTurnActionExpanded: action.secondTurnActionExpanded,
-        };
+    case SET_SECOND_TURN_ACTION_EXPANDED:
+      return {
+        ...state,
+        secondTurnActionExpanded: action.secondTurnActionExpanded,
+      };
     default:
       return state;
   }
