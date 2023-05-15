@@ -51,13 +51,14 @@ const AdventureLogInputWrapper = (props) => {
   const { dispatch, adventureLogInputExpanded, outOfTurnActions } = props;
   const socket = useContext(SocketContext);
 
-  const [diceValue, setDiceValue] = useState(1);
+  const [diceValue, setDiceValue] = useState(0);
 
   const showDiceGadget = outOfTurnActions.type === 'StartProject';
 
   useEffect(() => {
     if (showDiceGadget) {
-      setDiceValue(0);
+      setDiceValue(1);
+      console.log('useEffect', diceValue);
     }
   }, [showDiceGadget]);
 
