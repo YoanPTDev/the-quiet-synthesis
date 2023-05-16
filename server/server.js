@@ -49,8 +49,8 @@ io.on('connection', (socket) => {
     console.log(`${playerName} connected to ${gameEngine.game.config.roomCode}`);
   });
 
-  socket.on(ACTIONS.START_GAME, () => {
-    gameEngine.start();
+  socket.once(ACTIONS.PREP_GAME, () => {
+    gameEngine.gamePrep();
   });
 
   socket.on(ACTIONS.END_TURN, () => {

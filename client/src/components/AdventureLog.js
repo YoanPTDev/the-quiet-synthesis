@@ -7,23 +7,46 @@ const AdventureLog = (props) => {
   const renderAdventureLogData = () => {
     if (logs) {
       return logs.map((log) => {
-        const { weekNb, playerId, cardIdDrawn, promptChosen, actions } = log;
-        const { type, tokens, turns, description } = actions[0];
+        const { weekNb, playerId, promptChosen, actions, completedProjects } = log;
 
         return (
           <div
             key={weekNb}
             className='log'>
             <p>
-              Week {weekNb} {' - '} {type} {' by '}{' '}
+              <strong>Week:</strong> {weekNb} -{' '}
               {playerId ? playerId : 'an unknown player'}
             </p>
-            <p>Prompt: {promptChosen}</p>
             <p>
-              Contempt token{tokens > 1 ? 's' : ''}: {tokens}
+              <strong>Prompt: </strong> {promptChosen}
             </p>
-            <p>Specifics: {description}</p>
-            {turns > 0 ? <p>Ready in {turns} turns</p> : ''}
+            {actions.map((action, index) => {
+              const { type, tokens, turns, description } = action;
+
+              return (
+                <div
+                  key={`${weekNb}-${index}`}
+                  className='action'>
+                  <p>
+                    <strong>Type: </strong> {type}{' '}
+                    {type === 'StartProject' && turns === 0 && <strong>COMPLETED</strong>}
+                  </p>
+                  <p>
+                    <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
+                    {tokens}
+                  </p>
+                  <p>
+                    <strong>Specifics: </strong> {description}
+                  </p>
+                  <strong>
+                    {turns > 0 ? <p>Ready in {turns} turns</p> : ''}
+                  </strong>
+                </div>
+              );
+            })}
+            <br/>
+            <h5>Project completed this week!</h5>
+            {completedProjects}
           </div>
         );
       });

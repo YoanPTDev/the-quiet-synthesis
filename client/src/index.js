@@ -15,7 +15,7 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-  console.log('store.getState()', store.getState());
+  console.log('STORE ->', store.getState());
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

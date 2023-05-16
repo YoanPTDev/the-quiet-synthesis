@@ -90,7 +90,7 @@ class GameEngine {
       const emitDrawing = (index) => {
         if (index >= players.length) {
           // All players have drawn, now add resources
-          emitResource(0);
+          emitResource();
           return;
         }
 
@@ -102,19 +102,12 @@ class GameEngine {
         });
       };
       //************* Needs rework ************************
-      const emitResource = (index) => {
-        if (index >= players.length) {
-          // All players have added resources, start the game
+      const emitResource = () => {
+        io.to(this.game.config.roomCode).emit(ACTIONS.ADD_RESOURCES);
+        players[0].socket.emit(UPDATE.FIRST_PLAYER_GAME_PREP);
+
+        players[0].socket.once(ACTIONS.START_GAME, () => {
           this.start();
-          return;
-        }
-
-        let player = players[index];
-        // Replace RESOURCE_ACTION and RESOURCE_ADDED with the appropriate actions
-        player.socket.emit(RESOURCE_ACTION);
-
-        player.socket.once(RESOURCE_ADDED, () => {
-          emitResource(index + 1);
         });
       };
       //***************************************************
@@ -202,6 +195,14 @@ const playerTurnStateMachine = {
 
           console.log(`PROJECTS`);
 
+          this.gameEngine.log.weeks.logs.forEach((week) => {
+            week.actions.forEach((action) => {
+              if (action.turns > 0) {
+                action.turns -= 1;
+              }
+            });
+          });
+
           this.processProjects(0);
           this.transition(playerStates.ACTION2);
         } else {
@@ -228,7 +229,7 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.FINISHED;
 
           this.gameEngine.log.addEntry(this.newWeek);
-          this.currentPlayer.socket.broadcast.emit(
+          io.to(this.gameEngine.game.config.roomCode).emit(
             UPDATE.LOGS,
             this.gameEngine.log.weeks
           );
@@ -430,9 +431,9 @@ const playerTurnStateMachine = {
 
     if (project.turns == 0) {
       console.log('Project: ', project.desc, ' is finished');
-      project.player.socket.emit('PLACEHOLDER1');
+      project.player.socket.emit(UPDATE.PROJECT, {Description: project.desc});
 
-      project.player.socket.once('PLACEHOLDER2', (data) => {
+      project.player.socket.once(ACTIONS.COMPLETE_PROJECT, (data) => {
         let complProject = {
           orgDesc: project.desc,
           endDesc: data,

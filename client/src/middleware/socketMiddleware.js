@@ -5,6 +5,7 @@ import {
   enableDrawing,
   expandSecondTurnAction,
   expandDiscussionInput,
+  expandScarcityAbundanceLog,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
@@ -26,6 +27,13 @@ export const setSocketInstance = (socket) => {
 
 const setupSocketListeners = () => {
   if (socketInstance) {
+    socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
+      console.log('add ressources');
+      storeReference.dispatch(expandScarcityAbundanceLog());
+    });
+    socketInstance.on(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
+      console.log('first player game prep!');
+    })
     socketInstance.on(DATA.DRAWN_CARD, (data) => {
       storeReference.dispatch(fetchCard(data));
     });
@@ -36,11 +44,13 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
-      // console.log('UPDATE.ACTION -> socketMiddlware', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
       // storeReference.dispatch(
       //   fetchDirection({ directions: 'someone is playing' })
       // );
+    });
+    socketInstance.on(UPDATE.PROJECT, (data) => {
+      console.log('UPDATE.PROJECT', data);
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());
@@ -48,7 +58,6 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE.DISCUSSION, (data) => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
-      console.log('UPDATE_DISCUSSION', data);
     });
     socketInstance.on(UPDATE.NOTEBOOK, (data) => {
       storeReference.dispatch(fetchNote(data));

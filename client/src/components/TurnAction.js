@@ -2,19 +2,20 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { addPlayer } from '../actions/joueur';
-import { startGame, endTurn } from '../actions/partie';
+import { startGame, endTurn, prepGame } from '../actions/partie';
 import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
 import { fetchDirection } from '../actions/direction';
 
 const TurnAction = ({
-  addPlayer,
+  prepGame,
   startGame,
   endTurn,
   drawingEnabled,
   disableDrawing,
   expandAdventureLogInput,
-  fetchDirection
+  fetchDirection,
 }) => {
+  
   const handleDrawingEnd = () => {
     disableDrawing();
     expandAdventureLogInput();
@@ -24,9 +25,9 @@ const TurnAction = ({
   return (
     <div>
       <button
-        onClick={addPlayer}
+        onClick={prepGame}
         style={{ marginLeft: '10px' }}>
-        Ajouter un joueur
+        prep game
       </button>
       <button
         onClick={startGame}
@@ -59,6 +60,7 @@ const mapDispatchToProps = (dispatch, props) => {
     addPlayer: () => dispatch(addPlayer(socket)),
     startGame: () => dispatch(startGame(socket)),
     endTurn: () => dispatch(endTurn(socket)),
+    prepGame: () => dispatch(prepGame(socket)),
     disableDrawing: () => dispatch(disableDrawing()),
     expandAdventureLogInput: () => dispatch(expandAdventureLogInput()),
     fetchDirection: (data) => dispatch(fetchDirection(data)),
