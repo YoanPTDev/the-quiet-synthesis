@@ -10,7 +10,20 @@ const OutOfTurnAction = (props) => {
         <div>
           <div>{outOfTurnActions.type}</div>
           <div>{prompt}</div>
-          <div>{outOfTurnActions.description}</div>
+          <div>
+            {outOfTurnActions.description}
+          </div>
+          <div>
+            {outOfTurnActions.discussion &&
+              outOfTurnActions.discussion.map(
+                ({ player, statement }, index) => (
+                  <div key={index}>
+                    <div>{player}</div>
+                    <div>{statement}</div>
+                  </div>
+                )
+              )}
+          </div>
         </div>
       );
     }

@@ -47,6 +47,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchDirection({ directions: 'Discuss' }));
     });
     socketInstance.on(UPDATE.DISCUSSION, (data) => {
+      storeReference.dispatch(fetchOutOfTurnAction(data));
       console.log('UPDATE_DISCUSSION', data);
     });
     socketInstance.on(UPDATE.NOTEBOOK, (data) => {

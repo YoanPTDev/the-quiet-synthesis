@@ -3,14 +3,6 @@ class GameConfig {
     this.playerCount = playerCount;
     this.roomCode = generateRandomString(5);
   }
-
-  getPlayerCount() {
-    return this.playerCount;
-  }
-
-  getRoomCode() {
-    return this.roomCode;
-  }
 }
 
 function generateRandomString(n) {
@@ -26,8 +18,8 @@ function generateRandomString(n) {
 
 class Game {
   constructor(config) {
-    this.GameConfig = config; //Objet GameConfig
+    this.config = config; //Objet GameConfig
   }
 }
 
-export default Game;
+export { Game, GameConfig };
