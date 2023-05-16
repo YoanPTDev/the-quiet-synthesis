@@ -61,7 +61,7 @@ const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
     <div
       key={Date.now()}
       ref={cardRef}
-      className={`card-item`}
+      className={`card-item slide-fade-in`}
       style={{ backgroundColor: cardColor[season] }}>
       <div>
         <h3 className='card-title'>
