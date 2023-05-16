@@ -5,6 +5,7 @@ import {
   enableDrawing,
   expandSecondTurnAction,
   expandDiscussionInput,
+  expandScarcityAbundanceLog,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
@@ -26,6 +27,13 @@ export const setSocketInstance = (socket) => {
 
 const setupSocketListeners = () => {
   if (socketInstance) {
+    socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
+      console.log('add ressources');
+      storeReference.dispatch(expandScarcityAbundanceLog());
+    });
+    socketInstance.on(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
+      console.log('first player game prep!');
+    })
     socketInstance.on(DATA.DRAWN_CARD, (data) => {
       storeReference.dispatch(fetchCard(data));
     });

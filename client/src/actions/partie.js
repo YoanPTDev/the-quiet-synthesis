@@ -9,5 +9,6 @@ export const endTurn = (socket) => () => {
 };
 
 export const prepGame = (socket) => () => {
+  console.log('prep');
   socket.emit(ACTIONS.PREP_GAME);
-}
+};
