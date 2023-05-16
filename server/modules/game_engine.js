@@ -202,6 +202,14 @@ const playerTurnStateMachine = {
 
           console.log(`PROJECTS`);
 
+          this.gameEngine.log.weeks.logs.forEach((week) => {
+            week.forEach((action) => {
+              if (action.turns > 0) {
+                action.turns -= 1;
+              }
+            });
+          });
+
           this.processProjects(0);
           this.transition(playerStates.ACTION2);
         } else {
