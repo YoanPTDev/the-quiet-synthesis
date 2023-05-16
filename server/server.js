@@ -10,8 +10,7 @@ import {
 import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
 import Player from './modules/player.js';
-import Week from './modules/week.js';
-import { ProjectAction } from './modules/game_action_strategy.js';
+import { GameConfig } from './modules/game.js';
 
 let gameEngine = null;
 
@@ -45,8 +44,9 @@ io.on('connection', (socket) => {
     const playerName = `Player ${playerCount}`;
     socket.playerName = playerName;
     gameEngine.players.push(new Player(null, socket));
+    socket.join(gameEngine.game.config.roomCode);
 
-    console.log(`${playerName} connected`);
+    console.log(`${playerName} connected to ${gameEngine.game.config.roomCode}`);
   });
 
   socket.on(ACTIONS.START_GAME, () => {
@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
           gameEngine.scarc_abund.abundances.splice(indexToRemove, 1);
         }
         gameEngine.scarc_abund.scarcities.push(data.value);
-        io.emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
+        io.to(gameEngine.game.config.roomCode).emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
         break;
       case DATA.ABUNDANCE:
         if (data.action === ACTIONS.TRANSFER) {
@@ -80,12 +80,12 @@ io.on('connection', (socket) => {
           gameEngine.scarc_abund.scarcities.splice(indexToRemove, 1);
         }
         gameEngine.scarc_abund.abundances.push(data.value);
-        io.emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
+        io.to(gameEngine.game.config.roomCode).emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
         break;
       case DATA.NOTE:
         // Save the Notebook entry to your mongoDB collection
         gameEngine.notebook.addNote(data.value);
-        io.emit(UPDATE.NOTEBOOK, gameEngine.notebook.notes);
+        io.to(gameEngine.game.config.roomCode).emit(UPDATE.NOTEBOOK, gameEngine.notebook.notes);
         break;
       case DATA.NAME:
         // Save the Name entry to your mongoDB collection
@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
     if (index !== -1) {
       gameEngine.players.splice(index, 1);
     }
-    console.log(`${socket.playerName} disconnected`);
+    console.log(`${socket.playerName} disconnected from ${gameEngine.game.config.roomCode}`);
   });
 });
 
@@ -125,7 +125,7 @@ server.listen(port, () => {
 async function init() {
   //const connectionString = 'mongodb://localhost:27017/your-database';
   await connectToDatabase();
-  gameEngine = new GameEngine(null, null);
+  gameEngine = new GameEngine(new GameConfig(4), null);
   await gameEngine.buildAdventureLog('Test map', null);
   await gameEngine.buildDeck('default deck');
   console.log('build finished');

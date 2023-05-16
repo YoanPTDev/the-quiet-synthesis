@@ -1,4 +1,4 @@
-import Game from './game.js';
+import { Game } from './game.js';
 import Notebook from './notebook.js';
 import { Deck } from './deck.js';
 import Map from './map.js';
@@ -49,7 +49,6 @@ class GameEngine {
     this.players = new Array(); // Liste de Player
     this.map = new Map(mapConfig);
     this.log = null;
-    this.gameId = 1; // ID de la partie (encore necessaire?)
     this.timeElapsed = 0; // Sert a calculer le temps passé pour la sauvegarde
     this.nbrContempts = 0; // Nombre de contempt tokens
     this.reduceTimers = true; // Determine si on reduit les projets durant le tour
@@ -85,42 +84,44 @@ class GameEngine {
   }
 
   gamePrep() {
-    let players = this.players;
+    if (!this.isGameRunning) {
+      let players = this.players;
 
-    const emitDrawing = (index) => {
-      if (index >= players.length) {
-        // All players have drawn, now add resources
-        emitResource(0);
-        return;
-      }
+      const emitDrawing = (index) => {
+        if (index >= players.length) {
+          // All players have drawn, now add resources
+          emitResource(0);
+          return;
+        }
 
-      let player = players[index];
-      player.socket.emit(UPDATE.ENABLE_DRAWING);
+        let player = players[index];
+        player.socket.emit(UPDATE.ENABLE_DRAWING);
 
-      player.socket.once(ACTIONS.END_DRAWING, () => {
-        emitDrawing(index + 1);
-      });
-    };
-    //************* Needs rework ************************
-    const emitResource = (index) => {
-      if (index >= players.length) {
-        // All players have added resources, start the game
-        this.start();
-        return;
-      }
+        player.socket.once(ACTIONS.END_DRAWING, () => {
+          emitDrawing(index + 1);
+        });
+      };
+      //************* Needs rework ************************
+      const emitResource = (index) => {
+        if (index >= players.length) {
+          // All players have added resources, start the game
+          this.start();
+          return;
+        }
 
-      let player = players[index];
-      // Replace RESOURCE_ACTION and RESOURCE_ADDED with the appropriate actions
-      player.socket.emit(RESOURCE_ACTION);
+        let player = players[index];
+        // Replace RESOURCE_ACTION and RESOURCE_ADDED with the appropriate actions
+        player.socket.emit(RESOURCE_ACTION);
 
-      player.socket.once(RESOURCE_ADDED, () => {
-        emitResource(index + 1);
-      });
-    };
-    //***************************************************
+        player.socket.once(RESOURCE_ADDED, () => {
+          emitResource(index + 1);
+        });
+      };
+      //***************************************************
 
-    // Start the drawing process
-    emitDrawing(0);
+      // Start the drawing process
+      emitDrawing(0);
+    }
   }
 }
 
@@ -326,8 +327,7 @@ const playerTurnStateMachine = {
     if (this.isAction1()) {
       this.weekBuilder(data, 'newAction1');
       console.log('current player', this.currentPlayer.socket.id);
-      this.currentPlayer.socket.broadcast.emit(UPDATE.ACTION, {
-        // Changer pour broadcast apres tests
+      io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.ACTION, {
         action: this.newAction1,
         prompt: this.currentPrompt,
       });
@@ -339,7 +339,7 @@ const playerTurnStateMachine = {
       }
     } else if (this.isAction2()) {
       this.weekBuilder(data, 'newAction2');
-      this.currentPlayer.socket.broadcast.emit(UPDATE.ACTION, {
+      io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.ACTION, {
         action: this.newAction2,
       });
 
@@ -388,7 +388,9 @@ const playerTurnStateMachine = {
 
       discussion.push(reply);
       this[action].discussion = discussion;
-      io.emit(UPDATE.DISCUSSION, discussion);
+      io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.DISCUSSION, {
+        discussion: discussion,
+      });
 
       if (count === 0) {
         // First player's turn
