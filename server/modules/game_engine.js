@@ -228,7 +228,7 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.FINISHED;
 
           this.gameEngine.log.addEntry(this.newWeek);
-          this.currentPlayer.socket.broadcast.emit(
+          io.to(this.gameEngine.game.config.roomCode).emit(
             UPDATE.LOGS,
             this.gameEngine.log.weeks
           );
