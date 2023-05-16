@@ -203,7 +203,7 @@ const playerTurnStateMachine = {
           console.log(`PROJECTS`);
 
           this.gameEngine.log.weeks.logs.forEach((week) => {
-            week.forEach((action) => {
+            week.actions.forEach((action) => {
               if (action.turns > 0) {
                 action.turns -= 1;
               }
@@ -438,9 +438,9 @@ const playerTurnStateMachine = {
 
     if (project.turns == 0) {
       console.log('Project: ', project.desc, ' is finished');
-      project.player.socket.emit('PLACEHOLDER1');
+      project.player.socket.emit(UPDATE.PROJECT, {Description: project.desc});
 
-      project.player.socket.once('PLACEHOLDER2', (data) => {
+      project.player.socket.once(ACTIONS.COMPLETE_PROJECT, (data) => {
         let complProject = {
           orgDesc: project.desc,
           endDesc: data,
