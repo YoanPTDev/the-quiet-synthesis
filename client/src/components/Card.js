@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { collapseCard, expandCard } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
@@ -7,6 +7,7 @@ import Diamonds from '../assets/Diamonds.png';
 import Clubs from '../assets/Clubs.png';
 import Spades from '../assets/Spades.png';
 import { ACTIONS, DATA } from '../../../utils/constants.mjs';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const cardColor = {
   Spring: '#9fb261',
@@ -24,16 +25,10 @@ const cardSuit = {
 
 const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
   const socket = useContext(SocketContext);
-  const cardRef = useRef(null);
 
   useEffect(() => {
     if (card.id !== '') {
       expandCard();
-      if (cardRef.current) {
-        cardRef.current.classList.remove('slide-fade-in');
-        void cardRef.current.offsetWidth; // Trigger reflow
-        setTimeout(() => cardRef.current.classList.add('slide-fade-in'), 20);
-      }
     }
   }, [card]);
 
@@ -53,56 +48,64 @@ const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
     }
   };
 
-  if (!cardExpanded) {
-    return null;
-  }
+  // if (!cardExpanded) {
+  //   return null;
+  // }
 
   return (
-    <div
-      key={Date.now()}
-      ref={cardRef}
-      className={`card-item slide-fade-in`}
-      style={{ backgroundColor: cardColor[season] }}>
-      <div>
-        <h3 className='card-title'>
-          <img
-            src={cardSuit[suit]}
-            alt='suit-icon'
-            className='suit-icon'
-          />
-          <div style={{ margin: '20px' }}></div>
-          <div>{value}</div>
-          <div>{season}</div>
-        </h3>
-      </div>
-      <div className='card-prompts'>
-        {prompts &&
-          prompts.map((prompt, index) => (
-            <div
-              className='prompt-wrapper'
-              key={`${id}-${index}`}>
-              <button
-                className='card-prompt'
-                onClick={() => handleButtonClick(index)}>
-                {prompt.description}
-              </button>
-              {prompts.length === 2 && index === 0 && (
-                <div>
-                  <br />
-                  <p
-                    style={{
-                      fontStyle: 'italic',
-                      fontFamily: "'Martel', serif",
-                    }}>
-                    or...
-                  </p>
-                  <br />
-                </div>
-              )}
-            </div>
-          ))}
-      </div>
-    </div>
+    <AnimatePresence>
+      {cardExpanded && (
+        <motion.div
+          key={id}
+          className='card-item'
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          style={{ backgroundColor: cardColor[season] }}
+        >
+        <div>
+          <h3 className='card-title'>
+            <img
+              src={cardSuit[suit]}
+              alt='suit-icon'
+              className='suit-icon'
+            />
+            <div style={{ margin: '20px' }}></div>
+            <div>{value}</div>
+            <div>{season}</div>
+          </h3>
+        </div>
+        <div className='card-prompts'>
+          {prompts &&
+            prompts.map((prompt, index) => (
+              <div
+                className='prompt-wrapper'
+                key={`${id}-${index}`}>
+                <button
+                  className='card-prompt'
+                  onClick={() => handleButtonClick(index)}>
+                  {prompt.description}
+                </button>
+                {prompts.length === 2 && index === 0 && (
+                  <div>
+                    <br />
+                    <p
+                      style={{
+                        fontStyle: 'italic',
+                        fontFamily: "'Martel', serif",
+                      }}>
+                      or...
+                    </p>
+                    <br />
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
+      </motion.div>
+        )}
+    </AnimatePresence>
   );
 };
 

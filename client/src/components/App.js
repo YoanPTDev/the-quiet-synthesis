@@ -13,6 +13,7 @@ import OutOfTurnAction from './OutOfTurnAction';
 import TurnActionWrapper from './TurnAction';
 import SecondTurnActionWrapper from './SecondTurnAction';
 import { SocketContext } from '../middleware/socketcontext';
+import { AnimatePresence } from 'framer-motion';
 
 import { ACTIONS } from '../../../utils/constants.mjs';
 
@@ -47,8 +48,12 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
         <div>
           {/* <button onClick={cancelGame}>Quit the adventure!</button> */}
           <Map className='map' />
+            <AnimatePresence>
+              <div className='turn-action center component-container'>
+                  <Card />
+              </div>
+            </AnimatePresence>
           <div className='turn-action top-right component-container'>
-            <Card />
             <OutOfTurnAction />
           </div>
           <div className='bottom-right component-container'></div>
