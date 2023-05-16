@@ -33,6 +33,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(expandSecondTurnAction());
     });
     socketInstance.on(UPDATE.LOGS, (data) => {
+      console.log('UPDATE.LOGS', data);
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
@@ -48,7 +49,6 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE.DISCUSSION, (data) => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
-      console.log('UPDATE_DISCUSSION', data);
     });
     socketInstance.on(UPDATE.NOTEBOOK, (data) => {
       storeReference.dispatch(fetchNote(data));

@@ -8,22 +8,33 @@ const AdventureLog = (props) => {
     if (logs) {
       return logs.map((log) => {
         const { weekNb, playerId, cardIdDrawn, promptChosen, actions } = log;
-        const { type, tokens, turns, description } = actions[0];
 
         return (
           <div
             key={weekNb}
             className='log'>
             <p>
-              Week {weekNb} {' - '} {type} {' by '}{' '}
-              {playerId ? playerId : 'an unknown player'}
+              <strong>Week:</strong> {weekNb} - {playerId ? playerId : 'an unknown player'}
             </p>
-            <p>Prompt: {promptChosen}</p>
-            <p>
-              Contempt token{tokens > 1 ? 's' : ''}: {tokens}
-            </p>
-            <p>Specifics: {description}</p>
-            {turns > 0 ? <p>Ready in {turns} turns</p> : ''}
+            <p><strong>Prompt: </strong> {promptChosen}</p>
+            {actions.map((action, index) => {
+              const { type, tokens, turns, description } = action;
+
+              return (
+                <div
+                  key={`${weekNb}-${index}`}
+                  className='action'>
+                  <p>
+                    <strong>Type: </strong> {type}
+                  </p>
+                  <p>
+                    <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong> {tokens}
+                  </p>
+                  <p><strong>Specifics: </strong> {description}</p>
+                  <strong>{turns > 0 ? <p>Ready in {turns} turns</p> : ''}</strong>
+                </div>
+              );
+            })}
           </div>
         );
       });
