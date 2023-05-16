@@ -7,16 +7,19 @@ const AdventureLog = (props) => {
   const renderAdventureLogData = () => {
     if (logs) {
       return logs.map((log) => {
-        const { weekNb, playerId, cardIdDrawn, promptChosen, actions } = log;
+        const { weekNb, playerId, promptChosen, actions, completedProjects } = log;
 
         return (
           <div
             key={weekNb}
             className='log'>
             <p>
-              <strong>Week:</strong> {weekNb} - {playerId ? playerId : 'an unknown player'}
+              <strong>Week:</strong> {weekNb} -{' '}
+              {playerId ? playerId : 'an unknown player'}
             </p>
-            <p><strong>Prompt: </strong> {promptChosen}</p>
+            <p>
+              <strong>Prompt: </strong> {promptChosen}
+            </p>
             {actions.map((action, index) => {
               const { type, tokens, turns, description } = action;
 
@@ -25,16 +28,25 @@ const AdventureLog = (props) => {
                   key={`${weekNb}-${index}`}
                   className='action'>
                   <p>
-                    <strong>Type: </strong> {type}
+                    <strong>Type: </strong> {type}{' '}
+                    {type === 'StartProject' && turns === 0 && <strong>COMPLETED</strong>}
                   </p>
                   <p>
-                    <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong> {tokens}
+                    <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
+                    {tokens}
                   </p>
-                  <p><strong>Specifics: </strong> {description}</p>
-                  <strong>{turns > 0 ? <p>Ready in {turns} turns</p> : ''}</strong>
+                  <p>
+                    <strong>Specifics: </strong> {description}
+                  </p>
+                  <strong>
+                    {turns > 0 ? <p>Ready in {turns} turns</p> : ''}
+                  </strong>
                 </div>
               );
             })}
+            <br/>
+            <h5>Project completed this week!</h5>
+            {completedProjects}
           </div>
         );
       });

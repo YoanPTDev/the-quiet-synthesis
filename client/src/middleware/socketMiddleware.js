@@ -33,16 +33,17 @@ const setupSocketListeners = () => {
       storeReference.dispatch(expandSecondTurnAction());
     });
     socketInstance.on(UPDATE.LOGS, (data) => {
-      console.log('UPDATE.LOGS', data);
       storeReference.dispatch(fetchLog(data));
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
-      // console.log('UPDATE.ACTION -> socketMiddlware', data);
       storeReference.dispatch(fetchOutOfTurnAction(data));
       // storeReference.dispatch(
       //   fetchDirection({ directions: 'someone is playing' })
       // );
     });
+    socketInstance.on(UPDATE.PROJECT, (data) => {
+      console.log('UPDATE.PROJECT', data);
+    })
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());
       storeReference.dispatch(fetchDirection({ directions: 'Discuss' }));
