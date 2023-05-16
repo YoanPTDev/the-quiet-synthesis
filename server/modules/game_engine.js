@@ -326,7 +326,7 @@ const playerTurnStateMachine = {
     if (this.isAction1()) {
       this.weekBuilder(data, 'newAction1');
       console.log('current player', this.currentPlayer.socket.id);
-      this.currentPlayer.socket.emit(UPDATE.ACTION, {
+      this.currentPlayer.socket.broadcast.emit(UPDATE.ACTION, {
         // Changer pour broadcast apres tests
         action: this.newAction1,
         prompt: this.currentPrompt,
@@ -341,7 +341,6 @@ const playerTurnStateMachine = {
       this.weekBuilder(data, 'newAction2');
       this.currentPlayer.socket.broadcast.emit(UPDATE.ACTION, {
         action: this.newAction2,
-        prompt: this.currentPrompt,
       });
 
       if (Object.keys(this.newAction2).length !== 0) {
