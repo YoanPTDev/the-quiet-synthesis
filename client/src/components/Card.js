@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { collapseCard, expandCard } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
@@ -24,10 +24,16 @@ const cardSuit = {
 
 const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
   const socket = useContext(SocketContext);
+  const cardRef = useRef(null);
 
   useEffect(() => {
     if (card.id !== '') {
       expandCard();
+      if (cardRef.current) {
+        cardRef.current.classList.remove('slide-fade-in');
+        void cardRef.current.offsetWidth; // Trigger reflow
+        setTimeout(() => cardRef.current.classList.add('slide-fade-in'), 20);
+      }
     }
   }, [card]);
 
@@ -53,8 +59,9 @@ const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
 
   return (
     <div
-      key={id}
-      className='card-item'
+      key={Date.now()}
+      ref={cardRef}
+      className={`card-item`}
       style={{ backgroundColor: cardColor[season] }}>
       <div>
         <h3 className='card-title'>

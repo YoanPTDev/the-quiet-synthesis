@@ -195,7 +195,14 @@ li {
   padding: 10px;
   width: 250px;
   height: 400px;
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
+  .card-item.slide-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
 .card-title {
   border-top: solid 1px black;
