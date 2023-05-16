@@ -326,12 +326,11 @@ const playerTurnStateMachine = {
   handleSaveData(data) {
     if (this.isAction1()) {
       this.weekBuilder(data, 'newAction1');
-      console.log('current player', this.currentPlayer.socket.id);
       io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.ACTION, {
         action: this.newAction1,
         prompt: this.currentPrompt,
       });
-      
+
       if (Object.keys(this.newAction1).length !== 0) {
         if (this.newAction1.isCompleted()) {
           this.consolidateAction();
@@ -389,7 +388,7 @@ const playerTurnStateMachine = {
       discussion.push(reply);
       this[action].discussion = discussion;
       io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.DISCUSSION, {
-        discussion: discussion,
+        action: this[action],
       });
 
       if (count === 0) {
