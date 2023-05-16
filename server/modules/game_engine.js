@@ -328,7 +328,7 @@ const playerTurnStateMachine = {
       this.weekBuilder(data, 'newAction1');
       console.log('current player', this.currentPlayer.socket.id);
       io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.ACTION, {
-        action: this.newAction1,
+        action: this.newWeek.actions,
         prompt: this.currentPrompt,
       });
 
@@ -340,7 +340,7 @@ const playerTurnStateMachine = {
     } else if (this.isAction2()) {
       this.weekBuilder(data, 'newAction2');
       io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.ACTION, {
-        action: this.newAction2,
+        action: this.newWeek.actions,
       });
 
       if (Object.keys(this.newAction2).length !== 0) {
