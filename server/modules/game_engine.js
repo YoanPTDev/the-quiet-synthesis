@@ -90,7 +90,7 @@ class GameEngine {
       const emitDrawing = (index) => {
         if (index >= players.length) {
           // All players have drawn, now add resources
-          emitResource(0);
+          emitResource();
           return;
         }
 
@@ -102,19 +102,12 @@ class GameEngine {
         });
       };
       //************* Needs rework ************************
-      const emitResource = (index) => {
-        if (index >= players.length) {
-          // All players have added resources, start the game
+      const emitResource = () => {
+        io.to(this.game.config.roomCode).emit(ACTIONS.ADD_RESOURCES);
+        players[0].socket.emit(UPDATE.FIRST_PLAYER_GAME_PREP);
+
+        players[0].socket.once(ACTIONS.START_GAME, () => {
           this.start();
-          return;
-        }
-
-        let player = players[index];
-        // Replace RESOURCE_ACTION and RESOURCE_ADDED with the appropriate actions
-        player.socket.emit(RESOURCE_ACTION);
-
-        player.socket.once(RESOURCE_ADDED, () => {
-          emitResource(index + 1);
         });
       };
       //***************************************************
