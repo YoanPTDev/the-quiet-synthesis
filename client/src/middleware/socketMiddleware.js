@@ -43,7 +43,7 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       console.log('UPDATE.PROJECT', data);
-    })
+    });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());
       storeReference.dispatch(fetchDirection({ directions: 'Discuss' }));

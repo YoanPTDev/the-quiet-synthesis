@@ -7,3 +7,7 @@ export const startGame = (socket) => () => {
 export const endTurn = (socket) => () => {
   socket.emit(ACTIONS.END_TURN);
 };
+
+export const prepGame = (socket) => () => {
+  socket.emit(ACTIONS.PREP_GAME);
+}

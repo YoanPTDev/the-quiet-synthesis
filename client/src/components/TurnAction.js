@@ -7,14 +7,15 @@ import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
 import { fetchDirection } from '../actions/direction';
 
 const TurnAction = ({
-  addPlayer,
+  prepGame,
   startGame,
   endTurn,
   drawingEnabled,
   disableDrawing,
   expandAdventureLogInput,
-  fetchDirection
+  fetchDirection,
 }) => {
+  
   const handleDrawingEnd = () => {
     disableDrawing();
     expandAdventureLogInput();
@@ -24,9 +25,9 @@ const TurnAction = ({
   return (
     <div>
       <button
-        onClick={addPlayer}
+        onClick={prepGame}
         style={{ marginLeft: '10px' }}>
-        Ajouter un joueur
+        commencer Partie
       </button>
       <button
         onClick={startGame}
