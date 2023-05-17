@@ -8,11 +8,8 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const serverURL =
-      process.env.NODE_ENV === 'production'
-        ? process.env.REACT_APP_PROD_SERVER_URL
-        : process.env.REACT_APP_SERVER_URL;
-    const newSocket = io.connect(serverURL);
+    // const newSocket = io.connect('http://localhost:3001');
+    const newSocket = io.connect('http://thequietsynthesis.com:3001');
     setSocket(newSocket);
     setSocketInstance(newSocket);
 
