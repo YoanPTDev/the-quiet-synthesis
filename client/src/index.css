@@ -73,6 +73,15 @@ button, input {
   display: inline-flex;
 }
 
+.action-director {
+  position: absolute;
+  top: 5%;
+  text-align: center;
+  font-size: 2em;
+  opacity: 0.6;
+  width: 100%;
+}
+
 .action-buttons > * {
   margin: 20px;
 }
