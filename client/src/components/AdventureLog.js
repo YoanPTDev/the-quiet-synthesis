@@ -66,15 +66,28 @@ const AdventureLog = (props) => {
               );
             })}
             <br />
-            <h5>Project completed this week!</h5>
-            <div>
-            {completedProjects.map(({orgDesc, endDesc, orgPlayer, endPlayer}, index) => (
-              <div key={index}>
-                <div><strong>{orgPlayer}: </strong>{orgDesc}</div>
-                <div><strong>{endPlayer}: </strong>{endDesc}</div>
+            {completedProjects.length > 0 && (
+              <div>
+                <div className='centered-column'>
+                  <h3>Project completed this week!</h3>
+                </div>
+                {completedProjects.map(
+                  ({ orgDesc, endDesc, orgPlayer, endPlayer }, index) => (
+                    <div key={index}>
+                      <hr/>
+                      <div>
+                        <strong>{orgPlayer}: </strong>
+                        {orgDesc}
+                      </div>
+                      <div>
+                        <strong>{endPlayer}: </strong>
+                        {endDesc}
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
-            ))}
-            </div>
+            )}
           </div>
         );
       });
