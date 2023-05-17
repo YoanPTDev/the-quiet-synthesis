@@ -8,10 +8,11 @@ import {
   SET_DRAWING_ENABLED,
   SET_CARD_EXPANDED,
   SET_SECOND_TURN_ACTION_EXPANDED,
+  SET_FIRST_PLAYER,
 } from '../actions/types';
 
 const DEFAULT_SETTINGS = {
-  gameStarted: true,
+  gameStarted: false,
   adventureLogExpanded: false,
   adventureLogInputExpanded: false,
   notebookExpanded: false,
@@ -20,6 +21,7 @@ const DEFAULT_SETTINGS = {
   drawingEnabled: false,
   discussionInputExpanded: false,
   secondTurnActionExpanded: false,
+  isFirstPlayer: false,
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
@@ -58,6 +60,11 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
       return {
         ...state,
         drawingEnabled: action.drawingEnabled,
+      };
+    case SET_FIRST_PLAYER:
+      return {
+        ...state,
+        isFirstPlayer: action.isFirstPlayer,
       };
     case SET_CARD_EXPANDED:
       return {

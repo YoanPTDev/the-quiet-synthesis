@@ -7,10 +7,11 @@ import {
   SET_SCARCITY_ABUNDANCE_EXPANDED,
   SET_DRAWING_ENABLED,
   SET_CARD_EXPANDED,
-  SET_SECOND_TURN_ACTION_EXPANDED
+  SET_SECOND_TURN_ACTION_EXPANDED,
+  SET_FIRST_PLAYER,
 } from './types';
 
-export const startGame = () => {
+export const startGameStore = () => {
   return {
     type: SET_GAME_STARTED,
     gameStarted: true,
@@ -105,6 +106,13 @@ export const disableDrawing = () => {
   return {
     type: SET_DRAWING_ENABLED,
     drawingEnabled: false,
+  };
+};
+
+export const setFirstPlayer = () => {
+  return {
+    type: SET_FIRST_PLAYER,
+    isFirstPlayer: true,
   };
 };
 

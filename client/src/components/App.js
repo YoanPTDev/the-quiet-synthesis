@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { startGame, cancelGame } from '../actions/settings';
+import { startGameStore, cancelGame } from '../actions/settings';
 import AdventureLogWrapper from './AdventureLogWrapper';
 import AdventureLogInputWrapper from './AdventureLogInputWrapper';
 import DiscussionInputWrapper from './DiscussionInputWrapper';
@@ -11,13 +11,14 @@ import Map from './Map';
 import Card from './Card';
 import OutOfTurnAction from './OutOfTurnAction';
 import TurnActionWrapper from './TurnAction';
+import TurnActionPrepWrapper from './TurnActionPrep';
 import SecondTurnActionWrapper from './SecondTurnAction';
 import { SocketContext } from '../middleware/socketcontext';
 import { AnimatePresence } from 'framer-motion';
 
 import { ACTIONS } from '../../../utils/constants.mjs';
 
-const App = ({ gameStarted, startGame, cancelGame }) => {
+const App = ({ gameStarted }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
@@ -31,8 +32,8 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
     <div>
       <div className='action-buttons'>
         <h3>The Quiet Year</h3>
-        <ActionDirector/>
-        <TurnActionWrapper />
+        <ActionDirector />
+        {gameStarted ? <TurnActionWrapper /> : <TurnActionPrepWrapper />}
         <div className='note-log-wrapper'>
           <div className='toggle-button-wrapper'>
             <AdventureLogWrapper />
@@ -44,26 +45,18 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
           <SecondTurnActionWrapper />
         </div>
       </div>
-      {gameStarted ? (
-        <div>
-          {/* <button onClick={cancelGame}>Quit the adventure!</button> */}
-          <Map className='map' />
-            <AnimatePresence>
-              <div className='turn-action center component-container'>
-                  <Card />
-              </div>
-            </AnimatePresence>
-          <div className='turn-action top-right component-container'>
-            <OutOfTurnAction />
+      <div>
+        <Map className='map' />
+        <AnimatePresence>
+          <div className='turn-action center component-container'>
+            <Card />
           </div>
-          <div className='bottom-right component-container'></div>
+        </AnimatePresence>
+        <div className='turn-action top-right component-container'>
+          <OutOfTurnAction />
         </div>
-      ) : (
-        <div>
-          <h3>A new adventure is on the horizon!</h3>
-          <button onClick={startGame}>Go on an adventure!</button>
-        </div>
-      )}
+        <div className='bottom-right component-container'></div>
+      </div>
     </div>
   );
 };
@@ -74,6 +67,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const componentConnector = connect(mapStateToProps, { startGame, cancelGame });
+const componentConnector = connect(mapStateToProps, { startGame: startGameStore, cancelGame });
 
 export default componentConnector(App);
