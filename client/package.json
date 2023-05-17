@@ -21,6 +21,7 @@
   "homepage": "https://github.com/YoanPTDev/the-quiet-synthesis#readme",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
+    "dotenv": "^16.0.3",
     "framer-motion": "^10.12.12",
     "live-server": "^1.2.2",
     "p5": "^1.6.0",
