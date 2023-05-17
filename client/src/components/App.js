@@ -31,7 +31,9 @@ const App = ({ gameStarted, startGame, cancelGame }) => {
     <div>
       <div className='action-buttons'>
         <h3>The Quiet Year</h3>
-        <ActionDirector/>
+        <div className='action-director'>
+          <ActionDirector/>
+        </div>
         <TurnActionWrapper />
         <div className='note-log-wrapper'>
           <div className='toggle-button-wrapper'>
