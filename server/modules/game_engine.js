@@ -101,7 +101,7 @@ class GameEngine {
           emitDrawing(index + 1);
         });
       };
-      //************* Needs rework ************************
+
       const emitResource = () => {
         io.to(this.game.config.roomCode).emit(ACTIONS.ADD_RESOURCES);
         players[0].socket.emit(UPDATE.FIRST_PLAYER_GAME_PREP);
@@ -110,7 +110,6 @@ class GameEngine {
           this.start();
         });
       };
-      //***************************************************
 
       // Start the drawing process
       emitDrawing(0);
@@ -195,13 +194,15 @@ const playerTurnStateMachine = {
 
           console.log(`PROJECTS`);
 
-          this.gameEngine.log.weeks.logs.forEach((week) => {
-            week.actions.forEach((action) => {
-              if (action.turns > 0) {
-                action.turns -= 1;
-              }
+          if (this.gameEngine.reduceTimers) {
+            this.gameEngine.log.weeks.logs.forEach((week) => {
+              week.actions.forEach((action) => {
+                if (action.turns > 0) {
+                  action.turns -= 1;
+                }
+              });
             });
-          });
+          }
 
           this.processProjects(0);
           this.transition(playerStates.ACTION2);
