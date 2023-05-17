@@ -70,7 +70,7 @@ const AdventureLogInputWrapper = (props) => {
   if (!adventureLogInputExpanded) return null;
 
   return (
-    <div className='input-container'>
+    <div className='input-container centered-column'>
       {showDiceGadget && (
         <DiceGadget
           onRoll={handleDiceRoll}
