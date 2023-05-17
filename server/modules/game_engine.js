@@ -357,6 +357,9 @@ const playerTurnStateMachine = {
     let action = this.isAction1() ? this.newAction1 : this.newAction2;
 
     if (action.type === 'StartProject') {
+      if (this.isAction1()) {
+        action.turns += 1;
+      }
       this.gameEngine.map.projects.push(
         new Project(action.turns, action.description, this.currentPlayer)
       );
@@ -462,7 +465,11 @@ const playerTurnStateMachine = {
           this[action].description = data.value;
           console.log('DESCRIPTION', this[action].description);
           if (this[action].type == 'StartProject') {
-            this[action].turns = data.turns;
+            if (this.isAction1()) {
+              this[action].turns = data.turns + 1;
+            } else {
+              this[action].turns = data.turns;              
+            }
           }
         } else {
           console.log('Action does not exit');
