@@ -7,6 +7,7 @@ import {
   expandDiscussionInput,
   expandScarcityAbundanceLog,
   setFirstPlayer,
+  collapseScarcityAbundanceLog,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
@@ -34,6 +35,7 @@ const setupSocketListeners = () => {
     });
     socketInstance.once(UPDATE.GAME_STARTED, () => {
       storeReference.dispatch(startGameStore());
+      storeReference.dispatch(collapseScarcityAbundanceLog());
     });
     socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
       storeReference.dispatch(expandScarcityAbundanceLog());
