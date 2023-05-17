@@ -465,11 +465,7 @@ const playerTurnStateMachine = {
           this[action].description = data.value;
           console.log('DESCRIPTION', this[action].description);
           if (this[action].type == 'StartProject') {
-            if (this.isAction1()) {
-              this[action].turns = data.turns + 1;
-            } else {
-              this[action].turns = data.turns;              
-            }
+            this[action].turns = data.turns;              
           }
         } else {
           console.log('Action does not exit');
