@@ -57,6 +57,10 @@ button, input {
     padding: 0.1rem 0.25rem;
   }
 
+.unclickable {
+  pointer-events: none;
+}
+
 .canvas-container {
   position: relative;
   height: 100%;

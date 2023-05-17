@@ -32,9 +32,7 @@ const App = ({ gameStarted }) => {
     <div>
       <div className='action-buttons'>
         <h3>The Quiet Year</h3>
-        <div className='action-director'>
           <ActionDirector/>
-        </div>
         {gameStarted ? <TurnActionWrapper /> : <TurnActionPrepWrapper />}
         <div className='note-log-wrapper'>
           <div className='toggle-button-wrapper'>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 const ActionDirector = ({ directions }) => {
   if(directions === undefined) return null;
   return (
-    <div className='action-director-container'>
+    <div className='action-director-container unclickable'>
       <div className='action-director'>{directions}</div>
     </div>
   );
