@@ -8,6 +8,7 @@ import {
   expandScarcityAbundanceLog,
   setFirstPlayer,
   collapseScarcityAbundanceLog,
+  expandCompleteProjectInput,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
@@ -56,7 +57,7 @@ const setupSocketListeners = () => {
       // );
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
-      console.log('UPDATE.PROJECT', data);
+      storeReference.dispatch(expandCompleteProjectInput());
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());

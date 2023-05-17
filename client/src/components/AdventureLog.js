@@ -7,7 +7,9 @@ const AdventureLog = (props) => {
   const renderAdventureLogData = () => {
     if (logs) {
       return logs.map((log) => {
-        const { weekNb, playerId, promptChosen, actions, completedProjects } = log;
+        const { weekNb, playerId, promptChosen, actions, completedProjects } =
+          log;
+        console.log('completedProjects', completedProjects);
 
         return (
           <div
@@ -21,32 +23,58 @@ const AdventureLog = (props) => {
               <strong>Prompt: </strong> {promptChosen}
             </p>
             {actions.map((action, index) => {
-              const { type, tokens, turns, description } = action;
+              const { type, tokens, turns, description, discussion } = action;
 
               return (
                 <div
                   key={`${weekNb}-${index}`}
                   className='action'>
-                  <p>
+                  <div>
                     <strong>Type: </strong> {type}{' '}
-                    {type === 'StartProject' && turns === 0 && <strong>COMPLETED</strong>}
-                  </p>
-                  <p>
+                    {type === 'StartProject' && turns === 0 && (
+                      <strong>COMPLETED</strong>
+                    )}
+                  </div>
+                  <div>
                     <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
                     {tokens}
-                  </p>
-                  <p>
-                    <strong>Specifics: </strong> {description}
-                  </p>
+                  </div>
+                  <div>
+                    {discussion !== undefined && (
+                      <>
+                        {discussion.map(({ player, statement }, index) => (
+                          <div key={index}>
+                            <div>
+                              <strong>{player}: </strong>
+                              {statement}
+                            </div>
+                          </div>
+                        ))}
+                        <strong></strong>
+                      </>
+                    )}
+                    {discussion === undefined && (
+                      <>
+                        <strong>Specifics: </strong> {description}
+                      </>
+                    )}
+                  </div>
                   <strong>
                     {turns > 0 ? <p>Ready in {turns} turns</p> : ''}
                   </strong>
                 </div>
               );
             })}
-            <br/>
+            <br />
             <h5>Project completed this week!</h5>
-            {completedProjects}
+            <div>
+            {completedProjects.map(({orgDesc, endDesc, orgPlayer, endPlayer}, index) => (
+              <div key={index}>
+                <div><strong>{orgPlayer}: </strong>{orgDesc}</div>
+                <div><strong>{endPlayer}: </strong>{endDesc}</div>
+              </div>
+            ))}
+            </div>
           </div>
         );
       });

@@ -13,6 +13,7 @@ import OutOfTurnAction from './OutOfTurnAction';
 import TurnActionWrapper from './TurnAction';
 import TurnActionPrepWrapper from './TurnActionPrep';
 import SecondTurnActionWrapper from './SecondTurnAction';
+import CompleteProjectInputWrapper from './CompleteProjectInputWrapper';
 import { SocketContext } from '../middleware/socketcontext';
 import { AnimatePresence } from 'framer-motion';
 
@@ -39,6 +40,7 @@ const App = ({ gameStarted }) => {
             <AdventureLogWrapper />
             <NotebookWrapper />
             <ScarcityAbundanceWrapper />
+            <CompleteProjectInputWrapper/>
           </div>
           <AdventureLogInputWrapper />
           <DiscussionInputWrapper />

@@ -63,7 +63,6 @@ const AdventureLogInputWrapper = (props) => {
   }, [showDiceGadget]);
 
   const handleDiceRoll = (value) => {
-    console.log(`Dice rolled: ${value}`);
     setDiceValue(value);
   };
 
@@ -86,9 +85,9 @@ const AdventureLogInputWrapper = (props) => {
               turns: diceValue,
             };
             socket.emit(DATA.SAVE_ACTION, data);
+            dispatch(collapseAdventureLogInput())
           }
         }}
-        collapse={() => dispatch(collapseAdventureLogInput())}
       />
     </div>
   );

@@ -9,6 +9,7 @@ import {
   SET_CARD_EXPANDED,
   SET_SECOND_TURN_ACTION_EXPANDED,
   SET_FIRST_PLAYER,
+  SET_COMPLETE_PROJECT_INPUT_EXPANDED,
 } from './types';
 
 export const startGameStore = () => {
@@ -50,6 +51,20 @@ export const collapseAdventureLogInput = () => {
   return {
     type: SET_ADVENTURELOG_INPUT_EXPANDED,
     adventureLogInputExpanded: false,
+  };
+};
+
+export const expandCompleteProjectInput = () => {
+  return {
+    type: SET_COMPLETE_PROJECT_INPUT_EXPANDED,
+    completeProjectInputExpanded: true,
+  };
+};
+
+export const collapseCompleteProjectInput = () => {
+  return {
+    type: SET_COMPLETE_PROJECT_INPUT_EXPANDED,
+    completeProjectInputExpanded: false,
   };
 };
 
