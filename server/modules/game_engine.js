@@ -67,6 +67,7 @@ class GameEngine {
 
   start() {
     if (!this.isGameRunning) {
+      io.to(this.game.config.roomCode).emit(UPDATE.GAME_STARTED);
       playerTurnStateMachine.startTurn(this, this.currentPlayer());
       this.isGameRunning = true;
     }
