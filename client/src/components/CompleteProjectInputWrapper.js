@@ -23,7 +23,7 @@ const CompleteProjectInputWrapper = (props) => {
   if (!completeProjectInputExpanded) return null;
 
   return (
-    <div>
+    <div className='input-container centered-column'>
       <CompleteProjectInput
         onSave={(description) => {
           if (description !== '') {
