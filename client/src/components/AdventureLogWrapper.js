@@ -19,7 +19,7 @@ const AdventureLogWrapper = (props) => {
 
   return (
     <div>
-      <button onClick={(event) => {addRipple(event, "var(--log-button)"); toggleAdventureLog();}} className='menu-button'>
+      <button onClick={(event) => {addRipple(event, "var(--log-button)"); toggleAdventureLog();}} className='menu-button adv-button'>
         <div className='adv-button-icon'></div>
         {/* {adventureLogExpanded ? 'Hide Adventure Log' : 'Show Adventure Log'} */}
       </button>

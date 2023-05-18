@@ -18,7 +18,7 @@ const NotebookWrapper = (props) => {
 
   return (
     <div>
-      <button onClick={(event) => {addRipple(event, "var(--notebook-button)"); toggleNotebook();}} className='menu-button'>
+      <button onClick={(event) => {addRipple(event, "var(--notebook-button)"); toggleNotebook();}} className='menu-button note-button'>
         <div className='notebook-icon'></div>
       </button>
       {notebookExpanded && <Notebook />}

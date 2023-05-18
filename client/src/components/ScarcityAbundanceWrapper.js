@@ -24,7 +24,7 @@ const ScarcityAbundanceWrapper = (props) => {
 
   return (
     <div>
-      <button onClick={(event) => {addRipple(event, "var(--abunscar-button)"); toggleScarcityAbundanceLog();}} className='menu-button'>
+      <button onClick={(event) => {addRipple(event, "var(--abunscar-button)"); toggleScarcityAbundanceLog();}} className='menu-button scab-button'>
         <div className='scarabun-icon'></div>
       </button>
       {scarcityAbundanceLogExpanded && <ScarcityAbundanceLog />}
