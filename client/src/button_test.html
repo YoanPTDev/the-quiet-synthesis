@@ -1,72 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bookmark Shape</title>
-  <style>
-    .bookmark {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      background: #ff0000;
-      border-radius: 0 0 50px 50px;
-      box-shadow: 8px 8px  rgba(0,0,200,0.3), 0 0 0 3px;
-      transform: translate(0, -20px);
-      transition: all 0.2s;
-      overflow: hidden;
-    }
-
-    .bookmark:hover {
-      height: 175px;
-      width: 120px;
-      border-radius: 0 0 60px 60px;
-    }
-
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      width: 350px;
-      height: 350px;
-      background: green;
-      animation: ripple 0.6s;
-      
-    }
-
-    @keyframes ripple {
-      from {
-        transform: scale(0.01);
-        
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Bookmark Shape</title>
+    <style>
+      .bookmark {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background: #ff0000;
+        border-radius: 0 0 50px 50px;
+        box-shadow: 8px 8px rgba(0, 0, 200, 0.3), 0 0 0 3px;
+        transform: translate(0, -20px);
+        transition: all 0.2s;
+        overflow: hidden;
       }
-      to {
-        transform: scale(1);
-        
+
+      .bookmark:hover {
+        height: 175px;
+        width: 120px;
+        border-radius: 0 0 60px 60px;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="bookmark" onclick="addRipple(event)"></div>
 
-  <script>
-    function addRipple(event) {
-      var bookmark = event.target;
-      var ripple = document.createElement('div');
-      ripple.classList.add('ripple');
-      
-      var newColor = bookmark.style.backgroundColor === 'green' ? 'red' : 'green';
-      ripple.style.backgroundColor = newColor;
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        width: 350px;
+        height: 350px;
+        background: green;
+        animation: ripple 0.6s;
+      }
 
-      var rect = bookmark.getBoundingClientRect();
-      ripple.style.left = `${event.clientX - rect.left - 175}px`;
-      ripple.style.top = `${event.clientY - rect.top - 175}px`;
+      .hover-text {
+        padding: 20px;
+      }
 
-      bookmark.appendChild(ripple);
+      .tooltip {
+        position: absolute;
+        top: 30px;
+        left: 300px;
+        display: inline-block;
+        cursor: pointer;
+        border-bottom: 1px dotted black;
+      }
 
-      setTimeout(() => {
-        bookmark.style.backgroundColor = newColor;
-      }, 700);
-    }
-  </script>
-</body>
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        padding: 3px 0;
+        border-radius: 6px;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        bottom: 150%; /* Position the tooltip above the text */
+        left: 50%;
+        margin-left: -60px; /* Use half of the width (120/2 = 60) to center the tooltip */
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      @keyframes ripple {
+        from {
+          transform: scale(0.01);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="bookmark"
+      onclick="addRipple(event)"></div>
+
+    <div class="tooltip">
+      Hover over me
+      <span class="tooltiptext">Tooltip text</span>
+    </div>
+
+    <script>
+      function addRipple(event) {
+        var bookmark = event.target;
+        var ripple = document.createElement('div');
+        ripple.classList.add('ripple');
+
+        var newColor =
+          bookmark.style.backgroundColor === 'green' ? 'red' : 'green';
+        ripple.style.backgroundColor = newColor;
+
+        var rect = bookmark.getBoundingClientRect();
+        ripple.style.left = `${event.clientX - rect.left - 175}px`;
+        ripple.style.top = `${event.clientY - rect.top - 175}px`;
+
+        bookmark.appendChild(ripple);
+
+        setTimeout(() => {
+          bookmark.style.backgroundColor = newColor;
+        }, 700);
+      }
+    </script>
+  </body>
 </html>
