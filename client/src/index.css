@@ -8,6 +8,18 @@
    --ivory: #EAE8D0;
    --pastel-green: #dfead0;
    --sandy-purple: #a08493;
+   --log-button: #d4e892;
+   --notebook-button: #e6a373;
+   --abunscar-button: #87b4e8;
+}
+
+@keyframes ripple {
+  from {
+    transform: scale(0.01);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 * {
@@ -39,7 +51,6 @@ button, input {
   transition: all 235ms ease-in-out 0s;
   color: #41403e;
   border-color: #41403e;
-  background-color: var(--pastel-green);
   align-self: center;
   background-image: none;
   border-style: solid;
@@ -47,6 +58,64 @@ button, input {
   padding: 0.25rem;
   font-family: "Patrick Hand SC", sans-serif;
   font-size: 1.25em;
+}
+
+.menu-button {
+  position: relative;
+  display: flex;
+  width: 100px;
+  height: 100px;
+  border-radius: 0 0 50px 50px;
+  box-shadow: inset 0 0 0 2px #00000040, 8px 5px rgba(0, 0, 200, 0.2);
+  transform: translate(0, -31px);
+  transition: all 0.2s;
+  overflow: hidden;
+  border: none;
+  align-items:end;
+  justify-content: center;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.menu-button:hover {
+  height: 175px;
+  width: 120px;
+  border-radius: 0 0 60px 60px;
+  border: none;
+  transform: translate(0, -31px);
+  box-shadow: inset 0 0 0 2px #00000040, 8px 5px rgba(0, 0, 200, 0.2);
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 350px;
+  height: 350px;
+  animation: ripple 0.6s;
+  z-index: 1;
+}
+
+.adv-button-icon, .notebook-icon, .scarabun-icon {
+  background-color: white;
+  width: 70px;
+  height: 70px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.adv-button-icon {
+  background-image: url('./assets/advLogIcon.png');
+}
+
+.notebook-icon {
+  background-image: url('./assets/notebookIcon.png');
+}
+
+.scarabun-icon {
+  background-image: url('./assets/scarAbunIcon.png');
 }
 
 button {
@@ -89,6 +158,13 @@ textarea {
   display: inline-flex;
 }
 
+.toggle-button-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  height: 100%;
+}
+
 .action-director-container {
   position: absolute;
   top: 10%;
@@ -111,7 +187,7 @@ textarea {
 .scarcity-abundance-container,
 .input-container,
 .second-action-container {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

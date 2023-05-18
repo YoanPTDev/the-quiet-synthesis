@@ -5,6 +5,7 @@ import {
   expandScarcityAbundanceLog,
   collapseScarcityAbundanceLog,
 } from '../actions/settings';
+import { addRipple } from '../animations';
 
 const ScarcityAbundanceWrapper = (props) => {
   const {
@@ -23,9 +24,8 @@ const ScarcityAbundanceWrapper = (props) => {
 
   return (
     <div>
-      <button onClick={toggleScarcityAbundanceLog}>
-        {scarcityAbundanceLogExpanded
-          ? 'Hide': 'Show'} scarcities and abundances Log
+      <button onClick={(event) => {addRipple(event, "var(--abunscar-button)"); toggleScarcityAbundanceLog();}} className='menu-button'>
+        <div className='scarabun-icon'></div>
       </button>
       {scarcityAbundanceLogExpanded && <ScarcityAbundanceLog />}
     </div>
