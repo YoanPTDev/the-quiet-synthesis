@@ -55,7 +55,7 @@ class GameEngine {
     this.currentPlayerIndex = 0;
     this.isGameRunning = false;
     this.scarc_abund = { scarcities: [], abundances: [] };
-    this.gameEngine.incompleteProjects = { projects: [] };
+    this.incompleteProjects = { projects: [] };
   }
 
   async buildDeck(deckName) {
