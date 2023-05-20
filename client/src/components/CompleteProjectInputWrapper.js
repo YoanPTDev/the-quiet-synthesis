@@ -17,7 +17,7 @@ const CompleteProjectInput = ({ onSave }) => (
 );
 
 const CompleteProjectInputWrapper = (props) => {
-  const { dispatch, completeProjectInputExpanded } = props;
+  const { dispatch, completeProjectInputExpanded, firstProjectDescription } = props;
   const socket = useContext(SocketContext);
 
   if (!completeProjectInputExpanded) return null;
