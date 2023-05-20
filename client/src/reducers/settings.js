@@ -51,7 +51,6 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
         completeProjectInputExpanded: action.completeProjectInputExpanded,
       };
     case SET_INCOMPLETE_PROJECT_PICKER_EXPANDED:
-      console.log(action.incompleteProjectPickerExpanded);
       return {
         ...state,
         incompleteProjectPickerExpanded: action.incompleteProjectPickerExpanded,

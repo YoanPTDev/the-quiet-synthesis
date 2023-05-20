@@ -23,7 +23,7 @@ const IncompleteProjectPicker = (props) => {
 
   return (
     <div className='adventure-log-container'>
-      <h2>Choose a project!</h2>
+      <h2>Unfinished projects</h2>
       <hr />
       <div>{renderIncompleteProjectList()}</div>
       <hr />

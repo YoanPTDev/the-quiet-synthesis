@@ -221,8 +221,6 @@ const playerTurnStateMachine = {
             this.gameEngine.incompleteProjects
           );
 
-          console.log('this.gameEngine.incompleteProjects', this.gameEngine.incompleteProjects);
-
           this.transition(playerStates.ACTION2);
         } else {
           throw new Error(
@@ -252,8 +250,6 @@ const playerTurnStateMachine = {
             DATA.INCOMPLETE_PROJECTS_LIST,
             this.gameEngine.incompleteProjects
           );
-
-          console.log('this.gameEngine.incompleteProjects', this.gameEngine.incompleteProjects);
 
           this.gameEngine.log.addEntry(this.newWeek);
           io.to(this.gameEngine.game.config.roomCode).emit(

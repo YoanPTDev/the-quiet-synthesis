@@ -51,7 +51,6 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchCard(data));
     });
     socketInstance.on(DATA.INCOMPLETE_PROJECTS_LIST, (data) => {
-      console.log('INCOMPLETE_PROJECTS_LIST', data);
       storeReference.dispatch(fetchIncompleteProjects(data));
     });
     socketInstance.on(SECOND_TURN.ACTION, () => {
