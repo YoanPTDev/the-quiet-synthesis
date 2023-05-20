@@ -180,7 +180,13 @@ textarea {
   top: 10%;
   font-size: 2em;
   opacity: 0.6;
-  width: 100%;
+  width: 60%;
+  padding: 0 20%;
+  overflow-wrap: break-word;
+}
+
+.small-direction {
+  font-size: .7em;
 }
 
 .action-director {

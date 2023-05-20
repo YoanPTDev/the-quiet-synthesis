@@ -8,10 +8,11 @@ const DEFAULT_DIRECTIONS = {
 const directionsReducer = (state = DEFAULT_DIRECTIONS, action) => {
   switch (action.type) {
     case DIRECTIONS.FETCH_SUCCESS:
-      const { directions } = action;
+      const { directions, font } = action;
       return {
         ...state,
         directions,
+        font,
         fetchstate: fetchStates.success,
       };
     case DIRECTIONS.FETCH_ERROR:

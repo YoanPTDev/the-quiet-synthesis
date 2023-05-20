@@ -33,18 +33,18 @@ const App = ({ gameStarted }) => {
     <div>
       <div className='action-buttons'>
         <h3>The Quiet Year</h3>
-          <ActionDirector/>
+        <ActionDirector />
         {gameStarted ? <TurnActionWrapper /> : <TurnActionPrepWrapper />}
         <div className='note-log-wrapper'>
           <div className='toggle-button-wrapper'>
             <AdventureLogWrapper />
             <NotebookWrapper />
             <ScarcityAbundanceWrapper />
-            <CompleteProjectInputWrapper/>
+            <CompleteProjectInputWrapper />
+            <AdventureLogInputWrapper />
+            <DiscussionInputWrapper />
+            <SecondTurnActionWrapper />
           </div>
-          <AdventureLogInputWrapper />
-          <DiscussionInputWrapper />
-          <SecondTurnActionWrapper />
         </div>
       </div>
       <div>
@@ -69,6 +69,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const componentConnector = connect(mapStateToProps, { startGame: startGameStore, cancelGame });
+const componentConnector = connect(mapStateToProps, {
+  startGame: startGameStore,
+  cancelGame,
+});
 
 export default componentConnector(App);
