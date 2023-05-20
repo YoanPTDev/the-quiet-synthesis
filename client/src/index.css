@@ -112,7 +112,7 @@ button, input {
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 40px;
-  z-index: 2;
+  z-index: 200;
   pointer-events: none;
 }
 
@@ -207,23 +207,31 @@ textarea {
   box-shadow: 5px 5px 10px 0 var(--blue-gray), 0 0 0 2px var(--blue-gray);
 }
 
+.second-action-container {
+  z-index: 1;
+}
+
 .input-container {
   padding: 30px;
+  z-index: 10;
 }
 
 .adventure-log-container {
   width: 400px;
   height: 500px;
+  z-index: 50;
 }
 
 .notebook-container {
   width: 300px;
   height: 400px;
+  z-index: 30;
 }
 
 .scarcity-abundance-container {
   width: 650px;
   height: 400px;
+  z-index: 40;
 }
 
 .scarcities-abundances-title {

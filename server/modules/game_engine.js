@@ -443,7 +443,7 @@ const playerTurnStateMachine = {
 
     if (project.turns == 0) {
       console.log('Project: ', project.desc, ' is finished');
-      project.player.socket.emit(UPDATE.PROJECT, { Description: project.desc });
+      project.player.socket.emit(UPDATE.PROJECT, { description: project.desc, playerName: project.player.socket.playerName });
 
       project.player.socket.once(ACTIONS.COMPLETE_PROJECT, (data) => {
         let complProject = {

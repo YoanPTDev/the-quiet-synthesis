@@ -58,6 +58,8 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
+      console.log(data.description, data.playerName);
+      storeReference.dispatch(fetchDirection({ directions: 'Complete this project that ' + data.playerName + ' started: ' + data.description }));
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());
