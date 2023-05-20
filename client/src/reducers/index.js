@@ -6,6 +6,7 @@ import socketReducer from './socket';
 import scarcityAbundanceReducer from './scarcityAbundance';
 import outOfTurnActionReducer from './outOfTurnAction';
 import directionsReducer from './directions';
+import incompleteProjectsReducer from './incompleteProject';
 
 const rootReducer = {
   settings: settingsReducer,
@@ -16,6 +17,7 @@ const rootReducer = {
   scarcity_abundance: scarcityAbundanceReducer,
   outOfTurnAction: outOfTurnActionReducer,
   direction: directionsReducer,
+  incompleteProject: incompleteProjectsReducer,
 };
 
 export default rootReducer;

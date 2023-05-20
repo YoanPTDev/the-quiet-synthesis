@@ -9,7 +9,6 @@ const AdventureLogWrapper = (props) => {
     props;
 
   const toggleAdventureLog = () => {
-    console.log('1')
     if (adventureLogExpanded) {
       collapseAdventureLog();
     } else {
