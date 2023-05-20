@@ -55,6 +55,7 @@ class GameEngine {
     this.currentPlayerIndex = 0;
     this.isGameRunning = false;
     this.scarc_abund = { scarcities: [], abundances: [] };
+    this.incompleteProjects = { incompleteProjects: [] };
   }
 
   async buildDeck(deckName) {
@@ -195,7 +196,6 @@ const playerTurnStateMachine = {
 
           console.log(`PROJECTS`);
 
-          //CHECK THIS FUCKING FOR LOOP
           if (this.gameEngine.reduceTimers) {
             this.gameEngine.log.weeks.logs.forEach((week) => {
               week.actions.forEach((action) => {
@@ -204,9 +204,23 @@ const playerTurnStateMachine = {
                 }
               });
             });
+            this.newWeek.actions.forEach((action) => {
+              if (action.turns > 0) {
+                action.turns -= 1;
+              }
+            });
+
+            this.processProjects(0);
+            this.buildIncompleteProjectsArray();
+          } else {
+            this.gameEngine.reduceTimers = true;
           }
 
-          this.processProjects(0);
+          io.to(this.gameEngine.game.config.roomCode).emit(
+            DATA.INCOMPLETE_PROJECTS_LIST,
+            this.gameEngine.incompleteProjects
+          );
+
           this.transition(playerStates.ACTION2);
         } else {
           throw new Error(
@@ -230,6 +244,12 @@ const playerTurnStateMachine = {
       case playerStates.FINISHED:
         if (this.isAction2()) {
           this.currentState = playerStates.FINISHED;
+
+          this.buildIncompleteProjectsArray();
+          io.to(this.gameEngine.game.config.roomCode).emit(
+            DATA.INCOMPLETE_PROJECTS_LIST,
+            this.gameEngine.incompleteProjects
+          );
 
           this.gameEngine.log.addEntry(this.newWeek);
           io.to(this.gameEngine.game.config.roomCode).emit(
@@ -358,9 +378,6 @@ const playerTurnStateMachine = {
     let action = this.isAction1() ? this.newAction1 : this.newAction2;
 
     if (action.type === 'StartProject') {
-      // if (this.isAction1()) {
-      //   action.turns += 1;
-      // }
       this.gameEngine.map.projects.push(
         new Project(action.turns, action.description, this.currentPlayer)
       );
@@ -458,6 +475,26 @@ const playerTurnStateMachine = {
     }
   },
 
+  buildIncompleteProjectsArray() {
+    let index = 0;
+
+    this.gameEngine.map.projects.forEach((project) => {
+      if (project.turns > 0) {
+        this.gameEngine.incompleteProjects.incompleteProjects.push({
+          index: index,
+          playerName: project.player.socket.playerName,
+          desc: project.desc,
+          turns: project.turns,
+        });
+      }
+      index++;
+    });
+  },
+
+  completeProjectPrompt() {
+    this.currentPlayer.socket.once('something', (data) => {});
+  },
+
   weekBuilder(data, action) {
     console.log('weekBuilder');
     switch (data.type) {
@@ -533,13 +570,13 @@ const playerTurnStateMachine = {
             break;
           case 'modify ressource':
             this[action] = new ModifyRessourcesAction('', 0);
-            // Changer le futur scarcities-abundances object
+            // Changer le scarcities-abundances object
             break;
           case 'end game':
             this[action] = new EndGameAction('', 0);
             break;
           case 'end turn': // A tester, incertain
-            this.transition(playerStates.ACTION2);
+            this.currentState = playerStates.ACTION2;
             this.gameEngine.endTurn();
             break;
           case 'discard cards':

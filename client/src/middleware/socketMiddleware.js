@@ -21,8 +21,14 @@ import {
   DATA,
 } from '../../../utils/constants.mjs';
 import { startGameStore } from '../actions/settings';
+import { fetchIncompleteProjects } from '../actions/incompleteProject';
 
 let socketInstance;
+
+let FONT = {
+  SMALL: 'small-direction',
+  LARGE: 'large-direction',
+};
 
 export const setSocketInstance = (socket) => {
   socketInstance = socket;
@@ -44,6 +50,9 @@ const setupSocketListeners = () => {
     socketInstance.on(DATA.DRAWN_CARD, (data) => {
       storeReference.dispatch(fetchCard(data));
     });
+    socketInstance.on(DATA.INCOMPLETE_PROJECTS_LIST, (data) => {
+      storeReference.dispatch(fetchIncompleteProjects(data));
+    });
     socketInstance.on(SECOND_TURN.ACTION, () => {
       storeReference.dispatch(expandSecondTurnAction());
     });
@@ -58,10 +67,23 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
+      console.log(data.description, data.playerName);
+      storeReference.dispatch(
+        fetchDirection({
+          directions:
+            'Complete this project that ' +
+            data.playerName +
+            ' started: ' +
+            data.description,
+          font: FONT.SMALL,
+        })
+      );
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());
-      storeReference.dispatch(fetchDirection({ directions: 'Discuss' }));
+      storeReference.dispatch(
+        fetchDirection({ directions: 'Discuss', font: FONT.LARGE })
+      );
     });
     socketInstance.on(UPDATE.DISCUSSION, (data) => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
@@ -75,7 +97,10 @@ const setupSocketListeners = () => {
     socketInstance.on(UPDATE.ENABLE_DRAWING, () => {
       storeReference.dispatch(enableDrawing());
       storeReference.dispatch(
-        fetchDirection({ directions: 'Draw something on the map' })
+        fetchDirection({
+          directions: 'Draw something on the map',
+          font: FONT.LARGE,
+        })
       );
     });
   }

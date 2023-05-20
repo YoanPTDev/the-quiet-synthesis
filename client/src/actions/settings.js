@@ -10,6 +10,7 @@ import {
   SET_SECOND_TURN_ACTION_EXPANDED,
   SET_FIRST_PLAYER,
   SET_COMPLETE_PROJECT_INPUT_EXPANDED,
+  SET_INCOMPLETE_PROJECT_PICKER_EXPANDED
 } from './types';
 
 export const startGameStore = () => {
@@ -37,6 +38,20 @@ export const collapseAdventureLog = () => {
   return {
     type: SET_ADVENTURELOG_EXPANDED,
     adventureLogExpanded: false,
+  };
+};
+
+export const expandIncompleteProjectPicker = () => {
+  return {
+    type: SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
+    incompleteProjectPickerExpanded: true,
+  };
+};
+
+export const collapseIncompleteProjectPicker = () => {
+  return {
+    type: SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
+    incompleteProjectPickerExpanded: false,
   };
 };
 
@@ -132,7 +147,6 @@ export const setFirstPlayer = () => {
 };
 
 export const expandCard = () => {
-  console.log('expandCard -> action/settings');
   return {
     type: SET_CARD_EXPANDED,
     cardExpanded: true,
@@ -140,7 +154,6 @@ export const expandCard = () => {
 };
 
 export const collapseCard = () => {
-  console.log('collapseCard -> action/settings');
   return {
     type: SET_CARD_EXPANDED,
     cardExpanded: false,
