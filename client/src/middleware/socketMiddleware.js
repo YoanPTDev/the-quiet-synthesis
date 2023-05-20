@@ -46,9 +46,15 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
       storeReference.dispatch(expandScarcityAbundanceLog());
+      storeReference.dispatch(
+        fetchDirection({ directions: 'Add an amount of scarcities equals to the amount of players, then transfer one of them to the abundance list', font: FONT.SMALL })
+      );
     });
     socketInstance.on(DATA.DRAWN_CARD, (data) => {
       storeReference.dispatch(fetchCard(data));
+      storeReference.dispatch(
+        fetchDirection({ directions: 'Choose a prompt', font: FONT.LARGE })
+      );
     });
     socketInstance.on(DATA.INCOMPLETE_PROJECTS_LIST, (data) => {
       storeReference.dispatch(fetchIncompleteProjects(data));
