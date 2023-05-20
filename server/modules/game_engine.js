@@ -31,6 +31,7 @@ import io from '../server.js';
 import { EventEmitter } from 'events';
 
 class EndDiscussionEmitter extends EventEmitter {}
+class CompleteProjectPromptEmitter extends EventEmitter {}
 
 const playerStates = {
   WAITING: 'WAITING',
@@ -131,6 +132,7 @@ const playerTurnStateMachine = {
   listenersSetUp: false,
   saveActionListener: null,
   discussionListener: new EndDiscussionEmitter(),
+  completeProjectPromptListener: new CompleteProjectPromptEmitter(),
 
   saveActionHandler: function (data) {
     this.handleSaveData(data);
@@ -291,9 +293,28 @@ const playerTurnStateMachine = {
           }
         } else if (this.isAction2()) {
           if (Object.keys(this.newAction2).length !== 0) {
-            if (this.newAction1.isCompleted()) {
+            if (this.newAction2.isCompleted()) {
               this.consolidateAction();
             }
+          }
+        }
+      });
+
+      this.completeProjectPromptListener.on('project chosen', (data) => {
+        this.newAction1.description = data.desc;
+
+        let complProject = {
+          orgDesc: this.gameEngine.map.project[data.index].desc,
+          endDesc: data.desc,
+          orgPlayer: this.gameEngine.map.project[data.index].player.socket.playerName,
+          endPlayer: this.currentPlayer.socket.playerName,
+        };
+
+        this.newWeek.completedProjects.push(complProject);
+        
+        if (Object.keys(this.newAction1).length !== 0) {
+          if (this.newAction1.isCompleted()) {
+            this.consolidateAction();
           }
         }
       });
@@ -492,7 +513,10 @@ const playerTurnStateMachine = {
   },
 
   completeProjectPrompt() {
-    this.currentPlayer.socket.once('something', (data) => {});
+    this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
+    this.currentPlayer.socket.once(ACTIONS.SELECT_INCOMPLETE_PROJECT, (data) => {
+      this.completeProjectPromptListener.emit('project chosen', data);
+    });
   },
 
   weekBuilder(data, action) {
