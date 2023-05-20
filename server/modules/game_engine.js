@@ -194,6 +194,7 @@ const playerTurnStateMachine = {
           this.currentState = playerStates.PROJECTS;
 
           console.log(`PROJECTS`);
+          console.log(this.gameEngine.log.weeks.logs);
 
           //CHECK THIS FUCKING FOR LOOP
           if (this.gameEngine.reduceTimers) {
@@ -203,6 +204,11 @@ const playerTurnStateMachine = {
                   action.turns -= 1;
                 }
               });
+            });
+            this.newWeek.actions.forEach((action) => {
+              if (action.turns > 0) {
+                action.turns -= 1;
+              }
             });
           }
 
