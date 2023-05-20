@@ -1,9 +1,11 @@
 import { DIRECTIONS } from './types';
 
 export const fetchDirectionSuccess = (props) => {
-  const { directions } = props;
+  const { directions, font } = props;
+  console.log('font', font);
   return {
     type: DIRECTIONS.FETCH_SUCCESS,
+    font,
     directions,
   };
 };

@@ -24,6 +24,11 @@ import { startGameStore } from '../actions/settings';
 
 let socketInstance;
 
+let FONT = {
+  SMALL: 'small-direction',
+  LARGE: 'large-direction',
+};
+
 export const setSocketInstance = (socket) => {
   socketInstance = socket;
   setupSocketListeners();
@@ -59,11 +64,22 @@ const setupSocketListeners = () => {
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
       console.log(data.description, data.playerName);
-      storeReference.dispatch(fetchDirection({ directions: 'Complete this project that ' + data.playerName + ' started: ' + data.description }));
+      storeReference.dispatch(
+        fetchDirection({
+          directions:
+            'Complete this project that ' +
+            data.playerName +
+            ' started: ' +
+            data.description,
+          font: FONT.SMALL,
+        })
+      );
     });
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());
-      storeReference.dispatch(fetchDirection({ directions: 'Discuss' }));
+      storeReference.dispatch(
+        fetchDirection({ directions: 'Discuss', font: FONT.LARGE })
+      );
     });
     socketInstance.on(UPDATE.DISCUSSION, (data) => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
@@ -77,7 +93,10 @@ const setupSocketListeners = () => {
     socketInstance.on(UPDATE.ENABLE_DRAWING, () => {
       storeReference.dispatch(enableDrawing());
       storeReference.dispatch(
-        fetchDirection({ directions: 'Draw something on the map' })
+        fetchDirection({
+          directions: 'Draw something on the map',
+          font: FONT.LARGE,
+        })
       );
     });
   }
