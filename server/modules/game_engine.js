@@ -55,7 +55,7 @@ class GameEngine {
     this.currentPlayerIndex = 0;
     this.isGameRunning = false;
     this.scarc_abund = { scarcities: [], abundances: [] };
-    this.incompleteProjects = { projects: [] };
+    this.incompleteProjects = { incompleteProjects: [] };
   }
 
   async buildDeck(deckName) {
@@ -480,7 +480,7 @@ const playerTurnStateMachine = {
 
     this.gameEngine.map.projects.forEach((project) => {
       if (project.turns > 0) {
-        this.gameEngine.incompleteProjects.projects.push({
+        this.gameEngine.incompleteProjects.incompleteProjects.push({
           index: index,
           playerName: project.player.socket.playerName,
           desc: project.desc,

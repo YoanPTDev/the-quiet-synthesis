@@ -21,6 +21,7 @@ import {
   DATA,
 } from '../../../utils/constants.mjs';
 import { startGameStore } from '../actions/settings';
+import { fetchIncompleteProjects } from '../actions/incompleteProject';
 
 let socketInstance;
 
@@ -48,6 +49,9 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(DATA.DRAWN_CARD, (data) => {
       storeReference.dispatch(fetchCard(data));
+    });
+    socketInstance.on(DATA.INCOMPLETE_PROJECTS_LIST, (data) => {
+      storeReference.dispatch(fetchIncompleteProjects(data));
     });
     socketInstance.on(SECOND_TURN.ACTION, () => {
       storeReference.dispatch(expandSecondTurnAction());
