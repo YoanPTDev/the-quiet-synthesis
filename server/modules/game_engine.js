@@ -50,13 +50,22 @@ class GameEngine {
     this.players = new Array(); // Liste de Player
     this.map = new Map(mapConfig);
     this.log = null;
-    this.timeElapsed = 0; // Sert a calculer le temps passé pour la sauvegarde
     this.nbrContempts = 0; // Nombre de contempt tokens
     this.reduceTimers = true; // Determine si on reduit les projets durant le tour
     this.currentPlayerIndex = 0;
     this.isGameRunning = false;
     this.scarc_abund = { scarcities: [], abundances: [] };
     this.incompleteProjects = { incompleteProjects: [] };
+  }
+
+  getState() {
+    const state = {
+      notebook: this.notebook.notes,
+      advLog: this.log.weeks,
+      scar_abund: this.scarc_abund,
+      incompleteProjects: this.incompleteProjects,
+    };
+    return state;
   }
 
   async buildDeck(deckName) {
@@ -77,8 +86,10 @@ class GameEngine {
 
   endTurn() {
     playerTurnStateMachine.endTurn(this);
-    this.currentPlayerIndex =
-      (this.currentPlayerIndex + 1) % this.players.length;
+    do {
+      this.currentPlayerIndex =
+        (this.currentPlayerIndex + 1) % this.players.length;
+    } while (!this.currentPlayer().isConnected);
     playerTurnStateMachine.startTurn(this, this.currentPlayer());
   }
 
@@ -91,6 +102,11 @@ class GameEngine {
       let players = this.players;
 
       const emitDrawing = (index) => {
+        // Skip over disconnected players
+        while (index < players.length && !players[index].isConnected) {
+          index++;
+        }
+
         if (index >= players.length) {
           // All players have drawn, now add resources
           emitResource();
@@ -117,6 +133,22 @@ class GameEngine {
       // Start the drawing process
       emitDrawing(0);
     }
+  }
+
+  buildIncompleteProjectsArray() {
+    let index = 0;
+
+    this.map.projects.forEach((project) => {
+      if (project.turns > 0) {
+        this.incompleteProjects.incompleteProjects.push({
+          index: index,
+          playerName: project.player.name,
+          desc: project.desc,
+          turns: project.turns,
+        });
+      }
+      index++;
+    });
   }
 }
 
@@ -160,7 +192,7 @@ const playerTurnStateMachine = {
 
           this.newWeek = Week.build(
             this.gameEngine.log.weeks.logs.length + 1,
-            this.currentPlayer.socket.playerName,
+            this.currentPlayer.name,
             '',
             ''
           ); //Reset newWeek
@@ -169,7 +201,7 @@ const playerTurnStateMachine = {
           this.newAction2 = {};
 
           this.currentPlayer.socket.emit(ACTIONS.START_TURN);
-          console.log(`${this.currentPlayer.socket.playerName} start turn`);
+          console.log(`${this.currentPlayer.name} start turn`);
 
           this.drawCard();
           this.newWeek.cardIdDrawn = this.gameEngine.deck.currentCard.id;
@@ -185,7 +217,7 @@ const playerTurnStateMachine = {
         if (this.isDrawing()) {
           this.currentState = playerStates.ACTION1;
 
-          console.log(`${this.currentPlayer.socket.playerName} ACTION 1`);
+          console.log(`${this.currentPlayer.name} ACTION 1`);
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -213,7 +245,7 @@ const playerTurnStateMachine = {
             });
 
             this.processProjects(0);
-            this.buildIncompleteProjectsArray();
+            this.gameEngine.buildIncompleteProjectsArray();
           } else {
             this.gameEngine.reduceTimers = true;
           }
@@ -234,7 +266,7 @@ const playerTurnStateMachine = {
         if (this.isProjects()) {
           this.currentState = playerStates.ACTION2;
 
-          console.log(`${this.currentPlayer.socket.playerName} ACTION 2`);
+          console.log(`${this.currentPlayer.name} ACTION 2`);
 
           this.currentPlayer.socket.emit(SECOND_TURN.ACTION);
         } else {
@@ -247,7 +279,7 @@ const playerTurnStateMachine = {
         if (this.isAction2()) {
           this.currentState = playerStates.FINISHED;
 
-          this.buildIncompleteProjectsArray();
+          this.gameEngine.buildIncompleteProjectsArray();
           io.to(this.gameEngine.game.config.roomCode).emit(
             DATA.INCOMPLETE_PROJECTS_LIST,
             this.gameEngine.incompleteProjects
@@ -266,7 +298,7 @@ const playerTurnStateMachine = {
           );
 
           this.currentPlayer.socket.emit(ACTIONS.END_TURN);
-          console.log(`${this.currentPlayer.socket.playerName} end turn`);
+          console.log(`${this.currentPlayer.name} end turn`);
         } else {
           throw new Error(
             'Invalid state transition: ' + this.currentState + ' to ' + newState
@@ -306,12 +338,12 @@ const playerTurnStateMachine = {
         let complProject = {
           orgDesc: this.gameEngine.map.project[data.index].desc,
           endDesc: data.desc,
-          orgPlayer: this.gameEngine.map.project[data.index].player.socket.playerName,
-          endPlayer: this.currentPlayer.socket.playerName,
+          orgPlayer: this.gameEngine.map.project[data.index].player.name,
+          endPlayer: this.currentPlayer.name,
         };
 
         this.newWeek.completedProjects.push(complProject);
-        
+
         if (Object.keys(this.newAction1).length !== 0) {
           if (this.newAction1.isCompleted()) {
             this.consolidateAction();
@@ -424,9 +456,9 @@ const playerTurnStateMachine = {
     let count = 0;
 
     const handleDiscussionData = (data) => {
-      const respondingPlayer = (currPlayerIdx + count) % len;
+      let respondingPlayer = (currPlayerIdx + count) % len;
       const reply = {
-        player: this.gameEngine.players[respondingPlayer].socket.playerName,
+        player: this.gameEngine.players[respondingPlayer].name,
         statement: data,
       };
 
@@ -449,7 +481,15 @@ const playerTurnStateMachine = {
         (firstPlayerAskedQuestion && respondingPlayer !== currPlayerIdx)
       ) {
         // Move to next player's turn
-        count++;
+        // Skip over disconnected players
+        do {
+          count++;
+          respondingPlayer = (currPlayerIdx + count) % len;
+        } while (
+          count < len &&
+          !this.gameEngine.players[respondingPlayer].isConnected
+        );
+
         const nextPlayer = (currPlayerIdx + count) % len;
         this.gameEngine.players[nextPlayer].socket.emit(ACTIONS.DISCUSS);
         this.gameEngine.players[nextPlayer].socket.once(
@@ -475,48 +515,44 @@ const playerTurnStateMachine = {
 
     if (project.turns == 0) {
       console.log('Project: ', project.desc, ' is finished');
-      project.player.socket.emit(UPDATE.PROJECT, { Description: project.desc });
 
-      project.player.socket.once(ACTIONS.COMPLETE_PROJECT, (data) => {
-        let complProject = {
-          orgDesc: project.desc,
-          endDesc: data,
-          orgPlayer: project.player.socket.playerName,
-          endPlayer: project.player.socket.playerName,
-        };
+      if (project.player.isConnected) {
+        project.player.socket.emit(UPDATE.PROJECT, {
+          Description: project.desc,
+        });
 
-        this.newWeek.completedProjects.push(complProject);
+        project.player.socket.once(ACTIONS.COMPLETE_PROJECT, (data) => {
+          let complProject = {
+            orgDesc: project.desc,
+            endDesc: data,
+            orgPlayer: project.player.name,
+            endPlayer: project.player.name,
+          };
 
-        // Process the next project
+          this.newWeek.completedProjects.push(complProject);
+
+          // Process the next project
+          this.processProjects(index + 1);
+        });
+      } else {
+        console.log('Player for project', project.desc, 'is not connected');
+        // If the player for the current project is not connected, just process the next one
         this.processProjects(index + 1);
-      });
+      }
     } else {
       // If the project is not finished, just process the next one
       this.processProjects(index + 1);
     }
   },
 
-  buildIncompleteProjectsArray() {
-    let index = 0;
-
-    this.gameEngine.map.projects.forEach((project) => {
-      if (project.turns > 0) {
-        this.gameEngine.incompleteProjects.incompleteProjects.push({
-          index: index,
-          playerName: project.player.socket.playerName,
-          desc: project.desc,
-          turns: project.turns,
-        });
-      }
-      index++;
-    });
-  },
-
   completeProjectPrompt() {
     this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
-    this.currentPlayer.socket.once(ACTIONS.SELECT_INCOMPLETE_PROJECT, (data) => {
-      this.completeProjectPromptListener.emit('project chosen', data);
-    });
+    this.currentPlayer.socket.once(
+      ACTIONS.SELECT_INCOMPLETE_PROJECT,
+      (data) => {
+        this.completeProjectPromptListener.emit('project chosen', data);
+      }
+    );
   },
 
   weekBuilder(data, action) {
@@ -546,7 +582,13 @@ const playerTurnStateMachine = {
         this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
         break;
       case SECOND_ACTION.DISCUSSION:
-        this[action] = new DiscussAction('', 0, this.gameEngine.players.length);
+        let expectedLength = 0;
+        this.gameEngine.players.forEach((player) => {
+          if (player.isConnected) {
+            expectedLength++;
+          }
+        });
+        this[action] = new DiscussAction('', 0, expectedLength);
         this.discuss(action);
         break;
       case ACTIONS.SELECTED_PROMPT:
