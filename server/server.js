@@ -54,7 +54,9 @@ io.on('connection', (socket) => {
       console.log(
         `${player.name} (${player.uuid}) reconnected to ${gameEngine.game.config.roomCode}`
       );
-      player.socket.emit(DATA.GAME_STATE, gameEngine.getState());
+      player.socket.once(DATA.GAME_STATE, () => {
+        player.socket.emit(DATA.GAME_STATE, gameEngine.getState());
+      });
     }
 
     socket.player = player;
