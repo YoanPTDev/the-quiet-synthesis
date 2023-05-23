@@ -55,6 +55,7 @@ io.on('connection', (socket) => {
         `${player.name} (${player.uuid}) reconnected to ${gameEngine.game.config.roomCode}`
       );
       player.socket.once(DATA.GAME_STATE, () => {
+        console.log('received the signal to send back the state');
         player.socket.emit(DATA.GAME_STATE, gameEngine.getState());
       });
     }

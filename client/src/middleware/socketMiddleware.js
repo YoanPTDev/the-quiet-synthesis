@@ -33,20 +33,10 @@ let FONT = {
 export const setSocketInstance = (socket) => {
   socketInstance = socket;
   setupSocketListeners();
-  socket.emit(DATA.GAME_STATE);
 };
 
 const setupSocketListeners = () => {
   if (socketInstance) {
-    socketInstance.on(DATA.GAME_STATE, (data) => {
-      console.log('DATA.GAME_STATE', data);
-      storeReference.dispatch(startGameStore());
-      // storeReference.dispatch(fetchIncompleteProjects(data));
-      // storeReference.dispatch(fetchLog(data));
-      // storeReference.dispatch(fetchOutOfTurnAction(data));
-      // storeReference.dispatch(fetchNote(data));
-      // storeReference.dispatch(fetchScarcityAbundance(data));
-    })
     socketInstance.once(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
       storeReference.dispatch(setFirstPlayer());
     });
@@ -57,7 +47,11 @@ const setupSocketListeners = () => {
     socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
       storeReference.dispatch(expandScarcityAbundanceLog());
       storeReference.dispatch(
-        fetchDirection({ directions: 'Add an amount of scarcities equals to the amount of players, then transfer one of them to the abundance list', font: FONT.SMALL })
+        fetchDirection({
+          directions:
+            'Add an amount of scarcities equals to the amount of players, then transfer one of them to the abundance list',
+          font: FONT.SMALL,
+        })
       );
     });
     socketInstance.on(DATA.DRAWN_CARD, (data) => {
@@ -118,6 +112,19 @@ const setupSocketListeners = () => {
           font: FONT.LARGE,
         })
       );
+    });
+
+    socketInstance.on(DATA.GAME_STATE, (data) => {
+      console.log('game not started', data);
+      if (data.gameStarted) {
+        storeReference.dispatch(startGameStore());
+        console.log('game started');
+      }
+      // storeReference.dispatch(fetchIncompleteProjects(data));
+      // storeReference.dispatch(fetchLog(data));
+      // storeReference.dispatch(fetchOutOfTurnAction(data));
+      // storeReference.dispatch(fetchNote(data));
+      // storeReference.dispatch(fetchScarcityAbundance(data));
     });
   }
 };

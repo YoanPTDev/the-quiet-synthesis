@@ -18,7 +18,7 @@ import IncompleteProjectsPickerWrapper from './IncompleteProjectsPickerWrapper';
 import { SocketContext } from '../middleware/socketcontext';
 import { AnimatePresence } from 'framer-motion';
 
-import { ACTIONS } from '../../../utils/constants.mjs';
+import { ACTIONS, DATA } from '../../../utils/constants.mjs';
 
 const App = ({ gameStarted }) => {
   const socket = useContext(SocketContext);
@@ -44,6 +44,7 @@ const App = ({ gameStarted }) => {
 
       // Emit an event when the component mounts
       socket.emit(ACTIONS.ADD_PLAYER, uuid);
+      socket.emit(DATA.GAME_STATE);
     }
   }, [socket]);
 

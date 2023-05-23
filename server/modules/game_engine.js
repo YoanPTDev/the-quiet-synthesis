@@ -60,6 +60,7 @@ class GameEngine {
 
   getState() {
     const state = {
+      gameStarted: this.isGameRunning,
       notebook: this.notebook.notes,
       advLog: this.log.weeks,
       scar_abund: this.scarc_abund,
