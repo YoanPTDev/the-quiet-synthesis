@@ -23,10 +23,27 @@ import { ACTIONS } from '../../../utils/constants.mjs';
 const App = ({ gameStarted }) => {
   const socket = useContext(SocketContext);
 
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
+  }
+
   useEffect(() => {
     if (socket) {
+      let uuid = localStorage.getItem('uuid');
+      if (!uuid) {
+        uuid = generateUUID();
+        localStorage.setItem('uuid', uuid);
+      }
+
       // Emit an event when the component mounts
-      socket.emit(ACTIONS.ADD_PLAYER);
+      socket.emit(ACTIONS.ADD_PLAYER, uuid);
     }
   }, [socket]);
 
@@ -41,7 +58,7 @@ const App = ({ gameStarted }) => {
             <AdventureLogWrapper />
             <NotebookWrapper />
             <ScarcityAbundanceWrapper />
-            <IncompleteProjectsPickerWrapper/>
+            <IncompleteProjectsPickerWrapper />
             <CompleteProjectInputWrapper />
             <AdventureLogInputWrapper />
             <DiscussionInputWrapper />

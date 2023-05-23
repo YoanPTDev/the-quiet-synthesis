@@ -39,14 +39,14 @@ app.use((req, res, next) => {
 let playerCount = 0;
 
 io.on('connection', (socket) => {
-  socket.on(ACTIONS.ADD_PLAYER, () => {
+  socket.on(ACTIONS.ADD_PLAYER, (uuid) => {
     playerCount++;
-    const playerName = `Player ${playerCount}`;
-    socket.playerName = playerName;
-    gameEngine.players.push(new Player(null, socket));
+    const player = new Player(uuid, socket);
+    socket.player = player;
+    gameEngine.players.push(player);
     socket.join(gameEngine.game.config.roomCode);
 
-    console.log(`${playerName} connected to ${gameEngine.game.config.roomCode}`);
+    console.log(`${player.uuid} connected to ${gameEngine.game.config.roomCode}`);
   });
 
   socket.once(ACTIONS.PREP_GAME, () => {
@@ -107,12 +107,12 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     const index = gameEngine.players.findIndex(
-      (p) => p.socket.id === socket.id
+      (p) => p.uuid === socket.player.uuid
     );
     if (index !== -1) {
       gameEngine.players.splice(index, 1);
     }
-    console.log(`${socket.playerName} disconnected from ${gameEngine.game.config.roomCode}`);
+    console.log(`${socket.player.uuid} disconnected from ${gameEngine.game.config.roomCode}`);
   });
 });
 
