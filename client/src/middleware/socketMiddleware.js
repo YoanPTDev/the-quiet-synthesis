@@ -33,10 +33,20 @@ let FONT = {
 export const setSocketInstance = (socket) => {
   socketInstance = socket;
   setupSocketListeners();
+  socket.emit(DATA.GAME_STATE);
 };
 
 const setupSocketListeners = () => {
   if (socketInstance) {
+    socketInstance.on(DATA.GAME_STATE, (data) => {
+      console.log('DATA.GAME_STATE', data);
+      storeReference.dispatch(startGameStore());
+      // storeReference.dispatch(fetchIncompleteProjects(data));
+      // storeReference.dispatch(fetchLog(data));
+      // storeReference.dispatch(fetchOutOfTurnAction(data));
+      // storeReference.dispatch(fetchNote(data));
+      // storeReference.dispatch(fetchScarcityAbundance(data));
+    })
     socketInstance.once(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
       storeReference.dispatch(setFirstPlayer());
     });
