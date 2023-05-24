@@ -138,7 +138,8 @@ class GameEngine {
 
   buildIncompleteProjectsArray() {
     let index = 0;
-
+    this.incompleteProjects = { incompleteProjects: [] };
+    
     this.map.projects.forEach((project) => {
       if (project.turns > 0) {
         this.incompleteProjects.incompleteProjects.push({
@@ -636,6 +637,7 @@ const playerTurnStateMachine = {
           case 'complete project': // enable map for current player
             this[action] = new CompleteProjectAction('', 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+            this.completeProjectPrompt()
             break;
           case 'pause projects':
             this[action] = new PauseProjectsAction('', 0);
