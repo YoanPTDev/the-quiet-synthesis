@@ -600,10 +600,16 @@ const playerTurnStateMachine = {
       case SECOND_ACTION.PROJECT:
         this[action] = new ProjectAction('', 0, 0);
         this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+        this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+          this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
+        });
         break;
       case SECOND_ACTION.DISCOVERY:
         this[action] = new DiscoverAction('', 0);
         this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+        this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+          this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
+        });
         break;
       case SECOND_ACTION.DISCUSSION:
         let expectedLength = 0;
