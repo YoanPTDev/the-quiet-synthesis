@@ -338,12 +338,15 @@ const playerTurnStateMachine = {
         if (index == null) {
           this.consolidateAction();
         } else {
-          this.currentPlayer.socket.emit(UPDATE.PROJECT, {
-            description: this.gameEngine.map.projects[index].desc,
-            playerName: this.gameEngine.map.projects[index].player.name,
-          });
+          this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+          this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+            this.currentPlayer.socket.emit(UPDATE.PROJECT, {
+              description: this.gameEngine.map.projects[index].desc,
+              playerName: this.gameEngine.map.projects[index].player.name,
+            });
+          })
 
-          this.currentPlayer.socket.emit(ACTIONS.COMPLETE_PROJECT, (desc) => {
+          this.currentPlayer.socket.once(ACTIONS.COMPLETE_PROJECT, (desc) => {
             this.newAction1.description = desc;
 
             let complProject = {
@@ -620,10 +623,16 @@ const playerTurnStateMachine = {
           case 'start project': // enable map for current player
             this[action] = new ProjectAction('', 0, 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+            this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+              this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
+            });
             break;
           case 'discovery': // enable map for current player
             this[action] = new DiscoverAction('', 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+            this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+              this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
+            });
             break;
           case 'discussion':
             this[action] = new DiscussAction(
@@ -639,6 +648,9 @@ const playerTurnStateMachine = {
           case 'modify project': // enable map for current player
             this[action] = new ModifyAction('', 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+            this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+              this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
+            });
             break;
           case 'remove POI':
             this[action] = new RemoveMapElementAction('', 0);
@@ -646,14 +658,20 @@ const playerTurnStateMachine = {
           case 'lore': // enable map for current player
             this[action] = new AddLoreAction('', 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+            this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+              this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
+            });
             break;
           case 'complete project': // enable map for current player
             this[action] = new CompleteProjectAction('', 0);
-            this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
             this.completeProjectPrompt();
             break;
           case 'pause projects':
             this[action] = new PauseProjectsAction('', 0);
+            this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
+            this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
+              this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
+            });
             this.gameEngine.reduceTimers = false;
             break;
           case 'modify ressource':

@@ -59,7 +59,7 @@ class AddWeeksAction extends GameAction {
   }
   
   isCompleted() {
-    return this.description !== '';
+    return true; //placeholder
   }
 }
 
@@ -69,7 +69,7 @@ class ModifyAction extends GameAction {
   }
 
   isCompleted() {
-    return this.description !== '';
+    return true; //placeholder
   }
 }
 
@@ -79,7 +79,7 @@ class RemoveMapElementAction extends GameAction {
   }
 
   isCompleted() {
-    return this.description !== '';
+    return true; //placeholder
   }
 }
 
@@ -119,7 +119,7 @@ class ModifyRessourcesAction extends GameAction {
   }
 
   isCompleted() {
-    return this.description !== '';
+    return true; //placeholder
   }
 }
 
