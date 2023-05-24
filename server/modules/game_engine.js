@@ -396,6 +396,9 @@ const playerTurnStateMachine = {
     let card = this.gameEngine.deck.drawCard();
     if (card != null) {
       this.currentPlayer.socket.emit(DATA.DRAWN_CARD, card);
+      io.to(this.gameEngine.game.config.roomCode).emit(DATA.SEASON, {
+        season: card.season,
+      });
     } else {
       this.currentPlayer.socket.emit('error', { message: 'No cards left.' });
     }
@@ -512,7 +515,7 @@ const playerTurnStateMachine = {
     if (index >= this.gameEngine.map.projects.length) return; // No more projects left
 
     let project = this.gameEngine.map.projects[index];
-    if(project.turns > 0) {
+    if (project.turns > 0) {
       project.turns--;
     }
 

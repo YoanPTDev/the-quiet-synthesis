@@ -75,6 +75,9 @@ const setupSocketListeners = () => {
       //   fetchDirection({ directions: 'someone is playing' })
       // );
     });
+    socketInstance.on(DATA.SEASON, (data) => {
+      console.log('SEASON', data);
+    });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
       console.log(data.description, data.playerName);
