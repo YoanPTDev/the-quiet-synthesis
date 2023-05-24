@@ -516,9 +516,7 @@ const playerTurnStateMachine = {
     if (index >= this.gameEngine.map.projects.length) return; // No more projects left
 
     let project = this.gameEngine.map.projects[index];
-    if (project.turns > 0) {
-      project.turns--;
-    }
+    project.turns--;
 
     if (project.turns == 0) {
       console.log(`Project ${project.desc} is finished`);
