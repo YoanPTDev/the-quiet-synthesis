@@ -10,6 +10,7 @@ import {
   collapseScarcityAbundanceLog,
   expandCompleteProjectInput,
   expandIncompleteProjectPicker,
+  expandAdventureLogInput,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
@@ -38,7 +39,14 @@ export const setSocketInstance = (socket) => {
 
 const setupSocketListeners = () => {
   if (socketInstance) {
-
+    socketInstance.on(ACTIONS.ADD_DESCRIPTION, () => {
+      storeReference.dispatch(expandAdventureLogInput());
+      fetchDirection({
+        directions:
+          'Add a description',
+        font: FONT.LARGE,
+      })
+    })
     socketInstance.once(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
       storeReference.dispatch(setFirstPlayer());
     });
@@ -57,7 +65,6 @@ const setupSocketListeners = () => {
       );
     });
     socketInstance.on(ACTIONS.SELECT_INCOMPLETE_PROJECT, () => {
-      console.log('SELECT_INCOMPLETE_PROJECT');
       storeReference.dispatch(expandIncompleteProjectPicker());
       storeReference.dispatch(
         fetchDirection({
@@ -93,7 +100,6 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
-      console.log(data.description, data.playerName);
       storeReference.dispatch(
         fetchDirection({
           directions:

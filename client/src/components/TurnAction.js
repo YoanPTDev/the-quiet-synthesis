@@ -5,6 +5,7 @@ import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn, prepGame } from '../actions/partie';
 import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
 import { fetchDirection } from '../actions/direction';
+import { ACTIONS } from '../../../utils/constants.mjs';
 
 const TurnAction = ({
   // prepGame,
@@ -18,8 +19,7 @@ const TurnAction = ({
   
   const handleDrawingEnd = () => {
     disableDrawing();
-    expandAdventureLogInput();
-    fetchDirection({ directions: 'Add a description' });
+    socket.emit(ACTIONS.END_DRAWING);
   };
 
   return (
