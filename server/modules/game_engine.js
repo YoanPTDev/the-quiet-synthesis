@@ -512,14 +512,17 @@ const playerTurnStateMachine = {
     if (index >= this.gameEngine.map.projects.length) return; // No more projects left
 
     let project = this.gameEngine.map.projects[index];
-    project.turns -= 1;
+    if(project.turns > 0) {
+      project.turns--;
+    }
 
     if (project.turns == 0) {
-      console.log('Project: ', project.desc, ' is finished');
+      console.log(`Project ${project.desc} is finished`);
 
       if (project.player.isConnected) {
         project.player.socket.emit(UPDATE.PROJECT, {
-          Description: project.desc,
+          description: project.desc,
+          playerName: project.player.name,
         });
 
         project.player.socket.once(ACTIONS.COMPLETE_PROJECT, (data) => {

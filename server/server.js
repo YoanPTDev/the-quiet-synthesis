@@ -51,6 +51,7 @@ io.on('connection', (socket) => {
     } else {
       player.socket = socket;
       player.isConnected = true;
+      socket.join(gameEngine.game.config.roomCode);
       console.log(
         `${player.name} (${player.uuid}) reconnected to ${gameEngine.game.config.roomCode}`
       );
