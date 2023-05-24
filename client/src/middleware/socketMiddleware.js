@@ -9,6 +9,7 @@ import {
   setFirstPlayer,
   collapseScarcityAbundanceLog,
   expandCompleteProjectInput,
+  expandIncompleteProjectPicker,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
@@ -37,6 +38,7 @@ export const setSocketInstance = (socket) => {
 
 const setupSocketListeners = () => {
   if (socketInstance) {
+
     socketInstance.once(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
       storeReference.dispatch(setFirstPlayer());
     });
@@ -50,7 +52,18 @@ const setupSocketListeners = () => {
         fetchDirection({
           directions:
             'Add an amount of scarcities equals to the amount of players, then transfer one of them to the abundance list',
-          font: FONT.SMALL,
+          font: FONT.LARGE,
+        })
+      );
+    });
+    socketInstance.on(ACTIONS.SELECT_INCOMPLETE_PROJECT, () => {
+      console.log('SELECT_INCOMPLETE_PROJECT');
+      storeReference.dispatch(expandIncompleteProjectPicker());
+      storeReference.dispatch(
+        fetchDirection({
+          directions:
+            'Pick a project',
+          font: FONT.LARGE,
         })
       );
     });
