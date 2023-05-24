@@ -57,7 +57,6 @@ const setupSocketListeners = () => {
       );
     });
     socketInstance.on(ACTIONS.SELECT_INCOMPLETE_PROJECT, () => {
-      console.log('SELECT_INCOMPLETE_PROJECT');
       storeReference.dispatch(expandIncompleteProjectPicker());
       storeReference.dispatch(
         fetchDirection({
