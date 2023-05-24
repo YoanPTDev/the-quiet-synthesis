@@ -139,7 +139,7 @@ class GameEngine {
   buildIncompleteProjectsArray() {
     let index = 0;
     this.incompleteProjects = { incompleteProjects: [] };
-    
+
     this.map.projects.forEach((project) => {
       if (project.turns > 0) {
         this.incompleteProjects.incompleteProjects.push({
@@ -334,22 +334,33 @@ const playerTurnStateMachine = {
         }
       });
 
-      this.completeProjectPromptListener.on('project chosen', (data) => {
-        this.newAction1.description = data.desc;
+      this.completeProjectPromptListener.on('project chosen', (index) => {
+        if (index == null) {
+          this.consolidateAction();
+        } else {
+          this.currentPlayer.socket.emit(UPDATE.PROJECT, {
+            description: this.gameEngine.map.projects[index].desc,
+            playerName: this.gameEngine.map.projects[index].player.name,
+          });
 
-        let complProject = {
-          orgDesc: this.gameEngine.map.project[data.index].desc,
-          endDesc: data.desc,
-          orgPlayer: this.gameEngine.map.project[data.index].player.name,
-          endPlayer: this.currentPlayer.name,
-        };
+          this.currentPlayer.socket.emit(ACTIONS.COMPLETE_PROJECT, (desc) => {
+            this.newAction1.description = desc;
 
-        this.newWeek.completedProjects.push(complProject);
+            let complProject = {
+              orgDesc: this.gameEngine.map.project[index].desc,
+              endDesc: desc,
+              orgPlayer: this.gameEngine.map.project[index].player.name,
+              endPlayer: this.currentPlayer.name,
+            };
 
-        if (Object.keys(this.newAction1).length !== 0) {
-          if (this.newAction1.isCompleted()) {
-            this.consolidateAction();
-          }
+            this.newWeek.completedProjects.push(complProject);
+
+            if (Object.keys(this.newAction1).length !== 0) {
+              if (this.newAction1.isCompleted()) {
+                this.consolidateAction();
+              }
+            }
+          });
         }
       });
 
@@ -552,13 +563,17 @@ const playerTurnStateMachine = {
   },
 
   completeProjectPrompt() {
-    this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
-    this.currentPlayer.socket.once(
-      ACTIONS.SELECT_INCOMPLETE_PROJECT,
-      (data) => {
-        this.completeProjectPromptListener.emit('project chosen', data);
-      }
-    );
+    if (this.gameEngine.incompleteProjects.incompleteProjects.length === 0) {
+      this.completeProjectPromptListener.emit('project chosen', null);
+    } else {
+      this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
+      this.currentPlayer.socket.once(
+        ACTIONS.SELECT_INCOMPLETE_PROJECT,
+        (data) => {
+          this.completeProjectPromptListener.emit('project chosen', data);
+        }
+      );
+    }
   },
 
   weekBuilder(data, action) {
@@ -635,7 +650,7 @@ const playerTurnStateMachine = {
           case 'complete project': // enable map for current player
             this[action] = new CompleteProjectAction('', 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
-            this.completeProjectPrompt()
+            this.completeProjectPrompt();
             break;
           case 'pause projects':
             this[action] = new PauseProjectsAction('', 0);
