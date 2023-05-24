@@ -2,19 +2,21 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { ACTIONS } from '../../../utils/constants.mjs';
+import { collapseIncompleteProjectPicker } from '../actions/settings';
 
 const IncompleteProjectPicker = (props) => {
-  const { incompleteProjects } = props;
+  const { incompleteProjects, collapseIncompleteProjectPicker } = props;
   const socket = useContext(SocketContext);
 
   const handleClick = (index) => {
     socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT, index);
+    collapseIncompleteProjectPicker();
   };
 
   const renderIncompleteProjectList = () => {
     if (incompleteProjects) {
       return incompleteProjects.map((project) => {
-        const { playerName, desc, turns } = project;
+        const { index, playerName, desc, turns } = project;
 
         return (
           <div
@@ -45,4 +47,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(IncompleteProjectPicker);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    collapseIncompleteProjectPicker: () => dispatch(collapseIncompleteProjectPicker())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IncompleteProjectPicker);
