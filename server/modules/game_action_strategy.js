@@ -20,7 +20,7 @@ class GameAction {
 class ProjectAction extends GameAction {
   //nbrTour, imageID, coords
   constructor(desc, nbTokens, nbTour) {
-    super('StartProject', desc, nbTokens);
+    super('Start Project', desc, nbTokens);
     this.turns = nbTour;
   }
 
@@ -55,7 +55,7 @@ class DiscussAction extends GameAction {
 
 class AddWeeksAction extends GameAction {
   constructor(desc, nbTokens) {
-    super('AddWeeks', desc, nbTokens);
+    super('Add Weeks', desc, nbTokens);
   }
   
   isCompleted() {
@@ -65,7 +65,7 @@ class AddWeeksAction extends GameAction {
 
 class ModifyAction extends GameAction {
   constructor(desc, nbTokens) {
-    super('ModifyProject', desc, nbTokens);
+    super('Modify Project', desc, nbTokens);
   }
 
   isCompleted() {
@@ -105,7 +105,7 @@ class CompleteProjectAction extends GameAction {
 
 class PauseProjectsAction extends GameAction {
   constructor(desc, nbTokens) {
-    super('PauseProjects', desc, nbTokens);
+    super('Pause Projects', desc, nbTokens);
   }
 
   isCompleted() {
@@ -115,7 +115,7 @@ class PauseProjectsAction extends GameAction {
 
 class ModifyRessourcesAction extends GameAction {
   constructor(desc, nbTokens) {
-    super('ModifyRessources', desc, nbTokens);
+    super('Modify Ressources', desc, nbTokens);
   }
 
   isCompleted() {
@@ -125,7 +125,7 @@ class ModifyRessourcesAction extends GameAction {
 
 class EndGameAction extends GameAction {
   constructor(desc, nbTokens) {
-    super('GameOver', desc, nbTokens);
+    super('Game Over', desc, nbTokens);
   }
 
   isCompleted() {

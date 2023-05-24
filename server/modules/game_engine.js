@@ -350,11 +350,13 @@ const playerTurnStateMachine = {
             this.newAction1.description = desc;
 
             let complProject = {
-              orgDesc: this.gameEngine.map.project[index].desc,
+              orgDesc: this.gameEngine.map.projects[index].desc,
               endDesc: desc,
-              orgPlayer: this.gameEngine.map.project[index].player.name,
+              orgPlayer: this.gameEngine.map.projects[index].player.name,
               endPlayer: this.currentPlayer.name,
             };
+
+            this.gameEngine.map.projects[index].turns = 0;
 
             this.newWeek.completedProjects.push(complProject);
 
