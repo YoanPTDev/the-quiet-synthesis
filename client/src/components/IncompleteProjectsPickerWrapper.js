@@ -10,10 +10,8 @@ const IncompleteProjectsPickerWrapper = (props) => {
 
   const toggleIncompleteProjectsPicker = () => {
     if (incompleteProjectPickerExpanded) {
-      console.log('1');
       collapseIncompleteProjectPicker();
     } else {
-      console.log('2');
       expandIncompleteProjectPicker();
     }
   };
