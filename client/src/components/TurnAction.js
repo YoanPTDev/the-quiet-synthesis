@@ -16,6 +16,8 @@ const TurnAction = ({
   expandAdventureLogInput,
   fetchDirection,
 }) => {
+
+  const socket = useContext(SocketContext);
   
   const handleDrawingEnd = () => {
     disableDrawing();
