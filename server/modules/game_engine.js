@@ -318,8 +318,9 @@ const playerTurnStateMachine = {
 
         io.to(this.gameEngine.game.config.roomCode).emit(
           ACTIONS.END_GAME,
-          this.gameEngine.deck.fulldeck.length
+          this.gameEngine.deck.fullDeck.length
         );
+        break;
       default:
         throw new Error("Invalid state: " + newState);
     }
