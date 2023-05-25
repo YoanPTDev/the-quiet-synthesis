@@ -6,6 +6,7 @@ import { startGame, endTurn, prepGame } from '../actions/partie';
 import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
 import { fetchDirection } from '../actions/direction';
 import { ACTIONS } from '../../../utils/constants.mjs';
+import { FONT } from '../constants';
 
 const TurnAction = ({
   // prepGame,
