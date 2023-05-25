@@ -110,7 +110,20 @@ const setupSocketListeners = () => {
         })
       );
     });
-
+    socketInstance.on(UPDATE.NO_ONGOING_PROJECTS, () => {
+      storeReference.dispatch(
+        fetchDirection({
+          directions: 'There are no ongoing project at this moment...',
+          font: FONT.LARGE,
+        })
+      );
+      setTimeout(() => {
+        socketInstance.emit(
+          UPDATE.NO_ONGOING_PROJECTS,
+          'There are no ongoing project at this moment...'
+        );
+      }, 3000);
+    });
     socketInstance.once(UPDATE.GAME_STARTED, () => {
       storeReference.dispatch(startGameStore());
       storeReference.dispatch(collapseScarcityAbundanceLog());
