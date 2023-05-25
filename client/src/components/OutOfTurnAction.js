@@ -29,7 +29,7 @@ const OutOfTurnAction = (props) => {
     }
   };
 
-  if (outOfTurnActions.length === 0 || cardExpanded) {
+  if (outOfTurnActions.length === 0 || cardExpanded || outOfTurnActions.type === 'Game Over') {
     return null;
   }
 

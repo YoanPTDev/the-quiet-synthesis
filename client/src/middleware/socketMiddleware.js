@@ -167,13 +167,15 @@ const setupSocketListeners = () => {
 
     // GAME HAS COME TO AN END
     socketInstance.on(ACTIONS.END_GAME, (data) => {
-      fetchDirection({
-        directions: `The frost shephards have arrived ${data} weeks before the end of the year... 
+      storeReference.dispatch(
+        fetchDirection({
+          directions: `The frost shephards have arrived ${data} weeks before the end of the year... 
         The game is over.\nYou can now talk about what
         the Frost Shepherds might have been, what their
         arrival might have meant for the community and conclude this magnificent story.`,
-        font: FONT.LARGE,
-      });
+          font: FONT.LARGE,
+        })
+      );
     });
 
     // RECONNECTION
