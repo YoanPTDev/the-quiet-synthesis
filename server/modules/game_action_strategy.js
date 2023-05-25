@@ -73,16 +73,6 @@ class ModifyAction extends GameAction {
   }
 }
 
-class RemoveMapElementAction extends GameAction {
-  constructor(desc, nbTokens) {
-    super('Removal', desc, nbTokens);
-  }
-
-  isCompleted() {
-    return true; //placeholder
-  }
-}
-
 class AddLoreAction extends GameAction {
   constructor(desc, nbTokens) {
     super('Lore', desc, nbTokens);

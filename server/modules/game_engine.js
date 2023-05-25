@@ -338,9 +338,22 @@ const playerTurnStateMachine = {
         if (index == null) {
           this.consolidateAction();
         } else {
-          console.log(this.gameEngine.map.projects[index].turns);
-          this.gameEngine.map.projects[index].turns += 3;
-          console.log(this.gameEngine.map.projects[index].turns);
+          let project = this.gameEngine.map.projects[index];
+          project.turns += 3;
+
+          this.gameEngine.log.weeks.logs.forEach((week) => {
+            week.actions.forEach((action) => {
+              if (action.description === project.desc) {
+                action.turns += 3;
+              }
+            });
+          });
+          this.newWeek.actions.forEach((action) => {
+            if (action.description === project.desc) {
+              action.turns += 3;
+            }
+          });
+
           if (Object.keys(this.newAction1).length !== 0) {
             if (this.newAction1.isCompleted()) {
               this.consolidateAction();
@@ -359,7 +372,7 @@ const playerTurnStateMachine = {
               description: this.gameEngine.map.projects[index].desc,
               playerName: this.gameEngine.map.projects[index].player.name,
             });
-          })
+          });
 
           this.currentPlayer.socket.once(ACTIONS.COMPLETE_PROJECT, (desc) => {
             this.newAction1.description = desc;
@@ -669,7 +682,10 @@ const playerTurnStateMachine = {
             this.currentPlayer.socket.once(
               ACTIONS.SELECT_INCOMPLETE_PROJECT,
               (data) => {
-                this.completeProjectPromptListener.emit('prolong project', data);
+                this.completeProjectPromptListener.emit(
+                  'prolong project',
+                  data
+                );
               }
             );
             break;
@@ -679,9 +695,6 @@ const playerTurnStateMachine = {
             this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
               this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
             });
-            break;
-          case 'remove POI':
-            this[action] = new RemoveMapElementAction('', 0);
             break;
           case 'lore': // enable map for current player
             this[action] = new AddLoreAction('', 0);
