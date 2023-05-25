@@ -394,6 +394,7 @@ const playerTurnStateMachine = {
                 ) {
                   action.description = desc;
                   project.desc = desc;
+                  project.player = this.currentPlayer;
                 }
               });
             });
@@ -403,7 +404,9 @@ const playerTurnStateMachine = {
                 action.type === "Start Project"
               ) {
                 action.description = desc;
-                project.desc = desc;              }
+                project.desc = desc;
+                project.player = this.currentPlayer;
+              }
             });
 
             if (Object.keys(this.newAction1).length !== 0) {

@@ -125,7 +125,7 @@ io.on('connection', (socket) => {
   // --------TESTING----------
 
   socket.on(DATA.MOUSE, (data) => {
-    process.stdout.write(`\rMOUSE: ${data.x}, ${data.y}`);
+    process.stdout.write(`\rMOUSE: ${data.x}, ${data.y}\n`);
     socket.broadcast.emit(DATA.MOUSE, data);
   });
 

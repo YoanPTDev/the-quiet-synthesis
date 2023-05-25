@@ -69,7 +69,7 @@ class ModifyAction extends GameAction {
   }
 
   isCompleted() {
-    return true; //placeholder
+    return this.description !== '';
   }
 }
 
