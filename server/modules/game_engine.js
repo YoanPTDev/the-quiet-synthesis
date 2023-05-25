@@ -465,7 +465,7 @@ const playerTurnStateMachine = {
   consolidateAction() {
     let action = this.isAction1() ? this.newAction1 : this.newAction2;
 
-    if (action.type === 'StartProject') {
+    if (action.type === 'Start Project') {
       this.gameEngine.map.projects.push(
         new Project(action.turns, action.description, this.currentPlayer)
       );
@@ -600,7 +600,7 @@ const playerTurnStateMachine = {
       case DATA.DESCRIPTION:
         if (action != null) {
           this[action].description = data.value;
-          if (this[action].type == 'StartProject') {
+          if (this[action].type == 'Start Project') {
             if (this.isAction1()) {
               this[action].turns = data.turns + 1;
             } else {
