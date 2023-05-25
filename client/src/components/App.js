@@ -44,7 +44,6 @@ const App = ({ gameStarted }) => {
 
       // Emit an event when the component mounts
       socket.emit(ACTIONS.ADD_PLAYER, uuid);
-      socket.emit(DATA.GAME_STATE);
     }
   }, [socket]);
 

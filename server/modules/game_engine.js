@@ -16,7 +16,6 @@ import {
   ModifyRessourcesAction,
   PauseProjectsAction,
   ProjectAction,
-  RemoveMapElementAction,
 } from './game_action_strategy.js';
 
 import {
@@ -728,6 +727,7 @@ const playerTurnStateMachine = {
             break;
           case 'discard cards':
             this.gameEngine.deck.discard(2);
+            this.currentPlayer.socket.emit(SECOND_TURN.ACTION);
             break;
           default:
             console.log('Unknown Error');
