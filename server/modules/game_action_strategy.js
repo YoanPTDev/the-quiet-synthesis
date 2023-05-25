@@ -129,7 +129,6 @@ export {
   DiscussAction,
   AddWeeksAction,
   ModifyAction,
-  RemoveMapElementAction,
   AddLoreAction,
   CompleteProjectAction,
   PauseProjectsAction,
