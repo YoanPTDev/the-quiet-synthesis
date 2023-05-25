@@ -126,7 +126,7 @@ io.on('connection', (socket) => {
 
   socket.on(DATA.MOUSE, (data) => {
     process.stdout.write(`\rMOUSE: ${data.x}, ${data.y}      `);
-    socket.broadcast.emit(DATA.MOUSE, data);
+    socket.to(gameEngine.game.config.roomCode).emit(DATA.MOUSE, data);
   });
 
   socket.on('disconnect', () => {
