@@ -41,17 +41,11 @@ const setupSocketListeners = () => {
       console.log('ADD_DESCRIPTION');
       storeReference.dispatch(expandAdventureLogInput());
       fetchDirection({
-        directions: 'Add a description',
+        directions: 'Add a description...',
         font: FONT.LARGE,
       });
     });
-    socketInstance.once(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
-      storeReference.dispatch(setFirstPlayer());
-    });
-    socketInstance.once(UPDATE.GAME_STARTED, () => {
-      storeReference.dispatch(startGameStore());
-      storeReference.dispatch(collapseScarcityAbundanceLog());
-    });
+
     socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
       storeReference.dispatch(expandScarcityAbundanceLog());
       storeReference.dispatch(
@@ -82,25 +76,18 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(SECOND_TURN.ACTION, () => {
       storeReference.dispatch(expandSecondTurnAction());
-    });
-    socketInstance.on(UPDATE.LOGS, (data) => {
-      storeReference.dispatch(fetchLog(data));
-    });
-    socketInstance.on(UPDATE.ACTION, (data) => {
-      storeReference.dispatch(fetchOutOfTurnAction(data));
-    });
-    socketInstance.on(DATA.SEASON, (data) => {
-      storeReference.dispatch(setSeason(data));
+      fetchDirection({
+        directions: 'Choose an action then resolve it...',
+        font: FONT.LARGE,
+      });
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
       storeReference.dispatch(
         fetchDirection({
-          directions:
-            'Complete this project that ' +
-            data.playerName +
-            ' started: ' +
-            data.description,
+          directions: `${data.type} this project that 
+            ${data.playerName} started: 
+            ${data.description}`,
           font: FONT.SMALL,
         })
       );
@@ -108,8 +95,34 @@ const setupSocketListeners = () => {
     socketInstance.on(ACTIONS.DISCUSS, () => {
       storeReference.dispatch(expandDiscussionInput());
       storeReference.dispatch(
-        fetchDirection({ directions: 'Discuss', font: FONT.LARGE })
+        fetchDirection({
+          directions: 'Discuss amongst yourselves...',
+          font: FONT.LARGE,
+        })
       );
+    });
+    socketInstance.on(UPDATE.ENABLE_DRAWING, () => {
+      storeReference.dispatch(enableDrawing());
+      storeReference.dispatch(
+        fetchDirection({
+          directions: 'Draw something on the map...',
+          font: FONT.LARGE,
+        })
+      );
+    });
+
+    socketInstance.once(UPDATE.GAME_STARTED, () => {
+      storeReference.dispatch(startGameStore());
+      storeReference.dispatch(collapseScarcityAbundanceLog());
+      fetchDirection({
+        directions: 'The first week has started...',
+        font: FONT.LARGE,
+      });
+    });
+
+    // UPDATE INFOS
+    socketInstance.once(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
+      storeReference.dispatch(setFirstPlayer());
     });
     socketInstance.on(UPDATE.DISCUSSION, (data) => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
@@ -120,21 +133,20 @@ const setupSocketListeners = () => {
     socketInstance.on(UPDATE.SCARCITY_ABUNDANCE, (data) => {
       storeReference.dispatch(fetchScarcityAbundance(data));
     });
-    socketInstance.on(UPDATE.ENABLE_DRAWING, () => {
-      storeReference.dispatch(enableDrawing());
-      storeReference.dispatch(
-        fetchDirection({
-          directions: 'Draw something on the map',
-          font: FONT.LARGE,
-        })
-      );
+    socketInstance.on(UPDATE.LOGS, (data) => {
+      storeReference.dispatch(fetchLog(data));
+    });
+    socketInstance.on(UPDATE.ACTION, (data) => {
+      storeReference.dispatch(fetchOutOfTurnAction(data));
+    });
+    socketInstance.on(DATA.SEASON, (data) => {
+      storeReference.dispatch(setSeason(data));
     });
 
+    // RECONNECTION
     socketInstance.on(DATA.GAME_STATE, (data) => {
-      console.log('game not started', data);
       if (data.gameStarted) {
         storeReference.dispatch(startGameStore());
-        console.log('game started');
       }
 
       storeReference.dispatch(fetchIncompleteProjects(data.incompleteProjects));
@@ -142,6 +154,10 @@ const setupSocketListeners = () => {
       // storeReference.dispatch(fetchOutOfTurnAction(data));
       storeReference.dispatch(fetchNote(data.notebook));
       storeReference.dispatch(fetchScarcityAbundance(data.scar_abund));
+      fetchDirection({
+        directions: 'Reconnected...',
+        font: FONT.LARGE,
+      });
     });
   }
 };
