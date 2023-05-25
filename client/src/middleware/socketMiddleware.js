@@ -60,12 +60,11 @@ const setupSocketListeners = () => {
       storeReference.dispatch(expandScarcityAbundanceLog());
       storeReference.dispatch(
         fetchDirection({
-          directions:
-            `Add a ${data}, then take your second action`,
+          directions: `Add a ${data}, then take your second action`,
           font: FONT.LARGE,
         })
       );
-    })
+    });
     socketInstance.on(ACTIONS.SELECT_INCOMPLETE_PROJECT, () => {
       storeReference.dispatch(expandIncompleteProjectPicker());
       storeReference.dispatch(
@@ -164,6 +163,17 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(DATA.SEASON, (data) => {
       storeReference.dispatch(setSeason(data));
+    });
+
+    // GAME HAS COME TO AN END
+    socketInstance.on(ACTIONS.END_GAME, (data) => {
+      fetchDirection({
+        directions: `The frost shephards have arrived ${data} weeks before the end of the year... 
+        The game is over.\nYou can now talk about what
+        the Frost Shepherds might have been, what their
+        arrival might have meant for the community and conclude this magnificent story.`,
+        font: FONT.LARGE,
+      });
     });
 
     // RECONNECTION

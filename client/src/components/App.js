@@ -51,7 +51,7 @@ const App = ({ gameStarted }) => {
     <div>
       <AnimatePresence>
         <div className='action-buttons'>
-          <h3>The Quiet Year</h3>
+          <div className='TQY-logo'></div>
           <ActionDirector />
           {gameStarted ? <TurnActionWrapper /> : <TurnActionPrepWrapper />}
           <div className='note-log-wrapper'>

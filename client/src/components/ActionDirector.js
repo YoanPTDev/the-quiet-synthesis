@@ -7,12 +7,12 @@ const ActionDirector = ({ directions, font }) => {
   return (
     <motion.div
       className='unclickable action-director-container'
-      style={{ position: "absolute", top: "10%"}}
+      style={{ position: "absolute", top: "12%"}}
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ 
         opacity: [0.4, 0.6, 0.4],
-        scale: [1, 1.05, 1],
-        transition: { repeat: Infinity, duration: 2 }
+        scale: [1, 1.1, 1],
+        transition: { repeat: Infinity, duration: 5 }
       }}
       exit={{ opacity: 0, scale: 0.7 }}
       transition={{ opacity: { duration: 0.5 }, scale: { duration: 0.5 } }}

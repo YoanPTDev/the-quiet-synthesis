@@ -5,7 +5,7 @@
    --gray: #666666;
    --blue-gray: #8493A0;
    --blue-gray-alpha: #8493A066;
-   --ivory: #EAE8D0;
+   --ivory: #FFFDE6;
    --pastel-green: #dfead0;
    --sandy-purple: #a08493;
    --log-button: #d4e892;
@@ -40,6 +40,14 @@ body,
 
 h3 {
   font-size: 2rem;
+}
+
+.TQY-logo {
+  width: 356px;
+  height: 60px;
+  background-image: url(./assets/logo.png);
+  background-size: contain;
+  margin: 0;
 }
 
 button, input {
@@ -137,7 +145,7 @@ button, input {
 }
 
 button {
-  margin: 6px 10px;
+  margin: 10px;
 }
   button:hover {
     transform: translate3d(0, 2px, 0);
@@ -187,7 +195,6 @@ textarea {
   position: absolute;
   top: 10%;
   font-size: 2em;
-  
   width: 60%;
   padding: 0 20%;
   overflow-wrap: break-word;
@@ -199,10 +206,12 @@ textarea {
 
 .action-director {
   text-align: center;
+  position: relative;
+  top: 15%;
 }
 
-.action-buttons > * {
-  margin: 20px;
+.action-buttons {
+  padding-top: 5px;
 }
 
 .adventure-log-container,
@@ -296,6 +305,27 @@ li {
   box-shadow: 0 4px 6px var(--blue-gray);
   width: 300px;
   word-wrap: break-word;
+}
+
+.react-p5 {
+  width: 96%;
+  margin: 0 2%;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  transition: all 235ms ease 0s;
+  box-shadow: 15px 28px 25px -18px rgba(0, 0, 0, 0.2);
+  transition: all 235ms ease-in-out 0s;
+  color: #41403e;
+  border-color: #97793e;
+  align-self: center;
+  background-image: none;
+  border-style: solid;
+  border-width: 3px;
+  padding: 1%;
+  background-color: var(--ivory);
+  
 }
 
 .top-left {
