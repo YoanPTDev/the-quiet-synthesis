@@ -133,7 +133,7 @@ const setupSocketListeners = () => {
         );
       }, 3000);
     });
-    socketInstance.once(UPDATE.GAME_STARTED, () => {
+    socketInstance.on(UPDATE.GAME_STARTED, () => {
       storeReference.dispatch(startGameStore());
       storeReference.dispatch(collapseScarcityAbundanceLog());
       fetchDirection({

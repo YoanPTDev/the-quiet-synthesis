@@ -8,8 +8,8 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io.connect('http://localhost:3001');
-    // const newSocket = io.connect('http://thequietsynthesis.com:3001');
+    // const newSocket = io.connect('http://localhost:3001');
+    const newSocket = io.connect('http://thequietsynthesis.com:3001');
     setSocket(newSocket);
     setSocketInstance(newSocket);
 
