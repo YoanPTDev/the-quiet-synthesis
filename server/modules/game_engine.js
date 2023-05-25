@@ -339,7 +339,8 @@ const playerTurnStateMachine = {
           this.currentPlayer.socket.once(UPDATE.NO_ONGOING_PROJECTS, (data) => {
             this.newAction1.description = data;
             this.consolidateAction();
-          });        } else {
+          });
+        } else {
           let project = this.gameEngine.map.projects[index];
           project.turns += 3;
 
@@ -430,7 +431,8 @@ const playerTurnStateMachine = {
           this.currentPlayer.socket.once(UPDATE.NO_ONGOING_PROJECTS, (data) => {
             this.newAction1.description = data;
             this.consolidateAction();
-          });        } else {
+          });
+        } else {
           let project = this.gameEngine.map.projects[index];
 
           this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
