@@ -18,8 +18,8 @@ const IncompleteProjectsPickerWrapper = (props) => {
 
   return (
     <div>
-      <button onClick={(event) => {addRipple(event, "var(--log-button)"); toggleIncompleteProjectsPicker();}} className='menu-button adv-button'>
-        <div className='adv-button-icon'></div>
+      <button onClick={(event) => {addRipple(event, "var(--unfinished-button)"); toggleIncompleteProjectsPicker();}} className='menu-button proj-button'>
+        <div className='project-icon'></div>
       </button>
       {incompleteProjectPickerExpanded && <IncompleteProjectPicker />}
     </div>

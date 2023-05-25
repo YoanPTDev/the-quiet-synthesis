@@ -11,6 +11,7 @@
    --log-button: #d4e892;
    --notebook-button: #e6a373;
    --abunscar-button: #87b4e8;
+   --unfinished-button: #ffbd23;
 }
 
 @keyframes ripple {
@@ -104,8 +105,11 @@ button, input {
   .note-button, .note-button:hover {
     border: 2px solid var(--notebook-button);
   }
+  .proj-button, .proj-button:hover {
+    border: 2px solid var(--unfinished-button);
+  }
 
-.adv-button-icon, .notebook-icon, .scarabun-icon {
+.adv-button-icon, .notebook-icon, .scarabun-icon, .project-icon {
   background-color: white;
   width: 70px;
   height: 70px;
@@ -126,6 +130,10 @@ button, input {
 
 .scarabun-icon {
   background-image: url('./assets/scarAbunIcon.png');
+}
+
+.project-icon  {
+  background-image: url('./assets/unfinishedProjectIcon.png');
 }
 
 button {
