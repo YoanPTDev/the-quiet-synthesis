@@ -59,7 +59,7 @@ class AddWeeksAction extends GameAction {
   }
   
   isCompleted() {
-    return true; //placeholder
+    return this.description !== '';
   }
 }
 
@@ -69,7 +69,7 @@ class ModifyAction extends GameAction {
   }
 
   isCompleted() {
-    return true; //placeholder
+    return this.description !== '';
   }
 }
 

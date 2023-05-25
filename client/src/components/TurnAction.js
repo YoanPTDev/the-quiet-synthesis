@@ -22,6 +22,10 @@ const TurnAction = ({
   const handleDrawingEnd = () => {
     disableDrawing();
     socket.emit(ACTIONS.END_DRAWING);
+    fetchDirection({
+      directions: 'Add a description...',
+      font: FONT.LARGE,
+    })
   };
 
   return (

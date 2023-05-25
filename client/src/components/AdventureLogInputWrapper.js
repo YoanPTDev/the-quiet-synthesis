@@ -27,11 +27,15 @@ const DiceGadget = ({ onRoll, diceValue }) => {
   };
 
   return (
-    <img
-      src={diceNum[diceValue]}
-      alt={`Dice face ${diceValue}`}
-      onClick={handleRoll}
-    />
+    <div>
+      This project is gonna take 
+      <img
+        src={diceNum[diceValue]}
+        alt={`Dice face ${diceValue}`}
+        onClick={handleRoll}
+      />
+       turns
+    </div>
   );
 };
 

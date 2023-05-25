@@ -1,6 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { motion } from 'framer-motion';
+import one from '../assets/one.png';
+import two from '../assets/two.png';
+import three from '../assets/three.png';
+import four from '../assets/four.png';
+import five from '../assets/five.png';
+import six from '../assets/six.png';
 
 const AdventureLog = (props) => {
   const { logs } = props;
@@ -36,10 +42,13 @@ const AdventureLog = (props) => {
                       <strong>COMPLETED</strong>
                     )}
                   </div>
-                  <div>
-                    <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
-                    {tokens}
-                  </div>
+                  {tokens > 0 && (
+                    <div>
+                      <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
+                      {tokens}
+                    </div>
+                  )}
+
                   <div>
                     {discussion !== undefined && (
                       <>
@@ -75,7 +84,7 @@ const AdventureLog = (props) => {
                 {completedProjects.map(
                   ({ orgDesc, endDesc, orgPlayer, endPlayer }, index) => (
                     <div key={index}>
-                      <hr/>
+                      <hr />
                       <div>
                         <strong>{orgPlayer}: </strong>
                         {orgDesc}
@@ -98,12 +107,11 @@ const AdventureLog = (props) => {
   return (
     <motion.div
       className='adventure-log-container'
-      initial={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
-      animate={{ scale: [0.2, 1.1, 1.0], opacity: 1, x: "-50%", y: "-50%" }}
-      exit={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
+      initial={{ scale: 0.2, opacity: 0, x: '-50%', y: '-50%' }}
+      animate={{ scale: [0.2, 1.1, 1.0], opacity: 1, x: '-50%', y: '-50%' }}
+      exit={{ scale: 0.2, opacity: 0, x: '-50%', y: '-50%' }}
       transition={{ duration: 0.25 }}
-      style={{ position: "absolute", top: "50%", left: "50%" }}
-    >
+      style={{ position: 'absolute', top: '50%', left: '50%' }}>
       <h2>Adventure Log</h2>
       <hr />
       <div className='list-log'>{renderAdventureLogData()}</div>
