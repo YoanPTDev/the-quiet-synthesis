@@ -338,8 +338,9 @@ const playerTurnStateMachine = {
         if (index == null) {
           this.consolidateAction();
         } else {
+          console.log(this.gameEngine.map.projects[index].turns);
           this.gameEngine.map.projects[index].turns += 3;
-
+          console.log(this.gameEngine.map.projects[index].turns);
           if (Object.keys(this.newAction1).length !== 0) {
             if (this.newAction1.isCompleted()) {
               this.consolidateAction();

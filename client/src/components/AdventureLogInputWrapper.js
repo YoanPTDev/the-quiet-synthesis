@@ -53,7 +53,7 @@ const AdventureLogInputWrapper = (props) => {
 
   const [diceValue, setDiceValue] = useState(0);
 
-  const showDiceGadget = outOfTurnActions.type === 'StartProject';
+  const showDiceGadget = outOfTurnActions.type === 'Start Project';
 
   useEffect(() => {
     if (showDiceGadget) {
