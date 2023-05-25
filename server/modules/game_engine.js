@@ -335,8 +335,11 @@ const playerTurnStateMachine = {
 
       this.completeProjectPromptListener.on("prolong project", (index) => {
         if (index == null) {
-          this.consolidateAction();
-        } else {
+          this.currentPlayer.socket.emit(UPDATE.NO_ONGOING_PROJECTS);
+          this.currentPlayer.socket.once(UPDATE.NO_ONGOING_PROJECTS, (data) => {
+            this.newAction1.description = data;
+            this.consolidateAction();
+          });        } else {
           let project = this.gameEngine.map.projects[index];
           project.turns += 3;
 
@@ -369,8 +372,11 @@ const playerTurnStateMachine = {
 
       this.completeProjectPromptListener.on("modify project", (index) => {
         if (index == null) {
-          this.newAction1.description = "No ongoing projects at this moment";
-          this.consolidateAction();
+          this.currentPlayer.socket.emit(UPDATE.NO_ONGOING_PROJECTS);
+          this.currentPlayer.socket.once(UPDATE.NO_ONGOING_PROJECTS, (data) => {
+            this.newAction1.description = data;
+            this.consolidateAction();
+          });
         } else {
           let project = this.gameEngine.map.projects[index];
 
@@ -420,9 +426,11 @@ const playerTurnStateMachine = {
 
       this.completeProjectPromptListener.on("complete project", (index) => {
         if (index == null) {
-          this.newAction1.description = "No ongoing projects at this moment";
-          this.consolidateAction();
-        } else {
+          this.currentPlayer.socket.emit(UPDATE.NO_ONGOING_PROJECTS);
+          this.currentPlayer.socket.once(UPDATE.NO_ONGOING_PROJECTS, (data) => {
+            this.newAction1.description = data;
+            this.consolidateAction();
+          });        } else {
           let project = this.gameEngine.map.projects[index];
 
           this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
@@ -758,26 +766,41 @@ const playerTurnStateMachine = {
             break;
           case "prolong project":
             this[action] = new AddWeeksAction("", 0);
-            this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
-            this.currentPlayer.socket.once(
-              ACTIONS.SELECT_INCOMPLETE_PROJECT,
-              (data) => {
-                this.completeProjectPromptListener.emit(
-                  "prolong project",
-                  data
-                );
-              }
-            );
+            if (
+              this.gameEngine.incompleteProjects.incompleteProjects.length > 0
+            ) {
+              this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
+              this.currentPlayer.socket.once(
+                ACTIONS.SELECT_INCOMPLETE_PROJECT,
+                (data) => {
+                  this.completeProjectPromptListener.emit(
+                    "prolong project",
+                    data
+                  );
+                }
+              );
+            } else {
+              this.completeProjectPromptListener.emit("prolong project", null);
+            }
             break;
           case "modify project": // enable map for current player
             this[action] = new ModifyAction("", 0);
-            this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
-            this.currentPlayer.socket.once(
-              ACTIONS.SELECT_INCOMPLETE_PROJECT,
-              (data) => {
-                this.completeProjectPromptListener.emit("modify project", data);
-              }
-            );
+            if (
+              this.gameEngine.incompleteProjects.incompleteProjects.length > 0
+            ) {
+              this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
+              this.currentPlayer.socket.once(
+                ACTIONS.SELECT_INCOMPLETE_PROJECT,
+                (data) => {
+                  this.completeProjectPromptListener.emit(
+                    "modify project",
+                    data
+                  );
+                }
+              );
+            } else {
+              this.completeProjectPromptListener.emit("modify project", null);
+            }
             break;
           case "lore": // enable map for current player
             this[action] = new AddLoreAction("", 0);

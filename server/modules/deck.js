@@ -28,11 +28,10 @@ class DeckConfig {
 
         // if (dataCard.season == "Spring") {
         //   this.springCards.push(card);
-        // } else 
-        // if (dataCard.season == "Summer") {
-        //   this.summerCards.push(card);
-        // } else 
-        if (dataCard.season == "Fall") {
+        // } else
+        if (dataCard.season == "Summer") {
+          this.summerCards.push(card);
+        } else if (dataCard.season == "Fall") {
           this.fallCards.push(card);
         } else if (dataCard.season == "Winter") {
           this.winterCards.push(card);
