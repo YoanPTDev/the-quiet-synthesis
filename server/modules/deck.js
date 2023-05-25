@@ -1,5 +1,5 @@
-import Card from "./card.js";
-import { getDeckByName, getCardById } from "../db/db_DAO.js";
+import Card from './card.js';
+import { getDeckByName, getCardById } from '../db/db_DAO.js';
 
 class DeckConfig {
   constructor() {
@@ -26,14 +26,14 @@ class DeckConfig {
           card.prompts[j] = dataCard.prompts[j];
         }
 
-        // if (dataCard.season == "Spring") {
+        // if (dataCard.season == 'Spring') {
         //   this.springCards.push(card);
         // } else
         if (dataCard.season == "Summer") {
           this.summerCards.push(card);
         } else if (dataCard.season == "Fall") {
           this.fallCards.push(card);
-        } else if (dataCard.season == "Winter") {
+        } else if (dataCard.season == 'Winter') {
           this.winterCards.push(card);
         }
       }
