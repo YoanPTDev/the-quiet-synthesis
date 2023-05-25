@@ -824,8 +824,14 @@ const playerTurnStateMachine = {
             this.gameEngine.reduceTimers = false;
             break;
           case "modify ressource":
-            this[action] = new ModifyRessourcesAction("", 0);
-            // Changer le scarcities-abundances object
+            this[action] = new ModifyRessourcesAction("Changed ressources according to prompt", 0);
+            let data = null;
+            if (this.currentPrompt.includes('Scarcity')) {
+              data = 'Scarcity';
+            } else {
+              data = 'Abundance'
+            }
+            this.currentPlayer.socket.emit(ACTIONS.ADD_ABUN_SCARC, data);
             break;
           case "end game":
             this[action] = new EndGameAction("", 0);
