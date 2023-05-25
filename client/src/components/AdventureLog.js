@@ -8,6 +8,15 @@ import four from '../assets/four.png';
 import five from '../assets/five.png';
 import six from '../assets/six.png';
 
+const diceNum = {
+  1: one,
+  2: two,
+  3: three,
+  4: four,
+  5: five,
+  6: six,
+};
+
 const AdventureLog = (props) => {
   const { logs } = props;
 
@@ -38,7 +47,7 @@ const AdventureLog = (props) => {
                   className='action'>
                   <div>
                     <strong>Type: </strong> {type}{' '}
-                    {type === 'StartProject' && turns === 0 && (
+                    {type === 'Start Project' && turns === 0 && (
                       <strong>COMPLETED</strong>
                     )}
                   </div>
@@ -69,9 +78,25 @@ const AdventureLog = (props) => {
                       </>
                     )}
                   </div>
-                  <strong>
-                    {turns > 0 ? <p>Ready in {turns} turns</p> : ''}
-                  </strong>
+                  {turns > 0 && (
+                    <div>
+                      <strong>Ready in: </strong>
+                      {turns > 6 && (
+                        <img
+                          className='dice-adventure-log'
+                          src={diceNum[6]}
+                          alt={`Dice with number 6`}
+                        />
+                      )}
+                      <img
+                        className='dice-adventure-log'
+                        src={diceNum[turns > 6 ? turns - 6 : turns]}
+                        alt={`Dice with number ${
+                          turns > 6 ? turns - 6 : turns
+                        }`}
+                      />
+                    </div>
+                  )}
                 </div>
               );
             })}

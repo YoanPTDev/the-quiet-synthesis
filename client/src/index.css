@@ -245,6 +245,11 @@ textarea {
   z-index: 50;
 }
 
+.dice-adventure-log {
+  width: 30px;
+  height: 30px;
+}
+
 .notebook-container {
   width: 300px;
   height: 400px;
