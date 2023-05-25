@@ -119,7 +119,7 @@ class EndGameAction extends GameAction {
   }
 
   isCompleted() {
-    return this.description !== '';
+    return true;
   }
 }
 

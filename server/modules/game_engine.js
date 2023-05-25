@@ -39,6 +39,7 @@ const playerStates = {
   PROJECTS: "PROJECTS",
   ACTION2: "ACTION2",
   FINISHED: "FINISHED",
+  GAMEOVER: "GAMEOVER",
 };
 
 class GameEngine {
@@ -306,6 +307,19 @@ const playerTurnStateMachine = {
           );
         }
         break;
+      case playerStates.GAMEOVER:
+        this.currentState = playerStates.GAMEOVER;
+
+        this.gameEngine.log.addEntry(this.newWeek);
+        io.to(this.gameEngine.game.config.roomCode).emit(
+          UPDATE.LOGS,
+          this.gameEngine.log.weeks
+        );
+
+        io.to(this.gameEngine.game.config.roomCode).emit(
+          ACTIONS.END_GAME,
+          this.gameEngine.deck.fulldeck.length
+        );
       default:
         throw new Error("Invalid state: " + newState);
     }
@@ -576,7 +590,9 @@ const playerTurnStateMachine = {
 
     this.newWeek.actions.push(action);
 
-    if (this.isAction1()) {
+    if (action.type === "Game Over") {
+      this.transition(playerStates.GAMEOVER);
+    } else if (this.isAction1()) {
       this.transition(playerStates.PROJECTS);
     } else if (this.isAction2()) {
       this.gameEngine.endTurn();
@@ -824,12 +840,15 @@ const playerTurnStateMachine = {
             this.gameEngine.reduceTimers = false;
             break;
           case "modify ressource":
-            this[action] = new ModifyRessourcesAction("Changed ressources according to prompt", 0);
+            this[action] = new ModifyRessourcesAction(
+              "Changed ressources according to prompt",
+              0
+            );
             let data = null;
-            if (this.currentPrompt.includes('Scarcity')) {
-              data = 'Scarcity';
+            if (this.currentPrompt.includes("Scarcity")) {
+              data = "Scarcity";
             } else {
-              data = 'Abundance'
+              data = "Abundance";
             }
             this.currentPlayer.socket.emit(ACTIONS.ADD_ABUN_SCARC, data);
             break;
