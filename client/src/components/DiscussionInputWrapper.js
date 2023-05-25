@@ -25,7 +25,7 @@ const DiscussionInputWrapper = (props) => {
   const socket = useContext(SocketContext);
 
   return (
-    <div className='input-container'>
+    <div className='input-container centered-column'>
       <DiscussionInput
         onSave={(data) => {
           socket.emit(DATA.DISCUSSION, data);

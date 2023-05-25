@@ -1,5 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { motion } from 'framer-motion';
+import one from '../assets/one.png';
+import two from '../assets/two.png';
+import three from '../assets/three.png';
+import four from '../assets/four.png';
+import five from '../assets/five.png';
+import six from '../assets/six.png';
+
+const diceNum = {
+  1: one,
+  2: two,
+  3: three,
+  4: four,
+  5: five,
+  6: six,
+};
 
 const AdventureLog = (props) => {
   const { logs } = props;
@@ -7,7 +23,9 @@ const AdventureLog = (props) => {
   const renderAdventureLogData = () => {
     if (logs) {
       return logs.map((log) => {
-        const { weekNb, playerId, promptChosen, actions, completedProjects } = log;
+        const { weekNb, playerId, promptChosen, actions, completedProjects } =
+          log;
+        console.log('completedProjects', completedProjects);
 
         return (
           <div
@@ -21,32 +39,90 @@ const AdventureLog = (props) => {
               <strong>Prompt: </strong> {promptChosen}
             </p>
             {actions.map((action, index) => {
-              const { type, tokens, turns, description } = action;
+              const { type, tokens, turns, description, discussion } = action;
 
               return (
                 <div
                   key={`${weekNb}-${index}`}
                   className='action'>
-                  <p>
+                  <div>
                     <strong>Type: </strong> {type}{' '}
-                    {type === 'StartProject' && turns === 0 && <strong>COMPLETED</strong>}
-                  </p>
-                  <p>
-                    <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
-                    {tokens}
-                  </p>
-                  <p>
-                    <strong>Specifics: </strong> {description}
-                  </p>
-                  <strong>
-                    {turns > 0 ? <p>Ready in {turns} turns</p> : ''}
-                  </strong>
+                    {type === 'Start Project' && turns === 0 && (
+                      <strong>COMPLETED</strong>
+                    )}
+                  </div>
+                  {tokens > 0 && (
+                    <div>
+                      <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
+                      {tokens}
+                    </div>
+                  )}
+
+                  <div>
+                    {discussion !== undefined && (
+                      <>
+                        {discussion.map(({ player, statement }, index) => (
+                          <div key={index}>
+                            <div>
+                              <strong>{player}: </strong>
+                              {statement}
+                            </div>
+                          </div>
+                        ))}
+                        <strong></strong>
+                      </>
+                    )}
+                    {discussion === undefined && (
+                      <>
+                        <strong>Specifics: </strong> {description}
+                      </>
+                    )}
+                  </div>
+                  {turns > 0 && (
+                    <div>
+                      <strong>Ready in: </strong>
+                      {turns > 6 && (
+                        <img
+                          className='dice-adventure-log'
+                          src={diceNum[6]}
+                          alt={`Dice with number 6`}
+                        />
+                      )}
+                      <img
+                        className='dice-adventure-log'
+                        src={diceNum[turns > 6 ? turns - 6 : turns]}
+                        alt={`Dice with number ${
+                          turns > 6 ? turns - 6 : turns
+                        }`}
+                      />
+                    </div>
+                  )}
                 </div>
               );
             })}
-            <br/>
-            <h5>Project completed this week!</h5>
-            {completedProjects}
+            <br />
+            {completedProjects.length > 0 && (
+              <div>
+                <div className='centered-column'>
+                  <h3>Project completed this week!</h3>
+                </div>
+                {completedProjects.map(
+                  ({ orgDesc, endDesc, orgPlayer, endPlayer }, index) => (
+                    <div key={index}>
+                      <hr />
+                      <div>
+                        <strong>{orgPlayer}: </strong>
+                        {orgDesc}
+                      </div>
+                      <div>
+                        <strong>{endPlayer}: </strong>
+                        {endDesc}
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
           </div>
         );
       });
@@ -54,12 +130,18 @@ const AdventureLog = (props) => {
   };
 
   return (
-    <div className='adventure-log-container'>
+    <motion.div
+      className='adventure-log-container'
+      initial={{ scale: 0.2, opacity: 0, x: '-50%', y: '-50%' }}
+      animate={{ scale: [0.2, 1.1, 1.0], opacity: 1, x: '-50%', y: '-50%' }}
+      exit={{ scale: 0.2, opacity: 0, x: '-50%', y: '-50%' }}
+      transition={{ duration: 0.25 }}
+      style={{ position: 'absolute', top: '50%', left: '50%' }}>
       <h2>Adventure Log</h2>
       <hr />
       <div className='list-log'>{renderAdventureLogData()}</div>
       <hr />
-    </div>
+    </motion.div>
   );
 };
 

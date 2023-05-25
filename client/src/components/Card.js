@@ -80,7 +80,7 @@ const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
           {prompts &&
             prompts.map((prompt, index) => (
               <div
-                className='prompt-wrapper'
+                className='prompt-wrapper centered-column'
                 key={`${id}-${index}`}>
                 <button
                   className='card-prompt'

@@ -5,9 +5,22 @@
    --gray: #666666;
    --blue-gray: #8493A0;
    --blue-gray-alpha: #8493A066;
-   --ivory: #EAE8D0;
+   --ivory: #FFFDE6;
    --pastel-green: #dfead0;
    --sandy-purple: #a08493;
+   --log-button: #d4e892;
+   --notebook-button: #e6a373;
+   --abunscar-button: #87b4e8;
+   --unfinished-button: #ffbd23;
+}
+
+@keyframes ripple {
+  from {
+    transform: scale(0.01);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 * {
@@ -29,6 +42,14 @@ h3 {
   font-size: 2rem;
 }
 
+.TQY-logo {
+  width: 356px;
+  height: 60px;
+  background-image: url(./assets/logo.png);
+  background-size: contain;
+  margin: 0;
+}
+
 button, input {
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
@@ -39,7 +60,6 @@ button, input {
   transition: all 235ms ease-in-out 0s;
   color: #41403e;
   border-color: #41403e;
-  background-color: var(--pastel-green);
   align-self: center;
   background-image: none;
   border-style: solid;
@@ -47,15 +67,106 @@ button, input {
   padding: 0.25rem;
   font-family: "Patrick Hand SC", sans-serif;
   font-size: 1.25em;
-  margin: 3px 5px;
+}
+
+.menu-button {
+  position: relative;
+  display: flex;
+  width: 100px;
+  height: 100px;
+  border-radius: 0 0 50px 50px;
+  box-shadow: 8px 5px rgba(0, 0, 200, 0.2);
+  transform: translate(0, -31px);
+  transition: all 0.2s;
+  overflow: hidden;
+  border: none;
+  align-items:end;
+  justify-content: center;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.menu-button:hover {
+  height: 175px;
+  width: 120px;
+  border-radius: 0 0 60px 60px;
+  border: none;
+  transform: translate(0, -31px);
+  box-shadow: 8px 5px rgba(0, 0, 200, 0.2);
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 350px;
+  height: 350px;
+  animation: ripple 0.6s;
+  z-index: 1;
+}
+
+  .scab-button, .scab-button:hover {
+    border: 2px solid var(--abunscar-button);
+  }
+  .adv-button, .adv-button:hover {
+    border: 2px solid var(--log-button);
+  }
+  .note-button, .note-button:hover {
+    border: 2px solid var(--notebook-button);
+  }
+  .proj-button, .proj-button:hover {
+    border: 2px solid var(--unfinished-button);
+  }
+
+.adv-button-icon, .notebook-icon, .scarabun-icon, .project-icon {
+  background-color: white;
+  width: 70px;
+  height: 70px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 40px;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.adv-button-icon {
+  background-image: url('./assets/advLogIcon.png');
+}
+
+.notebook-icon {
+  background-image: url('./assets/notebookIcon.png');
+}
+
+.scarabun-icon {
+  background-image: url('./assets/scarAbunIcon.png');
+}
+
+.project-icon  {
+  background-image: url('./assets/unfinishedProjectIcon.png');
+}
+
+button {
+  margin: 10px;
 }
   button:hover {
     transform: translate3d(0, 2px, 0);
     box-shadow: 2px 8px 8px -5px rgba(0, 0, 0, 0.3);
   }
-  input {
-    padding: 0.1rem 0.25rem;
-  }
+
+input {
+  padding: 0.1rem 0.25rem;
+}
+
+textarea {
+  font-family: 'Martel', serif;
+  resize: none;
+  width: 500px;
+  height: 200px;
+  margin: 5px;
+}
+
+.unclickable {
+  pointer-events: none;
+}
 
 .canvas-container {
   position: relative;
@@ -73,46 +184,82 @@ button, input {
   display: inline-flex;
 }
 
-.action-buttons > * {
-  margin: 20px;
+.toggle-button-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  height: 100%;
+}
+
+.action-director-container {
+  position: absolute;
+  top: 10%;
+  font-size: 2em;
+  width: 60%;
+  padding: 0 20%;
+  overflow-wrap: break-word;
+}
+
+.small-direction {
+  font-size: .7em;
+}
+
+.action-director {
+  text-align: center;
+  position: relative;
+  top: 15%;
+}
+
+.action-buttons {
+  padding-top: 5px;
 }
 
 .adventure-log-container,
 .notebook-container,
 .input-container,
 .scarcity-abundance-container,
-.input-container,
 .second-action-container {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 10px 0 var(--blue-gray), 0 0 0 2px var(--blue-gray);
+}
+
+.second-action-container {
+  z-index: 1;
+  width: 250px;
 }
 
 .input-container {
-  width: 300px;
-  height: 100px;
+  padding: 30px;
+  z-index: 10;
 }
 
 .adventure-log-container {
   width: 400px;
   height: 500px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+
+.dice-adventure-log {
+  width: 30px;
+  height: 30px;
 }
 
 .notebook-container {
   width: 300px;
   height: 400px;
+  z-index: 30;
 }
 
 .scarcity-abundance-container {
-  width: 600px;
+  width: 650px;
   height: 400px;
-  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+  z-index: 40;
 }
 
 .scarcities-abundances-title {
@@ -146,6 +293,7 @@ button, input {
 .scarcities-abundance-mass-transfer-button {
   width: 100%;
   height: 10%;
+  margin: 10px 0;
 }
 
 li {
@@ -162,6 +310,27 @@ li {
   box-shadow: 0 4px 6px var(--blue-gray);
   width: 300px;
   word-wrap: break-word;
+}
+
+.react-p5 {
+  width: 96%;
+  margin: 0 2%;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  transition: all 235ms ease 0s;
+  box-shadow: 15px 28px 25px -18px rgba(0, 0, 0, 0.2);
+  transition: all 235ms ease-in-out 0s;
+  color: #41403e;
+  border-color: #97793e;
+  align-self: center;
+  background-image: none;
+  border-style: solid;
+  border-width: 3px;
+  padding: 1%;
+  background-color: var(--ivory);
+  
 }
 
 .top-left {
@@ -248,7 +417,7 @@ li {
   height: 348px;
 }
 
-.prompt-wrapper {
+.centered-column {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Notebook from './Notebook';
 import { expandNotebook, collapseNotebook } from '../actions/settings';
+import { addRipple } from '../animations';
+import { AnimatePresence } from 'framer-motion';
 
 const NotebookWrapper = (props) => {
   const { notebookExpanded, expandNotebook, collapseNotebook } = props;
@@ -17,10 +19,12 @@ const NotebookWrapper = (props) => {
 
   return (
     <div>
-      <button onClick={toggleNotebook}>
-        {notebookExpanded ? 'Hide Notebook' : 'Show Notebook'}
+      <button onClick={(event) => {addRipple(event, "var(--notebook-button)"); toggleNotebook();}} className='menu-button note-button'>
+        <div className='notebook-icon'></div>
       </button>
-      {notebookExpanded && <Notebook />}
+      <AnimatePresence>
+        {notebookExpanded && <Notebook />}
+      </AnimatePresence>
     </div>
   );
 };

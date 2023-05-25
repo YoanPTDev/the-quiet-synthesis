@@ -5,9 +5,11 @@ const InputField = ({ placeholder, onSave, value }) => {
   const [inputValue, setInputValue] = useState(value || '');
 
   const handleSave = () => {
-    if (onSave) {
-      onSave(inputValue);
-      setInputValue('');
+    if (inputValue !== '') {
+      if (onSave) {
+        onSave(inputValue);
+        setInputValue('');
+      }
     }
   };
 

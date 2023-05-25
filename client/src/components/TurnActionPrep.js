@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { startGame, prepGame } from '../actions/partie';
-import { startGameStore } from '../actions/settings';
 import {
   collapseScarcityAbundanceLog,
   disableDrawing,
@@ -18,7 +17,6 @@ const TurnActionPrep = ({
   isFirstPlayer,
   fetchDirection,
   collapseScarcityAbundanceLog,
-  startGameStore,
 }) => {
   const socket = useContext(SocketContext);
 
@@ -30,8 +28,6 @@ const TurnActionPrep = ({
 
   const handleStartGame = () => {
     startGame();
-    startGameStore();
-    collapseScarcityAbundanceLog();
   };
 
   return (
@@ -71,7 +67,6 @@ const mapDispatchToProps = (dispatch, props) => {
   const { socket } = props;
   return {
     startGame: () => dispatch(startGame(socket)),
-    startGameStore: () => dispatch(startGameStore()),
     prepGame: () => dispatch(prepGame(socket)),
     disableDrawing: () => dispatch(disableDrawing()),
     fetchDirection: (data) => dispatch(fetchDirection(data)),

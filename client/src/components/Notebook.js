@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import InputField from './InputField';
 import { SocketContext } from '../middleware/socketcontext';
 import { DATA } from '../../../utils/constants.mjs';
+import { motion } from 'framer-motion';
 
 const NotebookInput = (props) => (
   <InputField
@@ -32,7 +33,14 @@ const Notebook = (props) => {
   };
 
   return (
-    <div className='notebook-container'>
+    <motion.div
+      className='notebook-container'
+      initial={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
+      animate={{ scale: [0.2, 1.1, 1.0], opacity: 1, x: "-50%", y: "-50%" }}
+      exit={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
+      transition={{ duration: 0.25 }}
+      style={{ position: "absolute", top: "50%", left: "50%" }}
+    >
       <h2>Notebook</h2>
       <hr />
       <ul className='list-note'>{renderNotebookData()}</ul>
@@ -43,7 +51,7 @@ const Notebook = (props) => {
         }}
       />
       <hr />
-    </div>
+    </motion.div>
   );
 };
 

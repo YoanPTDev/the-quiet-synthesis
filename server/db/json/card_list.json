@@ -531,7 +531,7 @@
         },
         {
             "description": "Cold autumn winds drive out your enemies. Remove a\nthreatening force from the map and the area.",
-            "mechanic": "remove POI"
+            "mechanic": "lore"
         }
     ]
   },

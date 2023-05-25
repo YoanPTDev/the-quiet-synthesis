@@ -5,6 +5,8 @@ import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn, prepGame } from '../actions/partie';
 import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
 import { fetchDirection } from '../actions/direction';
+import { ACTIONS } from '../../../utils/constants.mjs';
+import { FONT } from '../constants';
 
 const TurnAction = ({
   // prepGame,
@@ -15,11 +17,16 @@ const TurnAction = ({
   expandAdventureLogInput,
   fetchDirection,
 }) => {
+
+  const socket = useContext(SocketContext);
   
   const handleDrawingEnd = () => {
     disableDrawing();
-    expandAdventureLogInput();
-    fetchDirection({ directions: 'Add a description' });
+    socket.emit(ACTIONS.END_DRAWING);
+    fetchDirection({
+      directions: 'Add a description...',
+      font: FONT.LARGE,
+    })
   };
 
   return (

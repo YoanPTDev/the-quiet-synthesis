@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
 import { DATA } from '../../../utils/constants.mjs';
-import { COLOR } from '../colors';
+import { COLOR } from '../constants';
 
 const Map = (props) => {
   const socket = useContext(SocketContext);
@@ -22,7 +22,7 @@ const Map = (props) => {
   });
 
   const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(window.innerWidth, window.innerHeight).parent(
+    p5.createCanvas(window.innerWidth * 0.96, window.innerHeight).parent(
       canvasParentRef
     );
     p5.background(COLOR.IVORY);
@@ -118,11 +118,19 @@ const Map = (props) => {
   };
 
   return (
-    <Sketch
-      setup={setup}
-      draw={draw}
-      mouseReleased={mouseReleased}
-    />
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      height: "100%"
+    }}>
+      <Sketch
+        setup={setup}
+        draw={draw}
+        mouseReleased={mouseReleased}
+      />
+    </div>
   );
 };
 

@@ -1,9 +1,11 @@
 import User from './user.js';
 
 class Player {
-  constructor(user, socket) {
-    this.user = user; //objet User
+  constructor(uuid, socket, name) {
+    this.uuid = uuid;
     this.socket = socket; //Connection socket.io
+    this.name = name;
+    this.isConnected = true;
   }
 }
 

@@ -3,9 +3,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
 
-import {
-  DATA, ACTIONS, UPDATE
-} from '../utils/constants.mjs';
+import { DATA, ACTIONS, UPDATE } from '../utils/constants.mjs';
 
 import { connectToDatabase } from './db/connection.js';
 import GameEngine from './modules/game_engine.js';
@@ -39,14 +37,31 @@ app.use((req, res, next) => {
 let playerCount = 0;
 
 io.on('connection', (socket) => {
-  socket.on(ACTIONS.ADD_PLAYER, () => {
-    playerCount++;
-    const playerName = `Player ${playerCount}`;
-    socket.playerName = playerName;
-    gameEngine.players.push(new Player(null, socket));
-    socket.join(gameEngine.game.config.roomCode);
+  socket.on(ACTIONS.ADD_PLAYER, (uuid) => {
+    let player = gameEngine.players.find((p) => p.uuid === uuid);
 
-    console.log(`${playerName} connected to ${gameEngine.game.config.roomCode}`);
+    if (!player) {
+      playerCount++;
+      player = new Player(uuid, socket, `Player ${playerCount}`);
+      gameEngine.players.push(player);
+      socket.join(gameEngine.game.config.roomCode);
+      console.log(
+        `${player.name} (${player.uuid}) connected to ${gameEngine.game.config.roomCode}`
+      );
+    } else {
+      player.socket = socket;
+      player.isConnected = true;
+      socket.join(gameEngine.game.config.roomCode);
+      console.log(
+        `${player.name} (${player.uuid}) reconnected to ${gameEngine.game.config.roomCode}`
+      );
+      player.socket.once(DATA.GAME_STATE, () => {
+        console.log('received the signal to send back the state');
+        player.socket.emit(DATA.GAME_STATE, gameEngine.getState());
+      });
+    }
+
+    socket.player = player;
   });
 
   socket.once(ACTIONS.PREP_GAME, () => {
@@ -70,7 +85,10 @@ io.on('connection', (socket) => {
           gameEngine.scarc_abund.abundances.splice(indexToRemove, 1);
         }
         gameEngine.scarc_abund.scarcities.push(data.value);
-        io.to(gameEngine.game.config.roomCode).emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
+        io.to(gameEngine.game.config.roomCode).emit(
+          UPDATE.SCARCITY_ABUNDANCE,
+          gameEngine.scarc_abund
+        );
         break;
       case DATA.ABUNDANCE:
         if (data.action === ACTIONS.TRANSFER) {
@@ -80,12 +98,18 @@ io.on('connection', (socket) => {
           gameEngine.scarc_abund.scarcities.splice(indexToRemove, 1);
         }
         gameEngine.scarc_abund.abundances.push(data.value);
-        io.to(gameEngine.game.config.roomCode).emit(UPDATE.SCARCITY_ABUNDANCE, gameEngine.scarc_abund);
+        io.to(gameEngine.game.config.roomCode).emit(
+          UPDATE.SCARCITY_ABUNDANCE,
+          gameEngine.scarc_abund
+        );
         break;
       case DATA.NOTE:
         // Save the Notebook entry to your mongoDB collection
         gameEngine.notebook.addNote(data.value);
-        io.to(gameEngine.game.config.roomCode).emit(UPDATE.NOTEBOOK, gameEngine.notebook.notes);
+        io.to(gameEngine.game.config.roomCode).emit(
+          UPDATE.NOTEBOOK,
+          gameEngine.notebook.notes
+        );
         break;
       case DATA.NAME:
         // Save the Name entry to your mongoDB collection
@@ -101,18 +125,17 @@ io.on('connection', (socket) => {
   // --------TESTING----------
 
   socket.on(DATA.MOUSE, (data) => {
-    console.log('Received:', data.x, data.y);
-    socket.broadcast.emit(DATA.MOUSE, data);
+    process.stdout.write(`\rMOUSE: ${data.x}, ${data.y}      `);
+    socket.to(gameEngine.game.config.roomCode).emit(DATA.MOUSE, data);
   });
 
   socket.on('disconnect', () => {
-    const index = gameEngine.players.findIndex(
-      (p) => p.socket.id === socket.id
-    );
-    if (index !== -1) {
-      gameEngine.players.splice(index, 1);
+    if (socket.player) {
+      socket.player.isConnected = false;
+      console.log(
+        `${socket.player.name} (${socket.player.uuid}) disconnected from ${gameEngine.game.config.roomCode}`
+      );
     }
-    console.log(`${socket.playerName} disconnected from ${gameEngine.game.config.roomCode}`);
   });
 });
 

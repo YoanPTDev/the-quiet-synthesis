@@ -9,7 +9,17 @@ import {
   SET_CARD_EXPANDED,
   SET_SECOND_TURN_ACTION_EXPANDED,
   SET_FIRST_PLAYER,
+  SET_COMPLETE_PROJECT_INPUT_EXPANDED,
+  SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
+  SET_SEASON
 } from './types';
+
+export const setSeason = ({season}) => {
+  return {
+    type: SET_SEASON,
+    season: season,
+  }
+}
 
 export const startGameStore = () => {
   return {
@@ -39,6 +49,20 @@ export const collapseAdventureLog = () => {
   };
 };
 
+export const expandIncompleteProjectPicker = () => {
+  return {
+    type: SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
+    incompleteProjectPickerExpanded: true,
+  };
+};
+
+export const collapseIncompleteProjectPicker = () => {
+  return {
+    type: SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
+    incompleteProjectPickerExpanded: false,
+  };
+};
+
 export const expandAdventureLogInput = () => {
   return {
     type: SET_ADVENTURELOG_INPUT_EXPANDED,
@@ -50,6 +74,20 @@ export const collapseAdventureLogInput = () => {
   return {
     type: SET_ADVENTURELOG_INPUT_EXPANDED,
     adventureLogInputExpanded: false,
+  };
+};
+
+export const expandCompleteProjectInput = () => {
+  return {
+    type: SET_COMPLETE_PROJECT_INPUT_EXPANDED,
+    completeProjectInputExpanded: true,
+  };
+};
+
+export const collapseCompleteProjectInput = () => {
+  return {
+    type: SET_COMPLETE_PROJECT_INPUT_EXPANDED,
+    completeProjectInputExpanded: false,
   };
 };
 
@@ -117,7 +155,6 @@ export const setFirstPlayer = () => {
 };
 
 export const expandCard = () => {
-  console.log('expandCard -> action/settings');
   return {
     type: SET_CARD_EXPANDED,
     cardExpanded: true,
@@ -125,7 +162,6 @@ export const expandCard = () => {
 };
 
 export const collapseCard = () => {
-  console.log('collapseCard -> action/settings');
   return {
     type: SET_CARD_EXPANDED,
     cardExpanded: false,
