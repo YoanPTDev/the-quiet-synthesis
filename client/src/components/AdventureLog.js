@@ -42,7 +42,7 @@ const AdventureLog = (props) => {
                       <strong>COMPLETED</strong>
                     )}
                   </div>
-                  {tokens && (
+                  {tokens > 0 && (
                     <div>
                       <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
                       {tokens}
