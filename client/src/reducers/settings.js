@@ -10,7 +10,8 @@ import {
   SET_SECOND_TURN_ACTION_EXPANDED,
   SET_FIRST_PLAYER,
   SET_COMPLETE_PROJECT_INPUT_EXPANDED,
-  SET_INCOMPLETE_PROJECT_PICKER_EXPANDED
+  SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
+  SET_SEASON
 } from '../actions/types';
 
 const DEFAULT_SETTINGS = {
@@ -26,6 +27,7 @@ const DEFAULT_SETTINGS = {
   isFirstPlayer: false,
   completeProjectInputExpanded: false,
   incompleteProjectPickerExpanded: false,
+  season: 'Spring',
 };
 
 const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
@@ -90,6 +92,8 @@ const settingsReducer = (state = DEFAULT_SETTINGS, action) => {
         ...state,
         secondTurnActionExpanded: action.secondTurnActionExpanded,
       };
+    case SET_SEASON:
+      return { ...state, season: action.season };
     default:
       return state;
   }

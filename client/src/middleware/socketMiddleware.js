@@ -11,6 +11,7 @@ import {
   expandCompleteProjectInput,
   expandIncompleteProjectPicker,
   expandAdventureLogInput,
+  setSeason,
 } from '../actions/settings';
 import { fetchOutOfTurnAction } from '../actions/outOfTurnAction';
 import { fetchDirection } from '../actions/direction';
@@ -91,12 +92,9 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(UPDATE.ACTION, (data) => {
       storeReference.dispatch(fetchOutOfTurnAction(data));
-      // storeReference.dispatch(
-      //   fetchDirection({ directions: 'someone is playing' })
-      // );
     });
     socketInstance.on(DATA.SEASON, (data) => {
-      console.log('SEASON', data);
+      storeReference.dispatch(setSeason(data));
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
@@ -142,11 +140,12 @@ const setupSocketListeners = () => {
         storeReference.dispatch(startGameStore());
         console.log('game started');
       }
-      // storeReference.dispatch(fetchIncompleteProjects(data));
-      // storeReference.dispatch(fetchLog(data));
+
+      storeReference.dispatch(fetchIncompleteProjects(data.incompleteProjects));
+      storeReference.dispatch(fetchLog(data.advLog));
       // storeReference.dispatch(fetchOutOfTurnAction(data));
-      // storeReference.dispatch(fetchNote(data));
-      // storeReference.dispatch(fetchScarcityAbundance(data));
+      storeReference.dispatch(fetchNote(data.notebook));
+      storeReference.dispatch(fetchScarcityAbundance(data.scar_abund));
     });
   }
 };

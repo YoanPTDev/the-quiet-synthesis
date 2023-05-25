@@ -10,8 +10,16 @@ import {
   SET_SECOND_TURN_ACTION_EXPANDED,
   SET_FIRST_PLAYER,
   SET_COMPLETE_PROJECT_INPUT_EXPANDED,
-  SET_INCOMPLETE_PROJECT_PICKER_EXPANDED
+  SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
+  SET_SEASON
 } from './types';
+
+export const setSeason = ({season}) => {
+  return {
+    type: SET_SEASON,
+    season: season,
+  }
+}
 
 export const startGameStore = () => {
   return {
