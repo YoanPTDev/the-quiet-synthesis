@@ -334,6 +334,20 @@ const playerTurnStateMachine = {
         }
       });
 
+      this.completeProjectPromptListener.on('prolong project', (index) => {
+        if (index == null) {
+          this.consolidateAction();
+        } else {
+          this.gameEngine.map.projects[index].turns += 3;
+
+          if (Object.keys(this.newAction1).length !== 0) {
+            if (this.newAction1.isCompleted()) {
+              this.consolidateAction();
+            }
+          }
+        }
+      });
+
       this.completeProjectPromptListener.on('project chosen', (index) => {
         if (index == null) {
           this.consolidateAction();
@@ -582,12 +596,10 @@ const playerTurnStateMachine = {
   },
 
   weekBuilder(data, action) {
-    console.log('weekBuilder');
     switch (data.type) {
       case DATA.DESCRIPTION:
         if (action != null) {
           this[action].description = data.value;
-          console.log('DESCRIPTION', this[action].description);
           if (this[action].type == 'StartProject') {
             if (this.isAction1()) {
               this[action].turns = data.turns + 1;
@@ -652,6 +664,13 @@ const playerTurnStateMachine = {
             break;
           case 'prolong project':
             this[action] = new AddWeeksAction('', 0);
+            this.currentPlayer.socket.emit(ACTIONS.SELECT_INCOMPLETE_PROJECT);
+            this.currentPlayer.socket.once(
+              ACTIONS.SELECT_INCOMPLETE_PROJECT,
+              (data) => {
+                this.completeProjectPromptListener.emit('prolong project', data);
+              }
+            );
             break;
           case 'modify project': // enable map for current player
             this[action] = new ModifyAction('', 0);
