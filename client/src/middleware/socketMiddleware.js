@@ -41,7 +41,7 @@ const setupSocketListeners = () => {
       console.log('ADD_DESCRIPTION');
       storeReference.dispatch(expandAdventureLogInput());
       fetchDirection({
-        directions: 'Add a description...',
+        directions: 'Add a description',
         font: FONT.LARGE,
       });
     });
@@ -56,6 +56,16 @@ const setupSocketListeners = () => {
         })
       );
     });
+    socketInstance.on(ACTIONS.ADD_ABUN_SCARC, (data) => {
+      storeReference.dispatch(expandScarcityAbundanceLog());
+      storeReference.dispatch(
+        fetchDirection({
+          directions:
+            `Add a ${data}, then take your second action`,
+          font: FONT.LARGE,
+        })
+      );
+    })
     socketInstance.on(ACTIONS.SELECT_INCOMPLETE_PROJECT, () => {
       storeReference.dispatch(expandIncompleteProjectPicker());
       storeReference.dispatch(
@@ -77,7 +87,7 @@ const setupSocketListeners = () => {
     socketInstance.on(SECOND_TURN.ACTION, () => {
       storeReference.dispatch(expandSecondTurnAction());
       fetchDirection({
-        directions: 'Choose an action then resolve it...',
+        directions: 'Choose an action then resolve it',
         font: FONT.LARGE,
       });
     });
@@ -96,7 +106,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(expandDiscussionInput());
       storeReference.dispatch(
         fetchDirection({
-          directions: 'Discuss amongst yourselves...',
+          directions: 'Discuss amongst yourselves',
           font: FONT.LARGE,
         })
       );
@@ -105,7 +115,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(enableDrawing());
       storeReference.dispatch(
         fetchDirection({
-          directions: 'Draw something on the map...',
+          directions: 'Draw something on the map',
           font: FONT.LARGE,
         })
       );
@@ -113,14 +123,14 @@ const setupSocketListeners = () => {
     socketInstance.on(UPDATE.NO_ONGOING_PROJECTS, () => {
       storeReference.dispatch(
         fetchDirection({
-          directions: 'There are no ongoing project at this moment...',
+          directions: 'There are no ongoing project at this moment',
           font: FONT.LARGE,
         })
       );
       setTimeout(() => {
         socketInstance.emit(
           UPDATE.NO_ONGOING_PROJECTS,
-          'There are no ongoing project at this moment...'
+          'There are no ongoing project at this moment'
         );
       }, 3000);
     });
@@ -128,7 +138,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(startGameStore());
       storeReference.dispatch(collapseScarcityAbundanceLog());
       fetchDirection({
-        directions: 'The first week has started...',
+        directions: 'The first week has started',
         font: FONT.LARGE,
       });
     });
@@ -164,7 +174,6 @@ const setupSocketListeners = () => {
 
       storeReference.dispatch(fetchIncompleteProjects(data.incompleteProjects));
       storeReference.dispatch(fetchLog(data.advLog));
-      // storeReference.dispatch(fetchOutOfTurnAction(data));
       storeReference.dispatch(fetchNote(data.notebook));
       storeReference.dispatch(fetchScarcityAbundance(data.scar_abund));
       fetchDirection({
