@@ -28,7 +28,7 @@ const SecondTurnAction = ({
   if (!secondTurnActionExpanded) return null;
 
   return (
-    <div className='second-action-container'>
+    <div className='second-action-container centered-column'>
       <button
         onClick={() => handleClick('Start a project')}
         style={{ marginLeft: '10px' }}>

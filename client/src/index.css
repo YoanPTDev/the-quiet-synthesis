@@ -187,7 +187,7 @@ textarea {
   position: absolute;
   top: 10%;
   font-size: 2em;
-  opacity: 0.6;
+  
   width: 60%;
   padding: 0 20%;
   overflow-wrap: break-word;
@@ -222,6 +222,7 @@ textarea {
 
 .second-action-container {
   z-index: 1;
+  width: 250px;
 }
 
 .input-container {
