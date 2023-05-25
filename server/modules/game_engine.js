@@ -857,6 +857,10 @@ const playerTurnStateMachine = {
             this[action] = new EndGameAction("", 0);
             break;
           case "end turn": // A tester, incertain
+            io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.ACTION, {
+              action: { type: "End Week" },
+              prompt: this.currentPrompt,
+            });
             this.currentState = playerStates.ACTION2;
             this.gameEngine.endTurn();
             break;
