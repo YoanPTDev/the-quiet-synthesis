@@ -23,15 +23,11 @@ import {
   SECOND_TURN,
   DATA,
 } from '../../../utils/constants.mjs';
+import { FONT } from '../constants';
 import { startGameStore } from '../actions/settings';
 import { fetchIncompleteProjects } from '../actions/incompleteProject';
 
 let socketInstance;
-
-let FONT = {
-  SMALL: 'small-direction',
-  LARGE: 'large-direction',
-};
 
 export const setSocketInstance = (socket) => {
   socketInstance = socket;

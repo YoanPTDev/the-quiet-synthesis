@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { disableDrawing } from '../actions/settings';
 import { SocketContext } from '../middleware/socketcontext';
 import { DATA } from '../../../utils/constants.mjs';
-import { COLOR } from '../colors';
+import { COLOR } from '../constants';
 
 const Map = (props) => {
   const socket = useContext(SocketContext);

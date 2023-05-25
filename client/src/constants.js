@@ -13,3 +13,8 @@ export const SEASON_COLOR = {
   Fall: '#ebd8d0',
   Winter: '#edf2fb',
 }
+
+export const FONT = {
+  SMALL: 'small-direction',
+  LARGE: 'large-direction',
+};
