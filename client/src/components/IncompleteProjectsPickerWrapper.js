@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import IncompleteProjectPicker from './IncompleteProjectsPicker';
 import { collapseIncompleteProjectPicker, expandIncompleteProjectPicker } from '../actions/settings';
 import { addRipple } from '../animations';
+import { AnimatePresence } from 'framer-motion';
 
 const IncompleteProjectsPickerWrapper = (props) => {
   const { incompleteProjectPickerExpanded, expandIncompleteProjectPicker, collapseIncompleteProjectPicker } =
@@ -18,10 +19,12 @@ const IncompleteProjectsPickerWrapper = (props) => {
 
   return (
     <div>
-      <button onClick={(event) => {addRipple(event, "var(--log-button)"); toggleIncompleteProjectsPicker();}} className='menu-button adv-button'>
-        <div className='adv-button-icon'></div>
+      <button onClick={(event) => {addRipple(event, "var(--unfinished-button)"); toggleIncompleteProjectsPicker();}} className='menu-button proj-button'>
+        <div className='project-icon'></div>
       </button>
-      {incompleteProjectPickerExpanded && <IncompleteProjectPicker />}
+      <AnimatePresence>
+        {incompleteProjectPickerExpanded && <IncompleteProjectPicker />}
+      </AnimatePresence>
     </div>
   );
 };

@@ -23,31 +23,28 @@ import {
   SECOND_TURN,
   DATA,
 } from '../../../utils/constants.mjs';
+import { FONT } from '../constants';
 import { startGameStore } from '../actions/settings';
 import { fetchIncompleteProjects } from '../actions/incompleteProject';
 
 let socketInstance;
 
-let FONT = {
-  SMALL: 'small-direction',
-  LARGE: 'large-direction',
-};
-
 export const setSocketInstance = (socket) => {
   socketInstance = socket;
   setupSocketListeners();
+  socket.emit(DATA.GAME_STATE);
 };
 
 const setupSocketListeners = () => {
   if (socketInstance) {
     socketInstance.on(ACTIONS.ADD_DESCRIPTION, () => {
+      console.log('ADD_DESCRIPTION');
       storeReference.dispatch(expandAdventureLogInput());
       fetchDirection({
-        directions:
-          'Add a description',
+        directions: 'Add a description',
         font: FONT.LARGE,
-      })
-    })
+      });
+    });
     socketInstance.once(UPDATE.FIRST_PLAYER_GAME_PREP, () => {
       storeReference.dispatch(setFirstPlayer());
     });
@@ -69,8 +66,7 @@ const setupSocketListeners = () => {
       storeReference.dispatch(expandIncompleteProjectPicker());
       storeReference.dispatch(
         fetchDirection({
-          directions:
-            'Pick a project',
+          directions: 'Pick a project',
           font: FONT.LARGE,
         })
       );

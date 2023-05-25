@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { ACTIONS } from '../../../utils/constants.mjs';
 import { collapseIncompleteProjectPicker } from '../actions/settings';
+import { motion } from 'framer-motion';
 
 const IncompleteProjectPicker = (props) => {
   const { incompleteProjects, collapseIncompleteProjectPicker } = props;
@@ -32,12 +33,19 @@ const IncompleteProjectPicker = (props) => {
   };
 
   return (
-    <div className='adventure-log-container'>
+    <motion.div
+      className='adventure-log-container'
+      initial={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
+      animate={{ scale: [0.2, 1.1, 1.0], opacity: 1, x: "-50%", y: "-50%" }}
+      exit={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
+      transition={{ duration: 0.25 }}
+      style={{ position: "absolute", top: "50%", left: "50%" }}
+    >
       <h2>Unfinished projects</h2>
       <hr />
       <div>{renderIncompleteProjectList()}</div>
       <hr />
-    </div>
+    </motion.div>
   );
 };
 

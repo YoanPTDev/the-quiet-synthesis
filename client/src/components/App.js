@@ -44,29 +44,30 @@ const App = ({ gameStarted }) => {
 
       // Emit an event when the component mounts
       socket.emit(ACTIONS.ADD_PLAYER, uuid);
-      socket.emit(DATA.GAME_STATE);
     }
   }, [socket]);
 
   return (
     <div>
-      <div className='action-buttons'>
-        <h3>The Quiet Year</h3>
-        <ActionDirector />
-        {gameStarted ? <TurnActionWrapper /> : <TurnActionPrepWrapper />}
-        <div className='note-log-wrapper'>
-          <div className='toggle-button-wrapper'>
-            <AdventureLogWrapper />
-            <NotebookWrapper />
-            <ScarcityAbundanceWrapper />
-            <IncompleteProjectsPickerWrapper />
-            <CompleteProjectInputWrapper />
-            <AdventureLogInputWrapper />
-            <DiscussionInputWrapper />
-            <SecondTurnActionWrapper />
+      <AnimatePresence>
+        <div className='action-buttons'>
+          <h3>The Quiet Year</h3>
+          <ActionDirector />
+          {gameStarted ? <TurnActionWrapper /> : <TurnActionPrepWrapper />}
+          <div className='note-log-wrapper'>
+            <div className='toggle-button-wrapper'>
+              <AdventureLogWrapper />
+              <NotebookWrapper />
+              <ScarcityAbundanceWrapper />
+              <IncompleteProjectsPickerWrapper />
+              <CompleteProjectInputWrapper />
+              <AdventureLogInputWrapper />
+              <DiscussionInputWrapper />
+              <SecondTurnActionWrapper />
+            </div>
           </div>
         </div>
-      </div>
+      </AnimatePresence>
       <div>
         <Map className='map' />
         <AnimatePresence>

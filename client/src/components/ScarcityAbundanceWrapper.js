@@ -6,6 +6,7 @@ import {
   collapseScarcityAbundanceLog,
 } from '../actions/settings';
 import { addRipple } from '../animations';
+import { AnimatePresence } from 'framer-motion';
 
 const ScarcityAbundanceWrapper = (props) => {
   const {
@@ -27,7 +28,9 @@ const ScarcityAbundanceWrapper = (props) => {
       <button onClick={(event) => {addRipple(event, "var(--abunscar-button)"); toggleScarcityAbundanceLog();}} className='menu-button scab-button'>
         <div className='scarabun-icon'></div>
       </button>
-      {scarcityAbundanceLogExpanded && <ScarcityAbundanceLog />}
+      <AnimatePresence>
+        {scarcityAbundanceLogExpanded && <ScarcityAbundanceLog />}
+      </AnimatePresence>
     </div>
   );
 };

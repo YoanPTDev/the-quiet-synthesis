@@ -14,6 +14,14 @@ export function addRipple(event, button_color) {
     bookmark.appendChild(ripple);
   
     setTimeout(() => {
-      bookmark.style.backgroundColor = newColor;
-    }, 700);
+      var ripple = document.createElement('div');
+      ripple.classList.add('ripple');
+      ripple.style.backgroundColor = 'white';
+    
+      var rect = bookmark.getBoundingClientRect();
+      ripple.style.left = `${event.clientX - rect.left - 175}px`;
+      ripple.style.top = `${event.clientY - rect.top - 175}px`;
+
+      bookmark.appendChild(ripple);
+    }, 250);
   }

@@ -1,12 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { motion } from 'framer-motion';
 
 const ActionDirector = ({ directions, font }) => {
   if(directions === undefined) return null;
   return (
-    <div className={'unclickable action-director-container'}>
+    <motion.div
+      className='unclickable action-director-container'
+      style={{ position: "absolute", top: "10%"}}
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ 
+        opacity: [0.4, 0.6, 0.4],
+        scale: [1, 1.05, 1],
+        transition: { repeat: Infinity, duration: 2 }
+      }}
+      exit={{ opacity: 0, scale: 0.7 }}
+      transition={{ opacity: { duration: 0.5 }, scale: { duration: 0.5 } }}
+    >
       <div className={`action-director ${font === 'small-direction' ? 'small-direction' : ''}`}>{directions}</div>
-    </div>
+    </motion.div>
   );
 };
 

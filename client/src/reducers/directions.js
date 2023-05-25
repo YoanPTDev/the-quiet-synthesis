@@ -1,8 +1,10 @@
 import { DIRECTIONS } from '../actions/types';
+import { FONT } from '../constants';
 import fetchStates from './fetchStates';
 
 const DEFAULT_DIRECTIONS = {
-  directions: [''],
+  directions: ['Welcome, for this new year is full of hope and despair'],
+  font: FONT.LARGE,
 };
 
 const directionsReducer = (state = DEFAULT_DIRECTIONS, action) => {
