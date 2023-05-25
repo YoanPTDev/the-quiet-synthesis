@@ -26,13 +26,14 @@ class DeckConfig {
           card.prompts[j] = dataCard.prompts[j];
         }
 
-        if (dataCard.season == "Spring") {
-          this.springCards.push(card);
-        } else if (dataCard.season == "Summer") {
-          this.summerCards.push(card);
-        } else if (dataCard.season == "Fall") {
-          this.fallCards.push(card);
-        } else if (dataCard.season == "Winter") {
+        // if (dataCard.season == "Spring") {
+        //   this.springCards.push(card);
+        // } else if (dataCard.season == "Summer") {
+        //   this.summerCards.push(card);
+        // } else if (dataCard.season == "Fall") {
+        //   this.fallCards.push(card);
+        // } else 
+        if (dataCard.season == "Winter") {
           this.winterCards.push(card);
         }
       }
