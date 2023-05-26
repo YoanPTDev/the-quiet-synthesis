@@ -254,12 +254,12 @@ textarea {
 
 .notebook-container {
   width: 300px;
-  height: 400px;
+  height: 430px;
   z-index: 30;
 }
 
 .scarcity-abundance-container {
-  width: 650px;
+  width: 750px;
   height: 400px;
   z-index: 40;
 }
@@ -285,6 +285,7 @@ textarea {
 .list-abundances {
   width: 90%;
   height: 80%;
+  overflow-y: auto;
 }
 
 .scarcities-abundances-input {
@@ -302,17 +303,21 @@ li {
   list-style-position: inside;
 }
 
+input {
+  margin: 5px;
+}
+
 .out-of-turn-action-container {
   position: fixed;
   top: 2%;
-  right: 1%;
+  right: 2%;
   background-color: var(--ivory);
   padding: 20px;
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
   border-top-left-radius: 255px 15px;
   border-top-right-radius: 15px 225px;
-  border-color: var(--black-dim);
+  border-color: #97793e;
   border-style: solid;
   border-width: 3px;
   box-shadow: 0 4px 6px var(--blue-gray);
@@ -321,20 +326,24 @@ li {
 }
 
 .action-type {
-  font-size: 1.2em;
+  font-size: 1.5em;
 }
 
 .action-prompt {
-  font-size: 1em;
-  padding: 10px;
+  font-size: 1.2em;
+  padding: 10px 0px;
 }
 
 .action-description {
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
-.action-discussion {
-  font-size: 1em;
+.discussion-player {
+  font-weight: bold;
+}
+
+.discussion-statement {
+  padding: 4px;
 }
 
 .react-p5 {

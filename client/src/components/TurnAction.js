@@ -9,15 +9,13 @@
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
-import { addPlayer } from '../actions/joueur';
-import { startGame, endTurn, prepGame } from '../actions/partie';
+import { prepGame } from '../actions/partie';
 import { disableDrawing } from '../actions/settings';
 import { fetchDirection } from '../actions/direction';
 import { ACTIONS } from '../../../utils/constants.mjs';
 import { FONT } from '../constants';
 
 const TurnAction = ({
-  endTurn,
   drawingEnabled,
   disableDrawing,
   fetchDirection,
@@ -36,11 +34,6 @@ const TurnAction = ({
 
   return (
     <div>
-      <button
-        onClick={endTurn}
-        style={{ marginLeft: '10px' }}>
-        Terminer tour
-      </button>
       {drawingEnabled && (
         <button
           onClick={handleDrawingEnd}
@@ -59,9 +52,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
   const { socket } = props;
   return {
-    addPlayer: () => dispatch(addPlayer(socket)),
-    startGame: () => dispatch(startGame(socket)),
-    endTurn: () => dispatch(endTurn(socket)),
     prepGame: () => dispatch(prepGame(socket)),
     disableDrawing: () => dispatch(disableDrawing()),
     fetchDirection: (data) => dispatch(fetchDirection(data)),

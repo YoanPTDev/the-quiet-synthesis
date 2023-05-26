@@ -57,7 +57,6 @@ const Notebook = (props) => {
           socket.emit(DATA.SAVE_LOG, data);
         }}
       />
-      <hr />
     </motion.div>
   );
 };
