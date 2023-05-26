@@ -258,7 +258,7 @@ textarea {
 }
 
 .scarcity-abundance-container {
-  width: 650px;
+  width: 750px;
   height: 400px;
   z-index: 40;
 }
@@ -284,6 +284,7 @@ textarea {
 .list-abundances {
   width: 90%;
   height: 80%;
+  overflow-y: auto;
 }
 
 .scarcities-abundances-input {

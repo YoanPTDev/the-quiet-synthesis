@@ -38,7 +38,7 @@ const InputField = ({ placeholder, onSave, value }) => {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          flexDirection: 'column',
+          // flexDirection: 'column',
           alignItems: 'center',
         }}>
         <input

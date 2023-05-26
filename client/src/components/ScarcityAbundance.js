@@ -1,9 +1,9 @@
 // components/ScarcityAbundance.js
 
-// composant React qui gère l'affichage et l'interaction de deux listes 
-// dynamiques : "Scarcities" et "Abundances", permettant aux utilisateurs 
-// d'ajouter des éléments, de transférer des éléments entre les listes et de cocher 
-// plusieurs éléments pour un transfert en masse, tout en synchronisant ces actions 
+// composant React qui gère l'affichage et l'interaction de deux listes
+// dynamiques : "Scarcities" et "Abundances", permettant aux utilisateurs
+// d'ajouter des éléments, de transférer des éléments entre les listes et de cocher
+// plusieurs éléments pour un transfert en masse, tout en synchronisant ces actions
 
 // Premiere et seule composante fait majoritairement par Nicolas, avec supervision de Yoan.
 
@@ -56,18 +56,26 @@ const ListItem = ({ item, onTransfer, onCheckedChange }) => {
   };
 
   return (
-    <div key={item}>
-      <input
-        type='checkbox'
-        name={item}
-        checked={isChecked}
-        onChange={handleCheckboxChange}
-      />
-      <label
-        htmlFor={item}
-        style={{ marginLeft: '5px' }}>
-        {item}
-      </label>
+    <div
+      key={item}
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <input
+          type='checkbox'
+          name={item}
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        <label
+          htmlFor={item}
+          style={{ marginLeft: '5px' }}>
+          {item}
+        </label>
+      </div>
       <button
         onClick={() => onTransfer(item)}
         style={{ marginLeft: '5px' }}>
@@ -201,12 +209,11 @@ const ScarcityAbundanceLog = (props) => {
   return (
     <motion.div
       className='scarcity-abundance-container'
-      initial={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
-      animate={{ scale: [0.2, 1.1, 1.0], opacity: 1, x: "-50%", y: "-50%" }}
-      exit={{ scale: 0.2, opacity: 0, x: "-50%", y: "-50%" }}
+      initial={{ scale: 0.2, opacity: 0, x: '-50%', y: '-50%' }}
+      animate={{ scale: [0.2, 1.1, 1.0], opacity: 1, x: '-50%', y: '-50%' }}
+      exit={{ scale: 0.2, opacity: 0, x: '-50%', y: '-50%' }}
       transition={{ duration: 0.25 }}
-      style={{ position: "absolute", top: "50%", left: "50%" }}
-    >
+      style={{ position: 'absolute', top: '50%', left: '50%' }}>
       <h2 className='scarcity-abundance-title'>Scarcities and Abundances</h2>
       <div className='list-scarcities-abundances'>
         <div className='scarcities-section'>
