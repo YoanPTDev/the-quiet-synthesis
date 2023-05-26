@@ -1,3 +1,8 @@
+// Ce code définit une classe JavaScript pour une liste chaînée simplement liée, 
+// avec des méthodes pour ajouter, insérer, supprimer des éléments, trouver l'index d'un élément, 
+// vérifier si la liste est vide, obtenir la taille de la liste, et afficher la liste.
+// chatGPT auteur.
+
 class Node {
   constructor(data) {
     this.data = data;

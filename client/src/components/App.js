@@ -1,3 +1,12 @@
+// App.js
+// l'application avec tous les composantes parent
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
+// Toute l'architecture de l'application est basé sur l'architecture de David Joseph Katz
+// Apprise dans le bootcamp https://www.udemy.com/course/react-js-and-redux-mastering-web-apps/
+
 import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { startGameStore, cancelGame } from '../actions/settings';
@@ -23,12 +32,17 @@ import { ACTIONS, DATA } from '../../../utils/constants.mjs';
 const App = ({ gameStarted }) => {
   const socket = useContext(SocketContext);
 
+  // Généré par chatGPT
   function generateUUID() {
+    // 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx' est le modèle d'un UUID version 4
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
       /[xy]/g,
       function (c) {
+        // | 0 est utilisé pour convertir le nombre en entier
         var r = (Math.random() * 16) | 0,
+          // Si c est 'x', utilise r, sinon utilise (r & 0x3) | 0x8 pour générer un nombre entre 8 et 11
           v = c === 'x' ? r : (r & 0x3) | 0x8;
+        // Convertir le nombre en base 16 (hexadécimal) et le renvoyer comme chaîne
         return v.toString(16);
       }
     );
@@ -42,7 +56,6 @@ const App = ({ gameStarted }) => {
         localStorage.setItem('uuid', uuid);
       }
 
-      // Emit an event when the component mounts
       socket.emit(ACTIONS.ADD_PLAYER, uuid);
     }
   }, [socket]);

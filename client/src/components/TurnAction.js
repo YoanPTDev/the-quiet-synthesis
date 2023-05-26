@@ -1,20 +1,25 @@
+// components/TurnAction.js
+// bouton qui permet aux joueurs de terminer leur tour ou leur 
+// dessin lors du jeu, en utilisant un contexte de socket pour émettre des 
+// événements et des actions Redux pour gérer l'état du jeu.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';
 import { addPlayer } from '../actions/joueur';
 import { startGame, endTurn, prepGame } from '../actions/partie';
-import { disableDrawing, expandAdventureLogInput } from '../actions/settings';
+import { disableDrawing } from '../actions/settings';
 import { fetchDirection } from '../actions/direction';
 import { ACTIONS } from '../../../utils/constants.mjs';
 import { FONT } from '../constants';
 
 const TurnAction = ({
-  // prepGame,
-  // startGame,
   endTurn,
   drawingEnabled,
   disableDrawing,
-  expandAdventureLogInput,
   fetchDirection,
 }) => {
 
@@ -59,7 +64,6 @@ const mapDispatchToProps = (dispatch, props) => {
     endTurn: () => dispatch(endTurn(socket)),
     prepGame: () => dispatch(prepGame(socket)),
     disableDrawing: () => dispatch(disableDrawing()),
-    expandAdventureLogInput: () => dispatch(expandAdventureLogInput()),
     fetchDirection: (data) => dispatch(fetchDirection(data)),
   };
 };

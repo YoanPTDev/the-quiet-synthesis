@@ -1,3 +1,11 @@
+// components/SecondTurnAction.js
+// composante regroupant 3 boutons qui représentent les 3 actions possibles au
+// à la 2e action du joueur dans un tour.
+// se expand et collapse par le store
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';

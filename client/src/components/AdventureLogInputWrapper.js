@@ -1,3 +1,13 @@
+// components/AdventureLogInputWrapper.js
+// Ce composant React connecté à Redux 
+// affiche un textAreaField qui prends la description d'une action
+// ou d'un projet démarré (avec un diceGadget si on a besoin de 
+// comptabiliser des semaines) et sauvegarde l'action dans le back end à l'aide
+// d'un emit avec le socket.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';

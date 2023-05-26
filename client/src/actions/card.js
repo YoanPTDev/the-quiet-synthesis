@@ -1,3 +1,10 @@
+// actions/card.js
+// collection d'actions de Redux qui sont utilisés pour modifier l'état 
+// lié aux cartes dans L'application
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { CARD_DRAW } from './types';
 
 export const fetchCardSuccess = (cardJSON) => {

@@ -1,3 +1,11 @@
+// reducers/scarcityAbundance.js
+// "scarcityAbundanceReducer" définit le reducer pour gérer les actions sur les 
+// scarcities et les abondances dans l'application, y compris la récupération réussie et 
+// l'échec de la récupération de ces éléments.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { SCARCITY_ABUNDANCE } from '../actions/types';
 import fetchStates from './fetchStates';
 

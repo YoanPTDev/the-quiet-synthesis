@@ -1,3 +1,11 @@
+// reducers/direction.js
+// "directionsReducer" définit le reducer pour gérer les actions sur les 
+// directions dans l'application, y compris la récupération réussie et 
+// l'échec de la récupération des directions.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { DIRECTIONS } from '../actions/types';
 import { FONT } from '../constants';
 import fetchStates from './fetchStates';

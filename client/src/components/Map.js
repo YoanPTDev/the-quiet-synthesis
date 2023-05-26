@@ -1,3 +1,12 @@
+// components/Map.js
+// Le composant "Map" est un espace de dessin interactif et partagé, 
+// construit avec React et la bibliothèque p5.js, qui permet aux utilisateurs 
+// de dessiner sur une carte lorsque le dessin est activé, et synchronise 
+// ces dessins entre plusieurs utilisateurs via des sockets.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import Sketch from 'react-p5';
 import { connect } from 'react-redux';
 import React, { useState, useEffect, useContext } from 'react';

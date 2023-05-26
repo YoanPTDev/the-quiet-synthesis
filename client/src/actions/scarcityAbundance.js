@@ -1,3 +1,10 @@
+// actions/scarcityAbundance.js
+// collection d'actions de Redux qui sont utilisés pour modifier l'état 
+// lié aux scarcities and abundances dans la composante de L'application
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { SCARCITY_ABUNDANCE } from './types';
 
 export const fetchScarcityAbundanceSuccess = (logJSON) => {

@@ -1,3 +1,11 @@
+// components/OutOfTurnAction.js
+// composant React qui, en fonction de l'état du jeu provenant du Redux 
+// store, affiche les actions effectuées hors tour par les joueurs, y 
+// compris le type d'action, la description et toute discussion associée.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React from 'react';
 import { connect } from 'react-redux';
 

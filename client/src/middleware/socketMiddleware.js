@@ -1,3 +1,12 @@
+// middleware/socketMiddleware.js
+// Ceci est un middleware pour la configuration de socket.io-client dans une
+// application Redux, qui initialise une instance de socket, définit divers
+// gestionnaires d'événements pour les actions reçues via le socket, et dispatche les
+// actions Redux correspondantes en réponse.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { fetchLog } from '../actions/log';
 import { fetchNote } from '../actions/note';
 import { fetchScarcityAbundance } from '../actions/scarcityAbundance';
@@ -40,10 +49,12 @@ const setupSocketListeners = () => {
     socketInstance.on(ACTIONS.ADD_DESCRIPTION, () => {
       console.log('ADD_DESCRIPTION');
       storeReference.dispatch(expandAdventureLogInput());
-      fetchDirection({
-        directions: 'Add a description',
-        font: FONT.LARGE,
-      });
+      storeReference.dispatch(
+        fetchDirection({
+          directions: 'Add a description',
+          font: FONT.LARGE,
+        })
+      );
     });
 
     socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
@@ -85,10 +96,12 @@ const setupSocketListeners = () => {
     });
     socketInstance.on(SECOND_TURN.ACTION, () => {
       storeReference.dispatch(expandSecondTurnAction());
-      fetchDirection({
-        directions: 'Choose an action then resolve it',
-        font: FONT.LARGE,
-      });
+      storeReference.dispatch(
+        fetchDirection({
+          directions: 'Choose an action then resolve it',
+          font: FONT.LARGE,
+        })
+      );
     });
     socketInstance.on(UPDATE.PROJECT, (data) => {
       storeReference.dispatch(expandCompleteProjectInput());
@@ -136,10 +149,12 @@ const setupSocketListeners = () => {
     socketInstance.on(UPDATE.GAME_STARTED, () => {
       storeReference.dispatch(startGameStore());
       storeReference.dispatch(collapseScarcityAbundanceLog());
-      fetchDirection({
-        directions: 'The first week has started',
-        font: FONT.LARGE,
-      });
+      storeReference.dispatch(
+        fetchDirection({
+          directions: 'The first week has started',
+          font: FONT.LARGE,
+        })
+      );
     });
 
     // UPDATE INFOS
@@ -188,10 +203,12 @@ const setupSocketListeners = () => {
       storeReference.dispatch(fetchLog(data.advLog));
       storeReference.dispatch(fetchNote(data.notebook));
       storeReference.dispatch(fetchScarcityAbundance(data.scar_abund));
-      fetchDirection({
-        directions: 'Reconnected...',
-        font: FONT.LARGE,
-      });
+      storeReference.dispatch(
+        fetchDirection({
+          directions: 'Reconnected...',
+          font: FONT.LARGE,
+        })
+      );
     });
   }
 };

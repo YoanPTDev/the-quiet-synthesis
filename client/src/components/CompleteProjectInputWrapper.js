@@ -1,3 +1,13 @@
+// components/CompleteProjectInputWrapper.js
+// Ce composant React connecté à Redux 
+// affiche un textAreaField qui prends la description d'une action
+// ou d'un projet démarré qui doit être complété et sauvegardé
+// dans le back end à l'aide d'un emit avec le socket.
+// Le wrapper l'affichant est dans le même fichier
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';

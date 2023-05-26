@@ -1,3 +1,11 @@
+// components/Card.js
+// Ce composant React connecté à Redux 
+// affiche la carte pigé et ses informations lorsqu'elle sont recueillies dans le 
+// store au moment de la pige. 
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { collapseCard, expandCard } from '../actions/settings';
@@ -47,10 +55,6 @@ const Card = ({ card, cardExpanded, expandCard, collapseCard }) => {
       socket.emit(DATA.SAVE_ACTION, data);
     }
   };
-
-  // if (!cardExpanded) {
-  //   return null;
-  // }
 
   return (
     <AnimatePresence>

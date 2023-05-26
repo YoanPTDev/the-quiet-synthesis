@@ -1,3 +1,13 @@
+// components/TextAreaField.js
+//  composant React qui fournit un champ de saisie de texte de type 
+// 'textarea' avec des fonctionnalités telles que la possibilité de sauvegarder 
+// l'entrée, de réinitialiser le champ après la sauvegarde, de réagir 
+// à la combinaison de touches 'Shift + Enter' pour sauvegarder et de 
+// replier le champ.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 

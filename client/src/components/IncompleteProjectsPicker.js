@@ -1,3 +1,12 @@
+// components/IncompleteProjectPicker.js
+// Ce composant React connecté à Redux 
+// affiche les projets en cours et permet de les sélectionner au besoin d'une 
+// finition de projet. lorsque le projet est sélectionné, le composante
+// se ferme.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';

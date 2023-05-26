@@ -1,3 +1,12 @@
+// components/DiscussionInputWrapper.js
+// Ce composant React connecté à Redux 
+// affiche un textAreaField qui prends une discussion et sauvegarde 
+// celle-ci dans le back end à l'aide d'un emit avec le socket.
+// Le wrapper l'affiche au click
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { SocketContext } from '../middleware/socketcontext';

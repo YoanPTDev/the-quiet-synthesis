@@ -1,4 +1,11 @@
 // reducers/notebook.js
+// "notebookReducer" définit le reducer pour gérer les actions sur les 
+// notes dans l'application, y compris la récupération réussie et 
+// l'échec de la récupération des notes.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { NOTE } from '../actions/types';
 import fetchStates from './fetchStates';
 

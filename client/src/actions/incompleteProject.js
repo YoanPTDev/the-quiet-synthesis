@@ -1,3 +1,10 @@
+// actions/incompleteProject.js
+// collection d'actions de Redux qui sont utilisés pour modifier l'état 
+// lié aux projets incomplets dans L'application
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { INCOMPLETE_PROJECTS } from './types';
 
 export const fetchIncompleteProjectsSuccess = (logJSON) => {

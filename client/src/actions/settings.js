@@ -1,3 +1,9 @@
+// actions/settings.js
+// collection d'actions de Redux qui sont utilisés pour modifier l'état lié aux settings dans L'application
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,
@@ -11,15 +17,15 @@ import {
   SET_FIRST_PLAYER,
   SET_COMPLETE_PROJECT_INPUT_EXPANDED,
   SET_INCOMPLETE_PROJECT_PICKER_EXPANDED,
-  SET_SEASON
+  SET_SEASON,
 } from './types';
 
-export const setSeason = ({season}) => {
+export const setSeason = ({ season }) => {
   return {
     type: SET_SEASON,
     season: season,
-  }
-}
+  };
+};
 
 export const startGameStore = () => {
   return {

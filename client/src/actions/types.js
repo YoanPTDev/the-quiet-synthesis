@@ -1,3 +1,9 @@
+// actions/types.js
+// les constantes utilisés pour les action creators de Redux
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 export const SET_GAME_STARTED = 'SET_GAME_STARTED';
 export const SET_SEASON = 'SET_SEASON';
 

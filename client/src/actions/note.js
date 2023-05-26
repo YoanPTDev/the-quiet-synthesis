@@ -1,3 +1,10 @@
+// actions/note.js
+// collection d'actions de Redux qui sont utilisés pour modifier l'état 
+// lié aux notes dans le notebook de L'application
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { NOTE } from './types';
 
 export const fetchNoteSuccess = (logJSON) => {

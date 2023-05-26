@@ -1,3 +1,11 @@
+// reducers/settings.js
+// "settingsReducer" définit le reducer pour gérer les actions sur les paramètres 
+// de l'application, y compris l'état du jeu, la visibilité de différentes sections 
+// et l'état d'activité du dessin.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import {
   SET_GAME_STARTED,
   SET_ADVENTURELOG_EXPANDED,

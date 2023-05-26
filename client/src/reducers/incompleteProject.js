@@ -1,3 +1,11 @@
+// reducers/incompleteProject.js
+// "incompleteProjectsReducer" définit le reducer pour gérer les actions sur les 
+// projets incomplets dans l'application, y compris la récupération réussie et 
+// l'échec de la récupération des projets incomplets.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { INCOMPLETE_PROJECTS } from '../actions/types';
 import fetchStates from './fetchStates';
 

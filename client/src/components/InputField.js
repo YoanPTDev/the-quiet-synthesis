@@ -1,5 +1,14 @@
+// components/InputField.js
+// c'est un champ de saisie textuelle React qui accepte une valeur par 
+// défaut et un texte indicatif (placeholder), qui sauvegarde la valeur de 
+// l'input quand on appuie sur 'Entrée' ou sur le bouton '
+// Submit', et qui réinitialise le champ après la sauvegarde.
+// C'est un component utilitaire et facilement réutilisable.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 
 const InputField = ({ placeholder, onSave, value }) => {
   const [inputValue, setInputValue] = useState(value || '');
@@ -37,4 +46,4 @@ const InputField = ({ placeholder, onSave, value }) => {
   );
 };
 
-export default connect()(InputField);
+export default InputField;

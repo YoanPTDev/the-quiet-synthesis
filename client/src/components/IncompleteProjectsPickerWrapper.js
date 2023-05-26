@@ -1,3 +1,10 @@
+// components/IncompleteProjectPickerWrapper.js
+// Ce composant React connecté à Redux 
+// wrap le IncompleteProjectPicker
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React from 'react';
 import { connect } from 'react-redux';
 import IncompleteProjectPicker from './IncompleteProjectsPicker';

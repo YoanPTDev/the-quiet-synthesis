@@ -1,3 +1,10 @@
+// components/AdventureLog.js
+// Ce composant React connecté à Redux 
+// affiche les informations en lien avec les actions passés dans la partie.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { motion } from 'framer-motion';

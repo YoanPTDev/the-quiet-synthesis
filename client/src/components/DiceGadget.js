@@ -1,3 +1,11 @@
+// components/DiceGadget.js
+// Composant React qui affiche une image d'un dé dont la valeur peut 
+// être modifiée par un clic, déclenchant une fonction onRoll avec la 
+// nouvelle valeur du dé.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import one from '../assets/one.png';
 import two from '../assets/two.png';
 import three from '../assets/three.png';

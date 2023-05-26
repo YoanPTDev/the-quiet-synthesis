@@ -1,3 +1,11 @@
+// reducers/card.js
+// "cardReducer" définit le reducer pour gérer les actions sur les 
+// cartes dans l'application, y compris la récupération réussie et 
+// l'échec de la récupération des cartes.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { CARD_DRAW } from '../actions/types';
 import fetchStates from './fetchStates';
 

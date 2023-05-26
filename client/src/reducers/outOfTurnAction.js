@@ -1,3 +1,11 @@
+// reducers/outOfTurnActions.js
+// "outOfTurnActionReducer" définit le reducer pour gérer les actions sur les 
+// actions hors tours dans l'application, y compris la récupération réussie et 
+// l'échec de la récupération des actions hors tours.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import { OUT_OF_TURN_ACTION } from '../actions/types';
 import fetchStates from './fetchStates';
 

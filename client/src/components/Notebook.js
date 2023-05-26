@@ -1,4 +1,11 @@
 // components/Notebook.js
+// Ce composant React connecté à Redux 
+// affiche les informations en lien avec les notes ajoutés au notebook
+// Il nous permet d'ajouter des notes au notebook à l'aide d'un input field
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField';

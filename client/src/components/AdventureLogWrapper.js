@@ -1,3 +1,11 @@
+// components/AdventureLogWrapper.js
+// Ce composant React connecté à Redux 
+// affiche le adventure log en temps et lieu grâce aux settings dans le store
+// Il implémente le Adventure Log, n'est qu'un wrapper pour l'afficher au click.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React from 'react';
 import { connect } from 'react-redux';
 import AdventureLog from './AdventureLog';

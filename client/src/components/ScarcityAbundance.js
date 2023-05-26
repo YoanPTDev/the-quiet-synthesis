@@ -1,3 +1,13 @@
+// components/ScarcityAbundance.js
+// composant React qui gère l'affichage et l'interaction de deux listes 
+// dynamiques : "Scarcities" et "Abundances", permettant aux utilisateurs 
+// d'ajouter des éléments, de transférer des éléments entre les listes et de cocher 
+// plusieurs éléments pour un transfert en masse, tout en synchronisant ces actions 
+// avec un serveur via des sockets.
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React, { useContext, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import InputField from './InputField';

@@ -1,3 +1,10 @@
+// components/ActionDirector.js
+// Ce composant React connecté à Redux 
+// affiche des instructions ou des directions à partir du store
+// Yoan Poulin Truchon (auteur)
+// Raphael Lavoie
+// Nicolas Drolet
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { motion } from 'framer-motion';
