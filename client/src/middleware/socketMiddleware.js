@@ -41,7 +41,6 @@ let socketInstance;
 export const setSocketInstance = (socket) => {
   socketInstance = socket;
   setupSocketListeners();
-  socket.emit(DATA.GAME_STATE);
 };
 
 const setupSocketListeners = () => {
