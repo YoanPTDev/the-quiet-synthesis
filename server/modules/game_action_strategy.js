@@ -2,7 +2,7 @@
 server/modules/game_action_strategy.js
 Les classes qui representent les différentes actions possible du jeu en utilisant le patron de Strategy.
 Raphael Lavoie (auteur)
-Nicolas Drolet
+Nicolas Drolet (co-pilot pour l'idée "isCompleted()")
 Yoan Poulin Truchon
 */
 

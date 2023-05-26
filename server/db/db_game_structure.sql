@@ -1,3 +1,13 @@
+-- db/db_game_structure.js
+-- Le code qui fait la connection entre le serveur et la base de données MongoDB.  
+-- On trouve ici les méthodes utilisées pour aller chercher le paquet de cartes, pour aller
+-- Chercher les adventure logs, pour faire des enregistrement ou des mises a jour des logs, etc.
+-- J'ai inclu aussi des exemples d'utilisation pour faciliter l'implémentation coté serveur.
+
+-- Nicolas Drolet (auteur)
+-- Yoan Poulin Truchon
+-- Raphael Lavoie
+
 -- USER COLLECTION (Scrapped for now)
 {
   "_id": ObjectId

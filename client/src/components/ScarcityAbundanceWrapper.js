@@ -1,8 +1,11 @@
 // components/ScarcityAbundanceWrapper.js
 // Le wrapper affiche le ScarcityAbundance component au click
-// Yoan Poulin Truchon (auteur)
+
+// Premiere et seule composante fait majoritairement par Nicolas, avec supervision de Yoan.
+
+// Nicolas Drolet (auteur)
+// Yoan Poulin Truchon (co-auteur)
 // Raphael Lavoie
-// Nicolas Drolet
 
 import React from 'react';
 import { connect } from 'react-redux';

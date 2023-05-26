@@ -1,3 +1,17 @@
+// db/routes/client_request_templates.js
+
+// Des méthodes qui devaient servir à une éventuelle implémentation d'une architecture REST.
+// Finalement cette méthode de transfert de données entre serveur et BD a été remplacé assez
+// tôt dans la conception pour faire place aux WebSockets, qui s'avéraient plus avantageux pour
+// un projet moins demandant au niveau graphique mais qui nécessitait un temps de réponse plus
+// rapide que REST. Je laisse le code ici pour témoignée d'une architecture qui ne fut jamais.
+
+// Ces méthodes auraient été ceux utilisés du coté serveur pour communiquer avec le front-end et ses requetes
+
+// Nicolas Drolet (auteur)
+// Yoan Poulin Truchon
+// Raphael Lavoie
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
  

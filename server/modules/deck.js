@@ -2,7 +2,7 @@
 server/modules/deck.js
 Les classes reliées au Deck de cartes et qui l'initialise à partir de la BD.
 Raphael Lavoie (auteur)
-Nicolas Drolet (auteur)
+Nicolas Drolet (co-auteur (très hands-off))
 Yoan Poulin Truchon
 */
 
