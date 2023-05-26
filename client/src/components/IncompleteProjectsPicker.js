@@ -35,6 +35,7 @@ const IncompleteProjectPicker = (props) => {
             <div>Player: {playerName}</div>
             <div>Description: {desc}</div>
             <div>Turn left: {turns}</div>
+            <hr/>
           </div>
         );
       });

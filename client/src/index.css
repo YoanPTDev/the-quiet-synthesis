@@ -8,6 +8,7 @@
    --blue-gray-alpha: #b0c8ddee;
    --dark-blue-gray: #384c5e;
    --ivory: #FFFDE6;
+   --ivory-dim: #FFFDE699;
    --pastel-green: #dfead0;
    --sandy-purple: #a08493;
    --log-button: #d4e892;
@@ -320,7 +321,7 @@ input {
   position: fixed;
   top: 2%;
   right: 2%;
-  background-color: var(--ivory);
+  background-color: var(--ivory-dim);
   padding: 20px;
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
