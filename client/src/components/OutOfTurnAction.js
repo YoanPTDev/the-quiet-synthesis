@@ -17,7 +17,9 @@ const OutOfTurnAction = (props) => {
       return (
         <div>
           <div className='action-type'>{outOfTurnActions.type}</div>
-          <div className='action-prompt'>{prompt}</div>
+          {prompt !== undefined && (
+            <div className='action-prompt'>{prompt}</div>
+          )}
           <div className='action-description'>
             {outOfTurnActions.description}
           </div>

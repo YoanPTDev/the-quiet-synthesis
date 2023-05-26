@@ -607,7 +607,7 @@ const playerTurnStateMachine = {
     const currPlayerIdx = this.gameEngine.currentPlayerIndex;
     const len = this.gameEngine.players.length;
     const discussion = [];
-    const regex = /\?$/;
+    const regex = /\?/;
 
     let firstPlayerAskedQuestion = false;
     let count = 0;
