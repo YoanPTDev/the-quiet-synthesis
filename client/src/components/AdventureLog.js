@@ -37,8 +37,8 @@ const AdventureLog = (props) => {
         return (
           <div
             key={weekNb}
-            className='log'>
-            <p>
+            className='single-log'>
+            <p className='single-log-title'>
               <strong>Week:</strong> {weekNb} -{' '}
               {playerId ? playerId : 'an unknown player'}
             </p>

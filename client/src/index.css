@@ -444,16 +444,23 @@ li {
   box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
 }
 
-.log {
-  border: 2px solid black;
-  border-radius: 2px;
+.single-log {
+  border: 3px solid var(--blue-gray);
+  border-radius: 15px;
   margin: 1px;
   margin-bottom: -3px;
   width: 350px;
   height: max-content;
   padding: 5px 0px 0px 5px;
   word-wrap: break-word;
+  position: relative;
 }
+    .single-log-title{
+      position: absolute;
+      color: white;
+      font-size: 1.2em;
+      box-shadow: 0 0 0 2px var(--blue-gray);
+    }
 
 .list-note,
 .list-log {
