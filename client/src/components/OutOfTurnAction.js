@@ -16,18 +16,18 @@ const OutOfTurnAction = (props) => {
     if (outOfTurnActions) {
       return (
         <div>
-          <div>{outOfTurnActions.type}</div>
-          <div>{prompt}</div>
-          <div>
+          <div className='action-type'>{outOfTurnActions.type}</div>
+          <div className='action-prompt'>{prompt}</div>
+          <div className='action-description'>
             {outOfTurnActions.description}
           </div>
-          <div>
+          <div className='action-discussion'>
             {outOfTurnActions.discussion &&
               outOfTurnActions.discussion.map(
                 ({ player, statement }, index) => (
                   <div key={index}>
-                    <div>{player}</div>
-                    <div>{statement}</div>
+                    <div className='discussion-player'>{player}</div>
+                    <div className='discussion-statement'>{statement}</div>
                   </div>
                 )
               )}

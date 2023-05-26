@@ -319,6 +319,23 @@ li {
   word-wrap: break-word;
 }
 
+.action-type {
+  font-size: 1.2em;
+}
+
+.action-prompt {
+  font-size: 1em;
+  padding: 10px;
+}
+
+.action-description {
+  font-size: 1em;
+}
+
+.action-discussion {
+  font-size: 1em;
+}
+
 .react-p5 {
   width: 96%;
   margin: 0 2%;
