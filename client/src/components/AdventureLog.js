@@ -76,8 +76,8 @@ const AdventureLog = (props) => {
                         <>
                           {discussion.map(({ player, statement }, index) => (
                             <div key={index}>
-                              <div>
-                                <strong>{player}: </strong>
+                              <div style={{color: "white"}}>
+                                <strong style={{color: "var(--dark-blue-gray)"}}>{player}: </strong>
                                 {statement}
                               </div>
                             </div>
@@ -117,20 +117,20 @@ const AdventureLog = (props) => {
               <br />
               {completedProjects.length > 0 && (
                 <div>
-                  <div className='centered-column'>
-                    <h3>Project completed this week!</h3>
+                  <div>
+                    <div className='comp-project-title centered-column'>Project completed this week!</div>
                   </div>
                   {completedProjects.map(
                     ({ orgDesc, endDesc, orgPlayer, endPlayer }, index) => (
                       <div key={index}>
                         <hr />
-                        <div>
-                          <strong>{orgPlayer}: </strong>
-                          {orgDesc}
-                        </div>
-                        <div>
-                          <strong>{endPlayer}: </strong>
-                          {endDesc}
+                        <div className='log-comp-project'>
+                          <div className='log-comp-project-player'>
+                            <div className='comp-project-player-name'>{orgPlayer}:</div> <div className='bold-300'>{orgDesc}</div>         
+                          </div>
+                          <div className='log-comp-project-player'>
+                            <div className='comp-project-player-name'>{endPlayer}:</div> <div className='bold-300'>{endDesc}</div>
+                          </div>
                         </div>
                       </div>
                     )
@@ -152,7 +152,7 @@ const AdventureLog = (props) => {
       exit={{ scale: 0.2, opacity: 0, x: '-50%', y: '-50%' }}
       transition={{ duration: 0.25 }}
       style={{ position: 'absolute', top: '50%', left: '50%' }}>
-      <h2>Adventure Log</h2>
+      <h2 className='centered-column log-dark-text'>Adventure Log</h2>
       <hr />
       <div className='list-log'>{renderAdventureLogData()}</div>
       <hr />

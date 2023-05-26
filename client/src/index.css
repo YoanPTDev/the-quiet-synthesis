@@ -44,6 +44,15 @@ h3 {
   font-size: 2rem;
 }
 
+hr {
+  margin: 5px 40px;
+}
+
+.bold-300 {
+  font-weight: 100;
+  font-size: 1.1em;
+}
+
 .TQY-logo {
   width: 356px;
   height: 60px;
@@ -477,13 +486,13 @@ input {
   margin: 30px 0;
   /* margin-bottom: -3px; */
   width: 350px;
-  /* height: max-content; */
+  height: auto;
   /* padding: 5px 0px 0px 5px; */
   /* word-wrap: break-word; */
   position: relative;
 }
     .single-log-title{
-      position: relative;
+      position: absolute;
       top: -35px;
       left: 10px;
       color: white;
@@ -503,11 +512,12 @@ input {
       }
     .single-log-infos {
       position: relative;
-      top: -40px;
+      top: 0px;
       display: grid;
       padding: 5px;
+      padding-top: 60px;
       grid-template-columns: 100%;
-      grid-template-rows: 20% 20% 20% 20% 20%;
+      grid-template-rows: 20% 20% 20% 20%;
     }
       .single-log-prompt {
         grid-row-start: 1;
@@ -522,7 +532,7 @@ input {
           .log-card-icon {
             position: absolute;
             right: 5px;
-            top: -10px;
+            top: 40px;
             width: 30px;
             height: 30px;
             background-image: url(./assets/logCardIcon.png);
@@ -532,7 +542,7 @@ input {
       }
           .action-0-type {
             position: absolute;
-            top: -45px;
+            top: 10px;
             right: 10px;
             align-items: right;
             font-size: 1.4em;
@@ -586,6 +596,36 @@ input {
         .action-1-specifics {
           color: white;
         }
+
+    .comp-project-title {
+      font-size: 1.5em;
+      font-weight: bolder;
+      margin-top: 15px;
+      color: var(--dark-blue-gray);
+    }
+
+    .log-comp-project {
+      background-color: var(--blue-gray-alpha);
+      border-radius: 0 0 15px 15px;
+      padding: 5px 10px;
+      margin: -5px;
+    }
+        .log-comp-project-player {
+          display: inline-flex;
+          color: var(--dark-blue-gray);
+        }
+            .comp-project-player-name {
+              color: white;
+              font-weight: bolder;
+              white-space: nowrap;
+              margin-right: 5px;
+              font-size: 1.2em;
+              text-shadow: 0 0 2px var(--blue-gray), 
+                       0 0 2px var(--blue-gray), 
+                       0 0 2px var(--blue-gray), 
+                       0 0 2px var(--blue-gray), 
+                       0 0 2px var(--blue-gray);
+            }
 
 .list-note,
 .list-log {
