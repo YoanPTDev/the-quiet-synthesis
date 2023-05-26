@@ -1,3 +1,11 @@
+/*
+server/modules/game.js
+La classe qui configure les paramètres du jeu (abandonnée) et génère le code de lobby pour Socket.IO.
+Raphael Lavoie (auteur)
+Nicolas Drolet
+Yoan Poulin Truchon
+*/
+
 class GameConfig {
   constructor(playerCount) {
     this.playerCount = playerCount;
@@ -18,7 +26,7 @@ function generateRandomString(n) {
 
 class Game {
   constructor(config) {
-    this.config = config; //Objet GameConfig
+    this.config = config;
   }
 }
 

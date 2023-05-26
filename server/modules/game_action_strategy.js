@@ -1,5 +1,12 @@
+/*
+server/modules/game_action_strategy.js
+Les classes qui representent les différentes actions possible du jeu en utilisant le patron de Strategy.
+Raphael Lavoie (auteur)
+Nicolas Drolet
+Yoan Poulin Truchon
+*/
+
 class GameAction {
-  // type, description, nbrTokens
   constructor(type, desc, nbTokens) {
     this.type = type;
     this.tokens = nbTokens;
@@ -18,7 +25,6 @@ class GameAction {
 }
 
 class ProjectAction extends GameAction {
-  //nbrTour, imageID, coords
   constructor(desc, nbTokens, nbTour) {
     super('Start Project', desc, nbTokens);
     this.turns = nbTour;
@@ -30,7 +36,6 @@ class ProjectAction extends GameAction {
 }
 
 class DiscoverAction extends GameAction {
-  //nbrTour = 0, imageID, coords
   constructor(desc, nbTokens) {
     super('Discovery', desc, nbTokens);
     this.turns = 0;
@@ -109,7 +114,7 @@ class ModifyRessourcesAction extends GameAction {
   }
 
   isCompleted() {
-    return true; //placeholder
+    return true;
   }
 }
 

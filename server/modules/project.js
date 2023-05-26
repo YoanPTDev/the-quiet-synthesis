@@ -1,19 +1,16 @@
-import MapElement from './map_element.js';
+/*
+server/modules/project.js
+La classe reliée au Projets qui peuvent être entâmés durant la partie.
+Raphael Lavoie (auteur)
+Nicolas Drolet
+Yoan Poulin Truchon
+*/
 
 class Project {
   constructor(turns, desc, player) {
     this.turns = turns;
     this.desc = desc;
     this.player = player;
-    //this.mapElem = mapElem; //Objet MapElement
-  }
-
-  endProject() {
-    //WIP
-  }
-
-  getElement() {
-    return this.mapElem;
   }
 }
 

@@ -1,4 +1,10 @@
-import User from './user.js';
+/*
+server/modules/player.js
+La classe représentant les Joueurs.
+Raphael Lavoie (auteur)
+Nicolas Drolet
+Yoan Poulin Truchon
+*/
 
 class Player {
   constructor(uuid, socket, name) {

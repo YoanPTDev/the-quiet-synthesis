@@ -1,3 +1,11 @@
+/*
+server/server.js
+Le serveur qui est gérer par Node.js
+Raphael Lavoie (auteur)
+Nicolas Drolet (auteur)
+Yoan Poulin Truchon
+*/
+
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
@@ -23,8 +31,7 @@ const io = new Server(server, {
   cors: corsOptions,
 });
 
-app.use(cors(corsOptions)); // use cors middleware
-
+app.use(cors(corsOptions));
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   res.header(
@@ -72,10 +79,7 @@ io.on('connection', (socket) => {
     gameEngine.endTurn();
   });
 
-  // --------TESTING----------
   socket.on(DATA.SAVE_LOG, (data) => {
-    console.log('data type', data.type);
-    // Process the data based on its type
     switch (data.type) {
       case DATA.SCARCITY:
         if (data.action === ACTIONS.TRANSFER) {
@@ -111,21 +115,14 @@ io.on('connection', (socket) => {
           gameEngine.notebook.notes
         );
         break;
-      case DATA.NAME:
-        // Save the Name entry to your mongoDB collection
-        break;
-      case DATA.GAMERTAG:
-        // Save the Gamertag entry to your mongoDB collection
-        break;
       default:
         console.log(`${data.type} is not a recognized data type. Make sure that the data type 
         exists on the server and that you have the proper syntax.`);
     }
   });
-  // --------TESTING----------
 
   socket.on(DATA.MOUSE, (data) => {
-    process.stdout.write(`\rMOUSE: ${data.x}, ${data.y}      `);
+    process.stdout.write(`\rMOUSE: ${data.x}, ${data.y}      `); //Do not remove, makes the drawing more smooth somehow?
     socket.to(gameEngine.game.config.roomCode).emit(DATA.MOUSE, data);
   });
 
@@ -146,7 +143,6 @@ server.listen(port, () => {
 });
 
 async function init() {
-  //const connectionString = 'mongodb://localhost:27017/your-database';
   await connectToDatabase();
   gameEngine = new GameEngine(new GameConfig(4), null);
   await gameEngine.buildAdventureLog('Test map', null);

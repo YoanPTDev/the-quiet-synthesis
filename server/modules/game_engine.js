@@ -1,3 +1,12 @@
+/*
+server/modules/game_engine.js
+Le coeur du jeu, la classe du game engine et le State Machine qui gère le tour de chaque joueurs et leurs actions.
+Toute la logique se situe ici.
+Raphael Lavoie (auteur)
+Nicolas Drolet
+Yoan Poulin Truchon
+*/
+
 import { Game } from "./game.js";
 import Notebook from "./notebook.js";
 import { Deck } from "./deck.js";
@@ -47,10 +56,9 @@ class GameEngine {
     this.game = new Game(gameConfig);
     this.notebook = new Notebook();
     this.deck = null;
-    this.players = new Array(); // Liste de Player
+    this.players = new Array();
     this.map = new Map(mapConfig);
     this.log = null;
-    this.nbrContempts = 0; // Nombre de contempt tokens
     this.reduceTimers = true; // Determine si on reduit les projets durant le tour
     this.currentPlayerIndex = 0;
     this.isGameRunning = false;
@@ -131,7 +139,6 @@ class GameEngine {
         });
       };
 
-      // Start the drawing process
       emitDrawing(0);
     }
   }
@@ -197,8 +204,8 @@ const playerTurnStateMachine = {
             this.currentPlayer.name,
             "",
             ""
-          ); //Reset newWeek
-          this.currentPrompt = null; //Reset prompt à chaque tour
+          );
+          this.currentPrompt = null;
           this.newAction1 = {};
           this.newAction2 = {};
 
@@ -507,11 +514,6 @@ const playerTurnStateMachine = {
 
   endTurn(gameEngine) {
     this.setGameEngine(gameEngine);
-    //--------- Testing purposes, remove after ---------------
-    if (this.isAction1() || this.isProjects()) {
-      this.currentState = playerStates.ACTION2;
-    }
-    //--------------------------------------------------------
     this.transition(playerStates.FINISHED);
     this.currentPlayer = null;
     this.transition(playerStates.WAITING);
@@ -761,14 +763,14 @@ const playerTurnStateMachine = {
           this.gameEngine.deck.currentCard.prompts[data.value].description;
         this.newWeek.promptChosen = this.currentPrompt;
         switch (this.gameEngine.deck.currentCard.prompts[data.value].mechanic) {
-          case "start project": // enable map for current player
+          case "start project":
             this[action] = new ProjectAction("", 0, 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
             this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
               this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
             });
             break;
-          case "discovery": // enable map for current player
+          case "discovery":
             this[action] = new DiscoverAction("", 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
             this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
@@ -802,7 +804,7 @@ const playerTurnStateMachine = {
               this.completeProjectPromptListener.emit("prolong project", null);
             }
             break;
-          case "modify project": // enable map for current player
+          case "modify project":
             this[action] = new ModifyAction("", 0);
             if (
               this.gameEngine.incompleteProjects.incompleteProjects.length > 0
@@ -821,14 +823,14 @@ const playerTurnStateMachine = {
               this.completeProjectPromptListener.emit("modify project", null);
             }
             break;
-          case "lore": // enable map for current player
+          case "lore":
             this[action] = new AddLoreAction("", 0);
             this.currentPlayer.socket.emit(UPDATE.ENABLE_DRAWING);
             this.currentPlayer.socket.once(ACTIONS.END_DRAWING, () => {
               this.currentPlayer.socket.emit(ACTIONS.ADD_DESCRIPTION);
             });
             break;
-          case "complete project": // enable map for current player
+          case "complete project":
             this[action] = new CompleteProjectAction("", 0);
             this.completeProjectPrompt();
             break;
@@ -856,7 +858,7 @@ const playerTurnStateMachine = {
           case "end game":
             this[action] = new EndGameAction("", 0);
             break;
-          case "end turn": // A tester, incertain
+          case "end turn":
             io.to(this.gameEngine.game.config.roomCode).emit(UPDATE.ACTION, {
               action: { type: "End Week" },
               prompt: this.currentPrompt,

@@ -1,12 +1,20 @@
-import Card from "./card.js";
-import { getDeckByName, getCardById } from "../db/db_DAO.js";
+/*
+server/modules/deck.js
+Les classes reliées au Deck de cartes et qui l'initialise à partir de la BD.
+Raphael Lavoie (auteur)
+Nicolas Drolet (auteur)
+Yoan Poulin Truchon
+*/
+
+import Card from './card.js';
+import { getDeckByName, getCardById } from '../db/db_DAO.js';
 
 class DeckConfig {
   constructor() {
-    this.springCards = new Array(); //Array de Card
-    this.summerCards = new Array(); //Array de Card
-    this.fallCards = new Array(); //Array de Card
-    this.winterCards = new Array(); //Array de Card
+    this.springCards = new Array();
+    this.summerCards = new Array();
+    this.fallCards = new Array();
+    this.winterCards = new Array();
   }
 
   async buildSeasons(deckName) {
@@ -26,14 +34,13 @@ class DeckConfig {
           card.prompts[j] = dataCard.prompts[j];
         }
 
-        // if (dataCard.season == "Spring") {
-        //   this.springCards.push(card);
-        // } else if (dataCard.season == "Summer") {
-        //   this.summerCards.push(card);
-        // } else if (dataCard.season == "Fall") {
-        //   this.fallCards.push(card);
-        // } else 
-        if (dataCard.season == "Winter") {
+        if (dataCard.season == 'Spring') {
+          this.springCards.push(card);
+        } else if (dataCard.season == 'Summer') {
+          this.summerCards.push(card);
+        } else if (dataCard.season == 'Fall') {
+          this.fallCards.push(card);
+        } else if (dataCard.season == 'Winter') {
           this.winterCards.push(card);
         }
       }
@@ -85,13 +92,12 @@ class Deck {
   }
 
   drawCard() {
-    //Retourne un objet Card
     this.currentCard = this.fullDeck.shift();
     return this.currentCard;
   }
 
   discard(amount) {
-    this.fullDeck.slice(0, amount); //Enleve les cartes de l'index 0 a "amount" non-inclus
+    this.fullDeck.slice(0, amount);
   }
 }
 

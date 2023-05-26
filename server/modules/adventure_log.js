@@ -1,4 +1,11 @@
-import Week from './week.js';
+/*
+server/modules/adventure_log.js
+La classe reliée au Adventure Log et les fonctions qui la sauvegarde dans la BD.
+Raphael Lavoie (auteur)
+Nicolas Drolet (auteur)
+Yoan Poulin Truchon
+*/
+
 import { createAdventureLog, addWeekToAdventureLog } from '../db/db_DAO.js';
 
 class AdventureLog {
@@ -17,10 +24,6 @@ class AdventureLog {
   async addEntry(entry) {
     this.weeks.logs.push(entry);
     await addNewWeekToAdventureLog(this.ID, entry);
-  }
-
-  displayLog() {
-    //WIP
   }
 }
 
