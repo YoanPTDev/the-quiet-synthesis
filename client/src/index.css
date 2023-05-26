@@ -6,6 +6,7 @@
    --gray: #666666;
    --blue-gray: #8493A0;
    --blue-gray-alpha: #b0c8ddee;
+   --dark-blue-gray: #384c5e;
    --ivory: #FFFDE6;
    --pastel-green: #dfead0;
    --sandy-purple: #a08493;
@@ -464,20 +465,118 @@ li {
 .single-log {
   border: 3px solid var(--blue-gray);
   border-radius: 15px;
-  margin: 1px;
-  margin-bottom: -3px;
+  margin: 30px 0;
+  /* margin-bottom: -3px; */
   width: 350px;
-  height: max-content;
-  padding: 5px 0px 0px 5px;
-  word-wrap: break-word;
+  /* height: max-content; */
+  /* padding: 5px 0px 0px 5px; */
+  /* word-wrap: break-word; */
   position: relative;
 }
     .single-log-title{
-      position: absolute;
+      position: relative;
+      top: -35px;
+      left: 10px;
       color: white;
-      font-size: 1.2em;
-      box-shadow: 0 0 0 2px var(--blue-gray);
+      padding: 0;
+      border-radius: 5px;
+      font-size: 3em;
+      text-shadow: 0 0 4px var(--blue-gray), 0 0 4px var(--blue-gray), 0 0 6px var(--blue-gray), 0 0 5px var(--blue-gray);
     }
+      .single-log-player {
+        position: relative;
+        top: -15px;
+        left: 0px;
+        font-size: 0.4em;
+        font-weight: bolder;
+        color: var(--blue-gray);
+        text-shadow: none;
+      }
+    .single-log-infos {
+      position: relative;
+      top: -40px;
+      display: grid;
+      padding: 5px;
+      grid-template-columns: 100%;
+      grid-template-rows: 20% 20% 20% 20% 20%;
+    }
+      .single-log-prompt {
+        grid-row-start: 1;
+        top: 50px;
+        left: 0px;
+        border-radius: 10px;
+        background-color: var(--blue-gray-alpha);
+        color: var(--dark-blue-gray);
+        font-weight: bold;
+        padding: 5px 20px;
+      }
+          .log-card-icon {
+            position: absolute;
+            right: 5px;
+            top: -10px;
+            width: 30px;
+            height: 30px;
+            background-image: url(./assets/logCardIcon.png);
+          }
+      .action-0 {
+        grid-row-start: 2;
+      }
+          .action-0-type {
+            position: absolute;
+            top: -45px;
+            right: 10px;
+            align-items: right;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--dark-blue-gray);
+            background-color: var(--blue-gray-alpha);
+            padding: 0 10px;
+            border-radius: 20px;
+          }
+          .action-0-specifics {
+            padding: 10px;
+          }
+      
+      .action-1 {
+        position: relative;
+        grid-row-start: 3;
+        background-color: var(--blue-gray);
+        border-radius: 15px;
+        margin-top: 20px;
+        padding: 10px;
+      }
+        .action-1-title{
+          position: absolute;
+          font-size: 2em;
+          font-weight: 900;
+          top: -25px;
+          left: 15px;
+          color: white;
+          text-shadow: 0 0 4px var(--blue-gray), 
+                       0 0 4px var(--blue-gray), 
+                       0 0 5px var(--blue-gray), 
+                       0 0 5px var(--blue-gray), 
+                       0 0 6px var(--blue-gray);
+        }      
+        .action-1-type {
+          position: relative;
+          top: 0px;
+          right: 0px;
+          text-align: right;
+          font-size: 1.4em;
+          font-weight: 700;
+          color: var(--blue-gray);
+          padding: 0 10px;
+          border-radius: 20px;
+          text-shadow: 0 0 3px white, 
+                       0 0 3px white, 
+                       0 0 3px white, 
+                       0 0 3px white, 
+                       0 0 3px white;
+        }
+        .action-1-specifics {
+          color: white;
+        }
 
 .list-note,
 .list-log {

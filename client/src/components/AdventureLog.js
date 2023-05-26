@@ -38,98 +38,106 @@ const AdventureLog = (props) => {
           <div
             key={weekNb}
             className='single-log'>
-            <p className='single-log-title'>
-              <strong>Week:</strong> {weekNb} -{' '}
-              {playerId ? playerId : 'an unknown player'}
-            </p>
-            <p>
-              <strong>Prompt: </strong> {promptChosen}
-            </p>
-            {actions.map((action, index) => {
-              const { type, tokens, turns, description, discussion } = action;
+            <div className='single-log-title'>
+              <strong>Week {weekNb}</strong>
+              <p className='single-log-player'>
+                {playerId ? playerId : 'an unknown player'}
+              </p> 
+            </div>
+            <div className='single-log-infos'>
+              
+              <p className='single-log-prompt'>
+                {promptChosen}
+                <div className='log-card-icon'></div>
+              </p>
+              {actions.map((action, index) => {
+                const { type, tokens, turns, description, discussion } = action;
 
-              return (
-                <div
-                  key={`${weekNb}-${index}`}
-                  className='action'>
-                  <div>
-                    <strong>Type: </strong> {type}{' '}
-                    {type === 'Start Project' && turns === 0 && (
-                      <strong>COMPLETED</strong>
-                    )}
-                  </div>
-                  {tokens > 0 && (
-                    <div>
-                      <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
-                      {tokens}
+                return (
+                  <div
+                    key={`${weekNb}-${index}`}
+                    className={`action-${index}`}>
+                    {index === 1 && (<div className='action-1-title'>Second Action</div>)}
+                    <div className={`action-${index}-type`}>
+                      {type}{' '}
+                      {type === 'Start Project' && turns === 0 && (
+                        <strong>COMPLETED</strong>
+                      )}
                     </div>
-                  )}
+                    {tokens > 0 && (
+                      <div>
+                        <strong>Contempt token{tokens > 1 ? 's' : ''}:</strong>{' '}
+                        {tokens}
+                      </div>
+                    )}
 
-                  <div>
-                    {discussion !== undefined && (
-                      <>
-                        {discussion.map(({ player, statement }, index) => (
-                          <div key={index}>
-                            <div>
-                              <strong>{player}: </strong>
-                              {statement}
-                            </div>
-                          </div>
-                        ))}
-                        <strong></strong>
-                      </>
-                    )}
-                    {discussion === undefined && (
-                      <>
-                        <strong>Specifics: </strong> {description}
-                      </>
-                    )}
-                  </div>
-                  {turns > 0 && (
                     <div>
-                      <strong>Ready in: </strong>
-                      {turns > 6 && (
+                      {discussion !== undefined && (
+                        <>
+                          {discussion.map(({ player, statement }, index) => (
+                            <div key={index}>
+                              <div>
+                                <strong>{player}: </strong>
+                                {statement}
+                              </div>
+                            </div>
+                          ))}
+                          <strong></strong>
+                        </>
+                      )}
+                      {discussion === undefined && (
+                        <>
+                          <div className={`action-${index}-specifics`}>{description}</div> 
+                        </>
+                      )}
+                    </div>
+                    {turns > 0 && (
+                      <div>
+                        <strong>Ready in: </strong>
+                        {turns > 6 && (
+                          <img
+                            className='dice-adventure-log'
+                            src={diceNum[6]}
+                            alt={`Dice with number 6`}
+                          />
+                        )}
                         <img
                           className='dice-adventure-log'
-                          src={diceNum[6]}
-                          alt={`Dice with number 6`}
+                          src={diceNum[turns > 6 ? turns - 6 : turns]}
+                          alt={`Dice with number ${
+                            turns > 6 ? turns - 6 : turns
+                          }`}
                         />
-                      )}
-                      <img
-                        className='dice-adventure-log'
-                        src={diceNum[turns > 6 ? turns - 6 : turns]}
-                        alt={`Dice with number ${
-                          turns > 6 ? turns - 6 : turns
-                        }`}
-                      />
-                    </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            
+              <br />
+              {completedProjects.length > 0 && (
+                <div>
+                  <div className='centered-column'>
+                    <h3>Project completed this week!</h3>
+                  </div>
+                  {completedProjects.map(
+                    ({ orgDesc, endDesc, orgPlayer, endPlayer }, index) => (
+                      <div key={index}>
+                        <hr />
+                        <div>
+                          <strong>{orgPlayer}: </strong>
+                          {orgDesc}
+                        </div>
+                        <div>
+                          <strong>{endPlayer}: </strong>
+                          {endDesc}
+                        </div>
+                      </div>
+                    )
                   )}
                 </div>
-              );
-            })}
-            <br />
-            {completedProjects.length > 0 && (
-              <div>
-                <div className='centered-column'>
-                  <h3>Project completed this week!</h3>
-                </div>
-                {completedProjects.map(
-                  ({ orgDesc, endDesc, orgPlayer, endPlayer }, index) => (
-                    <div key={index}>
-                      <hr />
-                      <div>
-                        <strong>{orgPlayer}: </strong>
-                        {orgDesc}
-                      </div>
-                      <div>
-                        <strong>{endPlayer}: </strong>
-                        {endDesc}
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-            )}
+              )}
+            </div>
           </div>
         );
       });
