@@ -192,6 +192,8 @@ const playerTurnStateMachine = {
         if (this.isWaiting()) {
           this.currentState = playerStates.DRAW;
 
+          this.currentPlayer.socket.to(this.gameEngine.game.config.roomCode).emit(UPDATE.SOMEONE_ELSE_PLAYING);
+
           //Création d'un listener qui sera retiré a la fin du tour afin d'éviter sa duplication.
           this.saveActionListener = this.saveActionHandler.bind(this);
           this.currentPlayer.socket.on(

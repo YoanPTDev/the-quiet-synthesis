@@ -46,7 +46,6 @@ export const setSocketInstance = (socket) => {
 const setupSocketListeners = () => {
   if (socketInstance) {
     socketInstance.on(ACTIONS.ADD_DESCRIPTION, () => {
-      console.log('ADD_DESCRIPTION');
       storeReference.dispatch(expandAdventureLogInput());
       storeReference.dispatch(
         fetchDirection({
@@ -55,7 +54,14 @@ const setupSocketListeners = () => {
         })
       );
     });
-
+    socketInstance.on(UPDATE.SOMEONE_ELSE_PLAYING, () => {
+      storeReference.dispatch(
+        fetchDirection({
+          directions: 'Someone else is playing...',
+          font: FONT.LARGE,
+        })
+      );
+    });
     socketInstance.on(ACTIONS.ADD_RESOURCES, () => {
       storeReference.dispatch(expandScarcityAbundanceLog());
       storeReference.dispatch(
