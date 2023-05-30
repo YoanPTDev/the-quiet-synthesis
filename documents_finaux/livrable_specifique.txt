@@ -1,0 +1,32 @@
+Yoan Poulin Truchon
+Nicolas Drolet
+Raphael Lavoie
+
+The Quiet Year - Édition en ligne
+
+*** Quelles sont les structures de données utilisées/développée et où se trouvent-elles dans le code?
+
+- Objets Javascript
+- Tableau (Array) -> server/modules/game_engine.js - ligne 59
+- Liste chaînée (avec le but de l'utiliser pour les dessins. Contenir les points dans des listes chaînées pour les partager aux autres joueurs. Lire les listes de points pour redessiner les dessins. Chaque ligne serait sauvegardé dans l'engin de jeu également, pour redessiner tous les dessins sur le canevas en cas de déconnexion/reconnexion.) -> utils/LinkedList.js (tout le fichier)
+- Stack (plus ou moins un stack puisque ça n'existe pas en Javascript... mais on l'utilise comme telle puisque nous pigeons toujours les cartes du dessus.) -> server/modules/deck.js - lignes 78 à 102
+
+*** Quels sont les design patterns utilisés/développé et où se trouvent-ils dans le code?
+
+- Observer -> /client/src/middleware/socketMiddleware.js - lignes 48 à 215
+- Middleware -> /client/src/middleware/socketMiddleware.js - lignes 48 à 215
+- Factory -> /client/src/middleware/socketMiddleware.js - utilisation du fetchDirection, entres autres. Produisent des gameObjects (Redux actions) avec des structure similaire. Discutable.
+- State Machine -> /server/modules/game_engine.js - lignes 165 à 336
+- Strategy -> /server/modules/game_action_strategy.js - fichier au complet
+- Adapter (DAO) -> /server/db/db_DAO.js - lignes 72 à 113
+- Singleton (même s'il n'était pas permis. on l'utilise tout de même) -> /client/src/middleware/socketcontext.js - fichier au complet
+- Composite -> /server/modules/game_engine.js - lignes 54 à 67 (création du GameEngine)
+
+*** Quel est l'usage des mathématiques que vous proposez pour répondre au devis initial? 1 seul, le plus important
+
+- Algorithme de Fisher-Yates -> /server/modules/deck.js - lignes 59 à 76
+
+*** Quel est l'usage des expressions régulières que vous proposez pour répondre au devis initial? 1 seul, le plus important
+
+Regex pour déterminer si le premier joueur à parler dans une discussion pose une question -> /server/modules/game_engine.js - lignes 612 et 632
+
