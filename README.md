@@ -1,18 +1,18 @@
-### The Quiet Year project
+### The Quiet Year - Projèt synthèse (CVM 2023)
 
 #### Yoan Poulin Truchon (Front-end development)
 #### Raphael Lavoie (Back-end development)
 #### Nicolas Drolet (DBA - UX/UI design)
 
-Using parcel, react, react-dom, redux, live-server
-
-# The Quiet Year - Online Edition
-
 ## Sommaire
 
-Une application web de jeu de rôle sur table respectant les règlements du jeu The Quiet Year, conçu par Avery Alder, et permettant aux différents joueurs de dessiner sur un canevas commun. Le jeu est dirigé par un deck de 52 cartes. Chaque atout est une saison et chaque carte est une semaine, totalisant une année complète.
-L'application est développé en MERN stack. 
-React et Redux s'occupe principalement du côté client. Node.js a été utilisé pour l'engin de jeu dans le back-end et sur le serveur et MongoDB est la base de donnée de type document qui a été utilisé pour stocker les données.
+Nous avons créé une application web interactive pour le jeu de rôle sur table, The Quiet Year, conçu par Avery Alder. Cette plateforme collaborative en ligne, respectueuse des règles originales du jeu, permet aux joueurs de collaborer et de dessiner sur un espace partagé.
+
+Le jeu est guidé par un jeu de 52 cartes, où chaque atout correspond à une saison et chaque carte représente une semaine, constituant ainsi une année complète.
+
+L'application a été développée en utilisant la pile technologique MERN. Du côté client, React et Redux ont été employés pour leur efficacité dans la création d'interfaces utilisateur dynamiques. Le serveur et le moteur de jeu, quant à eux, sont alimentés par Node.js, offrant une performance exceptionnelle pour les opérations en temps réel.
+
+Pour le stockage des données, nous avons opté pour MongoDB, une base de données de type document, qui offre flexibilité et efficacité pour le traitement des données.
 
 ## Installation
 - Nous avons utilisé VSCode pour le développement
