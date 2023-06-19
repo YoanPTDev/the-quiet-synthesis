@@ -42,9 +42,9 @@ L'utilisateur peut référer au site internet http://thequietsynthesis.com/ pour
 - https://www.mongodb.com/atlas/database
 
 ## Contact
-- Yoan Poulin Truchon (Front-end development) -> courriel: yoan.pt.dev@outlook.com
-- Raphael Lavoie (Back-end development) -> courriel: keyblademaster190@hotmail.com
-- Nicolas Drolet (DBA - UX/UI design) -> courriel: n_drolet@hotmail.ca
+- Yoan Poulin Truchon -> courriel: yoan.pt.dev@outlook.com
+- Raphael Lavoie -> courriel: keyblademaster190@hotmail.com
+- Nicolas Drolet -> courriel: n_drolet@hotmail.ca
 
 ## Remerciements
 - Nous tenons à remercier Fréderic Thériault pour son aide et son soutient en début du développement.
