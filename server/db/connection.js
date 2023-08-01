@@ -10,7 +10,9 @@
 
 
 import { MongoClient } from 'mongodb';
-const Db = "mongodb+srv://ndroletCVM:xc8biqOytEyvO0y9lV4IFUXhTow4GjQY@tqyonline.ljgkpby.mongodb.net/?retryWrites=true&w=majority"
+require('dotenv').config();
+
+const Db = process.env.MONGODB_URI;
 const client = new MongoClient(Db, { useNewUrlParser: true, useUnifiedTopology: true });
 
 let _db = null;
